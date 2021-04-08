@@ -99,6 +99,10 @@ text-transform: uppercase;
     transform: translateY(-2px);
 }
 
+.Button:disabled{
+    background: rgb(16, 89, 255, 0.4)
+}
+
 .ButtonContainer{
     display: flex;
     justify-content: center;
