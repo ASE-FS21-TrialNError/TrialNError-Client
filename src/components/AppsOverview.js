@@ -5,39 +5,43 @@ import { api } from "../helpers/api";
 import { Button } from "../views/design/Button";
 import { withRouter } from "react-router-dom";
 import { Header } from "../views/design/Header";
+import { BaseContainer, ContentContainer, PageHeaderContainer, PageHeading} from "../views/design/PageContent";
 import Error from "../views/Error";
 
 
-export const BaseContainer = styled.div`
-  margin-left: auto;
+const SearchBarContainer = styled.div`
+  float: right;
+  background: blue;
+`;
+
+const SearchBar = styled.input`
+  &::placeholder {
+    color: rgba(0, 0, 0, 1);
+  }
+  height: 35px;
   padding-left: 15px;
-  margin-right: auto;
-  padding-right: 15px;
+  margin-left: -4px;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  margin-bottom: 20px;
+  border-radius: 20px;
+  border-bottom-color:rgb(0, 0, 0);
+  color: rgb(0, 0, 0);
+  min-height: 35px;
+  min-width: 600px;
 `;
 
-const Container = styled(BaseContainer)`
-  color: white;
-  text-align: center;
+const FilterContainer = styled.div`
 `;
 
-const Users = styled.ul`
-  list-style: none;
-  padding-left: 0;
+
+const AppsContainer = styled.div`
+
 `;
-const ButtonContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  margin-top: 20px;
-`;
-const Label = styled.label`
-  color: white;
-  margin-bottom: 10px;
-  text-transform: uppercase;
-`;
-const Link = styled.a`
- margin: 10px;
- color: green
-`;
+
+
+
 
 
 class AppsOverview extends React.Component {
@@ -108,29 +112,25 @@ class AppsOverview extends React.Component {
     return (
       <div>
         <Header history={this.props.history}/>
-        <Container>
-          <h2>List of all Registered users </h2>
-          <p>Click to open the user details:</p>
-          <Link
-            style={{ color: "red" }}
-            width="25%"
-            onClick={() => {
-              this.logout();
-            }}
-          >
-            Logout
-          </Link>
-          <Link
-            width="25%"
-            onClick={() => {
-              this.goToDetails(localStorage.getItem("loginUserid"));
-            }}
-          >
-            Edit profile
-          </Link>
-          
-                
-        </Container>
+        <BaseContainer>
+          <ContentContainer>
+            <PageHeaderContainer>
+              <PageHeading>
+                Apps Overview
+              </PageHeading>
+              <SearchBarContainer>
+                <SearchBar/>
+              </SearchBarContainer>
+              
+              <FilterContainer>
+
+              </FilterContainer>
+            </PageHeaderContainer>
+            <AppsContainer>
+
+            </AppsContainer>
+          </ContentContainer>
+        </BaseContainer>
       </div>
     );
   }
