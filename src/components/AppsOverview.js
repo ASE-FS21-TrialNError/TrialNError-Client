@@ -12,6 +12,8 @@ import Error from "../views/Error";
 const SearchBarContainer = styled.div`
   float: right;
   background: blue;
+  width: 70%;
+  height: 70px;
 `;
 
 const SearchBar = styled.input`
@@ -20,19 +22,28 @@ const SearchBar = styled.input`
   }
   height: 35px;
   padding-left: 15px;
-  margin-left: -4px;
-  border-top: none;
+  
+  border-top-color:rgb(0, 0, 0);
+  border-bottom-color:rgb(0, 0, 0);
   border-left: none;
   border-right: none;
   margin-bottom: 20px;
+  margin-left: -4px;
+  margin-top: 10px;
   border-radius: 20px;
-  border-bottom-color:rgb(0, 0, 0);
+  
   color: rgb(0, 0, 0);
   min-height: 35px;
   min-width: 600px;
 `;
 
 const FilterContainer = styled.div`
+  border-bottom-color: rgb(220,220,220);
+  background: yellow;
+  height: 70px;
+  clear: both;
+  display: flex;
+  align-items: center;
 `;
 
 
@@ -40,6 +51,21 @@ const AppsContainer = styled.div`
 
 `;
 
+
+const SortButton = styled.div`
+  background-color = rgb(220,220,220);
+  border-color: black;
+  border: solid;
+  width: 100px;
+  height: 50px;
+  font-size: 24px;
+  fond-weight: bold;
+  overflow: hidden;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
 
 
 
@@ -119,10 +145,21 @@ class AppsOverview extends React.Component {
                 Apps Overview
               </PageHeading>
               <SearchBarContainer>
-                <SearchBar/>
+                <SearchBar
+                  placeholder="Enter the name of the app here..."
+                  onChange={(e) => {
+                    this.handleInputChange("email", e.target.value);
+                  }}
+                />
               </SearchBarContainer>
               
               <FilterContainer>
+                <SortButton
+                  
+
+                >
+                  Sort
+                </SortButton>
 
               </FilterContainer>
             </PageHeaderContainer>

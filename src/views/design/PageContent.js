@@ -22,8 +22,12 @@ export const PageHeaderContainer = styled.div`
 
 export const PageHeading = styled.div`
   float: left;
+  background-color: blue;
+  min-width: 300px;
+  width: 30%;
   font-size: 36px;
   font-weight: bold;
+  height: 70px;
 `;
 
 
