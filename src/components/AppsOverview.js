@@ -6,6 +6,7 @@ import { Button } from "../views/design/Button";
 import { withRouter } from "react-router-dom";
 import { Header } from "../views/design/Header";
 import { BaseContainer, ContentContainer, PageHeaderContainer, PageHeading} from "../views/design/PageContent";
+import Modal from "../views/design/Modal";
 import Error from "../views/Error";
 
 
@@ -76,7 +77,8 @@ class AppsOverview extends React.Component {
     this.state = {
       users: null,
       userId: null,
-      erroMessage:null
+      erroMessage:null,
+      sex: null
     };
   }
 
@@ -134,6 +136,10 @@ class AppsOverview extends React.Component {
     }
   }
 
+  updateSex(){
+    
+  }
+
   render() {
     return (
       <div>
@@ -160,11 +166,12 @@ class AppsOverview extends React.Component {
                 >
                   Sort
                 </SortButton>
+                <Modal/>
 
               </FilterContainer>
             </PageHeaderContainer>
             <AppsContainer>
-
+              <h1>{this.sex}</h1>
             </AppsContainer>
           </ContentContainer>
         </BaseContainer>
