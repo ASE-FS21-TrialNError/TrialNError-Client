@@ -75,9 +75,8 @@ class AppsOverview extends React.Component {
   constructor() {
     super();
     this.state = {
-      users: null,
-      userId: null,
-      erroMessage:null,
+      apps: null,
+      errorMessage:null,
       sex: null
     };
   }
@@ -92,7 +91,7 @@ class AppsOverview extends React.Component {
     } catch (error) {
       //console.log( `Something went wrong while logout the users: \n${handleError(error)}`);
       this.setState({
-        erroMessage: error.message,
+        errorMessage: error.message,
       });
     } finally {
       localStorage.removeItem("token");
@@ -109,35 +108,24 @@ class AppsOverview extends React.Component {
 
   async componentDidMount() {
     try {
-      //this.setState({ loggedInUserId:this.props.location.state.loggedInUserId });
-      const response = await api.get("/users");
-      // delays continuous execution of an async operation for 1 second.
-      // This is just a fake async call, so that the spinner can be displayed
-      // feel free to remove it :)
-      await new Promise((resolve) => setTimeout(resolve, 1000));
 
-      // Get the returned users and update the state.
-      this.setState({ users: response.data });
+      const response = await api.get("/users")
 
-      // This is just some data for you to see what is available.
-      // Feel free to remove it.
-      console.log("request to:", response.request.responseURL);
-      console.log("status code:", response.status);
-      console.log("status text:", response.statusText);
-      console.log("requested data:", response.data);
+      this.setState({ apps: response.data });
 
-      // See here to get more data.
+      
+     
       console.log(response);
     } catch (error) {
       this.setState({
-        erroMessage: error.message,
+        errorMessage: error.message,
       });
       //alert(`Something went wrong while fetching the users: \n${handleError(error)}`);
     }
   }
 
-  updateSex(){
-    
+  updateSex(value){
+    this.setState({sex: value});
   }
 
   render() {
@@ -166,12 +154,23 @@ class AppsOverview extends React.Component {
                 >
                   Sort
                 </SortButton>
-                <Modal/>
+                <Modal 
+                  sex={this.state.sex}
+                  updateSex={this.updateSex.bind(this)}
+                />
 
               </FilterContainer>
             </PageHeaderContainer>
             <AppsContainer>
-              <h1>{this.sex}</h1>
+              <h1>{this.state.sex} Hello </h1>
+              {!this.state.apps ? (
+                <h1>loading</h1>
+              ) : (
+                <h1>haha</h1>
+                // {this.state.apps.map((app) => {
+                //   return(app.name);
+                // })}
+              )}
             </AppsContainer>
           </ContentContainer>
         </BaseContainer>

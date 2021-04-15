@@ -16,8 +16,8 @@ const RadioButton = styled.div`
 
 
 class RadioButtonForm extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
     };
     this.onValueChange = this.onValueChange.bind(this);
@@ -28,6 +28,8 @@ class RadioButtonForm extends React.Component {
     this.setState({
       selectedOption: event.target.value
     });
+    this.props.updateSex(event.target.value);
+    console.log("sex:", event.target.value);
   }
 
   formSubmit(event) {

@@ -33,13 +33,13 @@ const SortButton = styled.button`
 `;
 
 
-const Modal = (() => (
+const Modal = ((props) => (
   <StyledPopup trigger={<SortButton> Trigger</SortButton>} position="bottom center"
     closeOnDocumentClick
   >
 
     <div>
-      <RadioButtonForm/>
+      <RadioButtonForm sex={props.sex} updateSex={props.updateSex}/>
     </div>
   </StyledPopup>
 ));
