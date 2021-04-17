@@ -34,7 +34,7 @@ class Registration extends React.Component {
       const user = new User(response.data);
 
       localStorage.setItem("token", user.token);
-      localStorage.setItem("loginUserid", user.id);
+      localStorage.setItem("loginUserId", user.id);
 
       this.props.history.push("/AppsOverview");
     }else{

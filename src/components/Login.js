@@ -1,7 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from "react";
 import { api } from "../helpers/api";
-import User from "./shared/models/User";
 import { withRouter } from "react-router-dom";
 import { Button, ButtonContainer } from "../views/design/Button";
 import Error from "../views/Error";
@@ -28,10 +27,9 @@ class Login extends React.Component {
       });
       const response = await api.post("/auth/login", requestBody);
 
+      console.log(response.status);
       if(response.status == 200){
-        const user = new User(response.data);
-        localStorage.setItem("token", user.token);
-        localStorage.setItem("loginUserid", user.id);
+        localStorage.setItem("token", response.data.payload.token);
         this.props.history.push("/appsOverview");
       }else{
         this.setState({
@@ -39,7 +37,7 @@ class Login extends React.Component {
         });
       }
     }catch(error){
-
+      console.log(error.response);
       this.setState({
         errorMessage: error.response.data.error
       });

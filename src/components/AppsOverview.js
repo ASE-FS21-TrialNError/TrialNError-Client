@@ -8,38 +8,39 @@ import { Header } from "../views/design/Header";
 import { BaseContainer, ContentContainer, PageHeaderContainer, PageHeading} from "../views/design/PageContent";
 import Modal from "../views/design/Modal";
 import Error from "../views/Error";
+import placeholder from "../views/design/image/placeholder.png";
 
+const PageHeaderSearchBarContainer = styled.div`
+  display: flex;
+  justify-content: flex-start;
+`;
 
 const SearchBarContainer = styled.div`
   float: right;
-  background: blue;
-  width: 70%;
+  width: 700px;
   height: 70px;
 `;
 
 const SearchBar = styled.input`
   &::placeholder {
-    color: rgba(0, 0, 0, 1);
+    color: rgb(92, 92, 92);
   }
-  height: 35px;
+  font-size: 16px;
+  height: 40px;
   padding-left: 15px;
-  
-  border-top-color:rgb(0, 0, 0);
-  border-bottom-color:rgb(0, 0, 0);
-  border-left: none;
-  border-right: none;
+  border: 1px solid #5c5c5c;
   margin-bottom: 20px;
   margin-left: -4px;
-  margin-top: 10px;
-  border-radius: 20px;
-  
-  color: rgb(0, 0, 0);
+  margin-top: 5px;
+  border-radius: 10px;
+
   min-height: 35px;
   min-width: 600px;
 `;
 
 const FilterContainer = styled.div`
-  border-bottom-color: rgb(220,220,220);
+  border-bottom-color: gray;
+  border-bottom: solid;
   background: yellow;
   height: 70px;
   clear: both;
@@ -49,12 +50,97 @@ const FilterContainer = styled.div`
 
 
 const AppsContainer = styled.div`
+`;
 
+const SingleAppContainer = styled.div`
+  height: 150px;
+  background-color: aqua;
+  display: flex;
+  flex-direction: row;
+  border: solid;
+  border-width: thin;
+  margin-bottom: 5px;
+  
+`;
+
+const AppImageContainer = styled.div`
+  width: 15%;
+  max-width: 150px;
+  background-color: darkkhaki;
+  padding: 5px 5px 5px 5px;
+`;
+
+const AppImage = styled.img`
+  height: 100%;
+  width: 100%;
 `;
 
 
+const AppDescriptionContainer = styled.div`
+  width: 35%;
+  background-color: rebeccapurple;
+`;
+
+
+const AppDescription = styled.div`
+  margin: 10px 10px 10px 10px;
+  border-right: gray;
+  border-right-style: solid;
+  border-right-width: thin;
+  overflow: hidden;
+  height: 130px;
+  padding-right: 5px;
+  position: relative;
+  background-color: aqua;
+`;
+
+const AppDesciptionTitle = styled.div`
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  background-color: chocolate;
+`;
+
+const AppDescriptionBody = styled.div`
+  font-size: 16px;
+  font-weight: normal;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  height: 80px;
+  line-height: 20px;
+  background-color: antiquewhite;
+  position: relative;
+`;
+
+const FadeOutElement = styled.div`
+  position: absolute;
+  height: 500px;
+  width: 500px;
+  background-color: red;
+  z-index: 9;
+`;
+
+const AppInfoContainer = styled.div`
+  width: 35%;
+  background-color: brown;
+`;
+
+const AppInfo = styled.div`
+`;
+
+const AppAddContainer = styled.div`
+  width: 15%;
+  background-color: gold;
+`;
+
+const AppAdd = styled.div`
+`;
+
 const SortButton = styled.div`
-  background-color = rgb(220,220,220);
+  background-color: rgb(220,220,220);
   border-color: black;
   border: solid;
   width: 100px;
@@ -84,7 +170,7 @@ class AppsOverview extends React.Component {
   logout() {
     try {
       api
-        .get("/users/logout/" + localStorage.getItem("loginUserid"))
+        .get("/users/logout/" + localStorage.getItem("loginUserId"))
         .then((res) => {
           console.log(res);
         });
@@ -95,27 +181,29 @@ class AppsOverview extends React.Component {
       });
     } finally {
       localStorage.removeItem("token");
-      localStorage.removeItem("loginUserid");
+      localStorage.removeItem("loginUserId");
       this.props.history.push("/login");
     }
-  }
-  goToDetails(userId) {
-    this.props.history.push({
-      pathname: "/userDetails",
-      state: { userId: userId },
-    });
   }
 
   async componentDidMount() {
     try {
 
-      const response = await api.get("/users")
+      console.log(localStorage.getItem("token"));
 
-      this.setState({ apps: response.data });
+      const response = await api.get("/apps?page=2&limit=10&category_andr=",
+      {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`
+      }
+      
+      });
+
+      this.setState({ apps: response.data.items });
 
       
      
-      console.log(response);
+      console.log(response.data);
     } catch (error) {
       this.setState({
         errorMessage: error.message,
@@ -135,17 +223,19 @@ class AppsOverview extends React.Component {
         <BaseContainer>
           <ContentContainer>
             <PageHeaderContainer>
-              <PageHeading>
-                Apps Overview
-              </PageHeading>
-              <SearchBarContainer>
-                <SearchBar
-                  placeholder="Enter the name of the app here..."
-                  onChange={(e) => {
-                    this.handleInputChange("email", e.target.value);
-                  }}
-                />
-              </SearchBarContainer>
+              <PageHeaderSearchBarContainer>
+                <PageHeading>
+                  Apps Overview
+                </PageHeading>
+                <SearchBarContainer>
+                  <SearchBar
+                    placeholder="Enter the name of the app here..."
+                    onChange={(e) => {
+                      this.handleInputChange("email", e.target.value);
+                    }}
+                  />
+                </SearchBarContainer>
+              </PageHeaderSearchBarContainer>
               
               <FilterContainer>
                 <SortButton
@@ -166,10 +256,41 @@ class AppsOverview extends React.Component {
               {!this.state.apps ? (
                 <h1>loading</h1>
               ) : (
-                <h1>haha</h1>
-                // {this.state.apps.map((app) => {
-                //   return(app.name);
-                // })}
+                <h1>
+                  {this.state.apps.map((app)=>{
+                    return (
+                      <SingleAppContainer>
+                        <AppImageContainer>
+                          <AppImage src={placeholder} alt={'missing'}/>
+                        </AppImageContainer>
+                        <AppDescriptionContainer>
+                          <AppDescription>
+                            <AppDesciptionTitle>
+                              {app.name}
+                            </AppDesciptionTitle>
+                            <AppDescriptionBody>
+                              {app.description}
+                              <FadeOutElement>
+                                asdfasdf
+                              </FadeOutElement>
+                            </AppDescriptionBody>
+
+                          </AppDescription>
+
+                        </AppDescriptionContainer>
+                        <AppInfoContainer>
+                          asldfalskdjfl
+                        </AppInfoContainer>
+                        <AppAddContainer>
+                          bbbbbbbbbbbbbbbbbb
+                        </AppAddContainer>
+
+                      </SingleAppContainer>
+
+                    );
+                  })}
+
+                </h1>
               )}
             </AppsContainer>
           </ContentContainer>
