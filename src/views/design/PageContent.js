@@ -8,7 +8,7 @@ export const BaseContainer = styled.div`
 
 
 export const ContentContainer = styled.div`
-  width: 1000px;
+  width: 1200px;
   margin-left: auto;
   margin-right: auto;
   margin-top: 50px;

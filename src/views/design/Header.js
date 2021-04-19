@@ -55,7 +55,6 @@ export class Header extends React.Component {
   logout() {
 
     localStorage.removeItem("token");
-    localStorage.removeItem("loginUserid");
     this.props.history.push("/login");
 
   }

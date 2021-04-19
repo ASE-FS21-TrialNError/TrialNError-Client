@@ -1,14 +1,13 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from "react";
 import styled from "styled-components";
-import { api } from "../helpers/api";
-import { Button } from "../views/design/Button";
+import { api } from "../../helpers/api";
 import { withRouter } from "react-router-dom";
-import { Header } from "../views/design/Header";
-import { BaseContainer, ContentContainer, PageHeaderContainer, PageHeading} from "../views/design/PageContent";
-import Modal from "../views/design/Modal";
-import Error from "../views/Error";
-import placeholder from "../views/design/image/placeholder.png";
+import { Header } from "../../views/design/Header";
+import { BaseContainer, ContentContainer, PageHeaderContainer, PageHeading} from "../../views/design/PageContent";
+import Modal from "../../views/design/Modal";
+import placeholder from "../../views/design/image/placeholder.png";
+import TableComparison from "./TableComparison";
 
 const PageHeaderSearchBarContainer = styled.div`
   display: flex;
@@ -54,31 +53,32 @@ const AppsContainer = styled.div`
 
 const SingleAppContainer = styled.div`
   height: 150px;
-  background-color: aqua;
   display: flex;
   flex-direction: row;
   border: solid;
   border-width: thin;
-  margin-bottom: 5px;
+  margin-bottom: 10px;
   
 `;
 
 const AppImageContainer = styled.div`
-  width: 15%;
-  max-width: 150px;
-  background-color: darkkhaki;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 14%;
   padding: 5px 5px 5px 5px;
 `;
 
 const AppImage = styled.img`
   height: 100%;
   width: 100%;
+  max-width: 150px;
+  max-height: 150px;
 `;
 
 
 const AppDescriptionContainer = styled.div`
-  width: 35%;
-  background-color: rebeccapurple;
+  width: 36%;
 `;
 
 
@@ -91,7 +91,6 @@ const AppDescription = styled.div`
   height: 130px;
   padding-right: 5px;
   position: relative;
-  background-color: aqua;
 `;
 
 const AppDesciptionTitle = styled.div`
@@ -101,7 +100,6 @@ const AppDesciptionTitle = styled.div`
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
-  background-color: chocolate;
 `;
 
 const AppDescriptionBody = styled.div`
@@ -111,7 +109,6 @@ const AppDescriptionBody = styled.div`
   overflow: hidden;
   height: 80px;
   line-height: 20px;
-  background-color: antiquewhite;
   position: relative;
 `;
 
@@ -125,7 +122,17 @@ const FadeOutElement = styled.div`
 
 const AppInfoContainer = styled.div`
   width: 35%;
-  background-color: brown;
+`;
+
+const AppTableContainer = styled.div`
+  margin: 10px 10px 10px 10px;
+  border-right: gray;
+  border-right-style: solid;
+  border-right-width: thin;
+  overflow: hidden;
+  height: 130px;
+  padding-right: 5px;
+  position: relative;
 `;
 
 const AppInfo = styled.div`
@@ -167,24 +174,6 @@ class AppsOverview extends React.Component {
     };
   }
 
-  logout() {
-    try {
-      api
-        .get("/users/logout/" + localStorage.getItem("loginUserId"))
-        .then((res) => {
-          console.log(res);
-        });
-    } catch (error) {
-      //console.log( `Something went wrong while logout the users: \n${handleError(error)}`);
-      this.setState({
-        errorMessage: error.message,
-      });
-    } finally {
-      localStorage.removeItem("token");
-      localStorage.removeItem("loginUserId");
-      this.props.history.push("/login");
-    }
-  }
 
   async componentDidMount() {
     try {
@@ -270,16 +259,15 @@ class AppsOverview extends React.Component {
                             </AppDesciptionTitle>
                             <AppDescriptionBody>
                               {app.description}
-                              <FadeOutElement>
-                                asdfasdf
-                              </FadeOutElement>
                             </AppDescriptionBody>
 
                           </AppDescription>
 
                         </AppDescriptionContainer>
                         <AppInfoContainer>
-                          asldfalskdjfl
+                          <AppTableContainer>
+                            <TableComparison app={app}/>
+                          </AppTableContainer>
                         </AppInfoContainer>
                         <AppAddContainer>
                           bbbbbbbbbbbbbbbbbb

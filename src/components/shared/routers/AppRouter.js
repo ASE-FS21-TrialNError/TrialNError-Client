@@ -5,7 +5,7 @@ import { LoginGuard } from "../routeProtectors/LoginGuard";
 import Login from "../../Login";
 import { RegistrationGuard } from "../routeProtectors/RegistrationGuard";
 import Registration from "../../Registration";
-import AppsOverview from "../../AppsOverview";
+import AppsOverview from "../../appOverview/AppsOverview";
 
 
 class AppRouter extends React.Component {

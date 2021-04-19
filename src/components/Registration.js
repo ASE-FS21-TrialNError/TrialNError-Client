@@ -1,6 +1,5 @@
 import React from "react";
 import { api } from "../helpers/api";
-import User from "./shared/models/User";
 import { withRouter } from "react-router-dom";
 import { Button, ButtonContainer } from "../views/design/Button";
 import Error from "../views/Error";
@@ -31,10 +30,8 @@ class Registration extends React.Component {
     const response = await api.post("/auth/register", requestBody);
 
     if (response.status == 201){
-      const user = new User(response.data);
 
-      localStorage.setItem("token", user.token);
-      localStorage.setItem("loginUserId", user.id);
+      localStorage.setItem("token", response.data.payload.token);
 
       this.props.history.push("/AppsOverview");
     }else{
