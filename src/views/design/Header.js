@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import {Button} from "./Button";
+import {Link} from "react-router-dom";
 
 const HeaderContainer = styled.div`
   height: 100px;
@@ -74,9 +75,15 @@ export class Header extends React.Component {
             </NavButton>
           </NavButtonContainer>
           <NavButtonContainer>
-            <NavButton>
-              AppsOverview
-            </NavButton>
+            <Link
+              to={{
+                pathname: "/appsOverview"
+              }}
+            >
+              <NavButton>
+                AppsOverview
+              </NavButton>
+            </Link>
           </NavButtonContainer>
           <NavButtonContainer>
             <NavButton

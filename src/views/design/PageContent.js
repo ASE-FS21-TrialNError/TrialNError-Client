@@ -20,9 +20,16 @@ export const ContentContainer = styled.div`
   border-radius: 2px;
 `;
 
+export const PageHeaderSearchBarContainer = styled.div`
+  display: flex;
+  justify-content: flex-start;
+`;
+
 export const PageHeaderContainer = styled.div`
   
 `;
+
+
 
 export const PageHeading = styled.div`
   float: left;

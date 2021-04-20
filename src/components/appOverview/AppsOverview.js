@@ -4,15 +4,13 @@ import styled from "styled-components";
 import { api } from "../../helpers/api";
 import { withRouter } from "react-router-dom";
 import { Header } from "../../views/design/Header";
-import { BaseContainer, ContentContainer, PageHeaderContainer, PageHeading} from "../../views/design/PageContent";
+import { BaseContainer, ContentContainer, PageHeaderContainer, PageHeading, PageHeaderSearchBarContainer} from "../../views/design/PageContent";
 import Modal from "../../views/design/Modal";
 import placeholder from "../../views/design/image/placeholder.png";
 import TableComparison from "./TableComparison";
+import {PageNumbers} from "./PageNumbers";
 
-const PageHeaderSearchBarContainer = styled.div`
-  display: flex;
-  justify-content: flex-start;
-`;
+
 
 const SearchBarContainer = styled.div`
   float: right;
@@ -161,14 +159,23 @@ const SortButton = styled.div`
   justify-content: center;
 `;
 
+const PageNumberContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+
+`;
 
 
 
 class AppsOverview extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       apps: null,
+      totalPages: null,
+      currentPage: null,
+
       errorMessage:null,
       sex: null
     };
@@ -180,7 +187,7 @@ class AppsOverview extends React.Component {
 
       console.log(localStorage.getItem("token"));
 
-      const response = await api.get("/apps?page=2&limit=10&category_andr=",
+      const response = await api.get("/apps?page=1&limit=10",
       {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`
@@ -189,9 +196,9 @@ class AppsOverview extends React.Component {
       });
 
       this.setState({ apps: response.data.items });
-
-      
-     
+      this.setState({totalPages: response.data.totalPages})
+      this.setState({currentPage: 1})
+      console.log("total pages", this.state.totalPages);
       console.log(response.data);
     } catch (error) {
       this.setState({
@@ -201,11 +208,33 @@ class AppsOverview extends React.Component {
     }
   }
 
+  async updatePageNumber(value){
+
+    const response = await api.get("/apps?page=1&limit=10",
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`
+        }
+    });
+    this.setState({apps: response.data.items });
+    this.setState({totalPages: response.data.totalPages})
+    this.setState({currentPage: value});
+  }
+
   updateSex(value){
     this.setState({sex: value});
   }
 
+  goToDetails(appId) {
+    this.props.history.push({
+      pathname: "/appDetails",
+      state: { appId: appId },
+    });
+  }
+
+
   render() {
+
     return (
       <div>
         <Header history={this.props.history}/>
@@ -228,8 +257,6 @@ class AppsOverview extends React.Component {
               
               <FilterContainer>
                 <SortButton
-                  
-
                 >
                   Sort
                 </SortButton>
@@ -246,15 +273,31 @@ class AppsOverview extends React.Component {
                 <h1>loading</h1>
               ) : (
                 <h1>
+                  <PageNumberContainer>
+                    <PageNumbers
+                      updatePageNumber={this.updatePageNumber.bind(this)}
+                      totalPages={this.state.totalPages}
+                      currentPage={this.state.currentPage}
+                    />
+                  </PageNumberContainer>
                   {this.state.apps.map((app)=>{
                     return (
                       <SingleAppContainer>
                         <AppImageContainer>
-                          <AppImage src={placeholder} alt={'missing'}/>
+                          <AppImage
+                            src={placeholder} alt={'missing'}
+                            onClick={() => {
+                              this.goToDetails(app._id);
+                            }}
+                          />
                         </AppImageContainer>
                         <AppDescriptionContainer>
                           <AppDescription>
-                            <AppDesciptionTitle>
+                            <AppDesciptionTitle
+                              onClick={() => {
+                                this.goToDetails(app._id);
+                              }}
+                            >
                               {app.name}
                             </AppDesciptionTitle>
                             <AppDescriptionBody>
@@ -277,8 +320,15 @@ class AppsOverview extends React.Component {
 
                     );
                   })}
-
+                  <PageNumberContainer>
+                    <PageNumbers
+                      updatePageNumber={this.updatePageNumber.bind(this)}
+                      totalPages={this.state.totalPages}
+                      currentPage={this.state.currentPage}
+                    />
+                  </PageNumberContainer>
                 </h1>
+
               )}
             </AppsContainer>
           </ContentContainer>
