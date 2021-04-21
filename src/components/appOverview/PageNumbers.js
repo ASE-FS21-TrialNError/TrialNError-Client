@@ -17,68 +17,94 @@ const PageNumberContainer = styled.div`
   color: blue;
 `;
 
-export function PageNumbers(props){
+export class PageNumbers extends React.Component{
 
-  let pageNumbers = [];
-  let nrOfPageNrsDisplayed = 11;
-  let lowerBoundary = 1;
-  let upperBoundary = nrOfPageNrsDisplayed;
-  if(props.totalPages < nrOfPageNrsDisplayed){
-    lowerBoundary = 1;
-    upperBoundary = 10;
-  }else if(props.currentPage < Math.round(nrOfPageNrsDisplayed/2)){
+  constructor(props) {
+    super(props);
+
+  }
+
+
+
+  render() {
+    let pageNumbers = [];
+    let nrOfPageNrsDisplayed = 11;
+    let lowerBoundary = 1;
+    let upperBoundary = nrOfPageNrsDisplayed;
+    if(this.props.totalPages < nrOfPageNrsDisplayed){
+      lowerBoundary = 1;
+      upperBoundary = 10;
+    }else if(this.props.currentPage < Math.round(nrOfPageNrsDisplayed/2)){
       lowerBoundary = 1;
       upperBoundary = nrOfPageNrsDisplayed;
-  }else if(props.currentPage > props.totalPages - Math.round(nrOfPageNrsDisplayed/2)) {
-    if(nrOfPageNrsDisplayed % 2 == 0){
-      lowerBoundary = props.currentPage - Math.floor(nrOfPageNrsDisplayed/2) - (Math.floor(nrOfPageNrsDisplayed/2) - (props.totalPages - props.currentPage))+1;
-      upperBoundary = props.totalPages;
+    }else if(this.props.currentPage > this.props.totalPages - Math.round(nrOfPageNrsDisplayed/2)) {
+      if(nrOfPageNrsDisplayed % 2 == 0){
+        lowerBoundary = this.props.currentPage - Math.floor(nrOfPageNrsDisplayed/2) - (Math.floor(nrOfPageNrsDisplayed/2) - (this.props.totalPages - this.props.currentPage))+1;
+        upperBoundary = this.props.totalPages;
+      }else{
+        lowerBoundary = this.props.currentPage - Math.floor(nrOfPageNrsDisplayed/2) - (Math.floor(nrOfPageNrsDisplayed/2) - (this.props.totalPages - this.props.currentPage));
+        upperBoundary = this.props.totalPages;
+      }
+
+
     }else{
-      lowerBoundary = props.currentPage - Math.floor(nrOfPageNrsDisplayed/2) - (Math.floor(nrOfPageNrsDisplayed/2) - (props.totalPages - props.currentPage));
-      upperBoundary = props.totalPages;
+      if(nrOfPageNrsDisplayed % 2 == 0){
+        lowerBoundary = this.props.currentPage - Math.floor(nrOfPageNrsDisplayed/2) + 1;
+        upperBoundary = this.props.currentPage + Math.floor(nrOfPageNrsDisplayed/2);
+      }else{
+        lowerBoundary = this.props.currentPage - Math.floor(nrOfPageNrsDisplayed/2) ;
+        upperBoundary = this.props.currentPage + Math.floor(nrOfPageNrsDisplayed/2);
+      }
+
     }
 
-
-  }else{
-    if(nrOfPageNrsDisplayed % 2 == 0){
-      lowerBoundary = props.currentPage - Math.floor(nrOfPageNrsDisplayed/2) + 1;
-      upperBoundary = props.currentPage + Math.floor(nrOfPageNrsDisplayed/2);
-    }else{
-      lowerBoundary = props.currentPage - Math.floor(nrOfPageNrsDisplayed/2) ;
-      upperBoundary = props.currentPage + Math.floor(nrOfPageNrsDisplayed/2);
+    let currentPageStyle = {
+      fontWeight: "bold",
+      border: "solid",
+      borderRadius: "20px"
     }
 
-  }
+    let i=lowerBoundary;
+    console.log(this.props.totalPages);
 
-  let currentPageStyle = {
-    fontWeight: "bold",
-    border: "solid",
-    borderRadius: "20px"
-  }
 
-  let i=lowerBoundary;
-  console.log(props.totalPages);
-
-  for(i; i <= upperBoundary; i++){
-    if(i === props.currentPage){
-      pageNumbers.push(<PageNumberContainer style={currentPageStyle}>{i}</PageNumberContainer>)
-    }else{
-    /*pageNumbers.push(i);*/
-      pageNumbers.push(
-        <PageNumberContainer
-        onClick = {()=>{props.updatePageNumber(i)}}
-        >
-          {i}
-        </PageNumberContainer>
-      );
+    for(i; i <= upperBoundary; i++){
+      pageNumbers.push(i);
     }
+    console.log(pageNumbers);
+
+
+
+    return (
+      <PageNumberNavigation>
+        {pageNumbers.map((pageNumber) => {
+          if(pageNumber === this.props.currentPage){
+            return (
+              <PageNumberContainer
+                key={pageNumber.toString()}
+                style={currentPageStyle}
+                onClick = {()=>{this.props.updatePageNumber(pageNumber)}}
+              >
+                {pageNumber}
+              </PageNumberContainer>
+            )
+          }else {
+            return (
+              <PageNumberContainer
+                key={pageNumber.toString()}
+                onClick={() => {
+                  this.props.updatePageNumber(pageNumber)
+                }}
+              >
+                {pageNumber}
+              </PageNumberContainer>
+            )
+          }
+        })}
+
+      </PageNumberNavigation>
+
+    )
   }
-  console.log(pageNumbers);
 
-  return (
-    <PageNumberNavigation>
-      {pageNumbers}
-    </PageNumberNavigation>
-
-  )
 }

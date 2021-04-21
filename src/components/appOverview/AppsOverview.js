@@ -37,8 +37,7 @@ const SearchBar = styled.input`
 
 const FilterContainer = styled.div`
   border-bottom-color: gray;
-  border-bottom: solid;
-  background: yellow;
+  border-bottom-style: solid;
   height: 70px;
   clear: both;
   display: flex;
@@ -175,7 +174,7 @@ class AppsOverview extends React.Component {
       apps: null,
       totalPages: null,
       currentPage: null,
-
+      nrOfAppsPerPage: 10,
       errorMessage:null,
       sex: null
     };
@@ -210,13 +209,16 @@ class AppsOverview extends React.Component {
 
   async updatePageNumber(value){
 
-    const response = await api.get("/apps?page=1&limit=10",
+    console.log("page number", value);
+    const url = "/apps?page=".concat(value.toString(), "&limit=", this.state.nrOfAppsPerPage.toString())
+    const response = await api.get(url,
       {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`
         }
     });
     this.setState({apps: response.data.items });
+    console.log("apps", this.state.apps);
     this.setState({totalPages: response.data.totalPages})
     this.setState({currentPage: value});
   }
@@ -256,11 +258,7 @@ class AppsOverview extends React.Component {
               </PageHeaderSearchBarContainer>
               
               <FilterContainer>
-                <SortButton
-                >
-                  Sort
-                </SortButton>
-                <Modal 
+                <Modal
                   sex={this.state.sex}
                   updateSex={this.updateSex.bind(this)}
                 />

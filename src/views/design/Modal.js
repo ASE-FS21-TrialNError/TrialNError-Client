@@ -4,21 +4,27 @@ import 'reactjs-popup/dist/index.css';
 import RadioButtonForm from './RadioButtonForm';
 
 const StyledPopup = styled(Popup)`
-
+  
+  height: 500px;
+  width: 1000px;
   // use your custom style for ".popup-overlay"
   &-overlay {
   }
   // use your custom style for ".popup-content"
-  &-content {
+  &-content[role=tooltip] {
     height: 300px;
-    width: 600px;
-    background-color: red;
+    width: 400px;
+    background-color: white;
+    padding: 10px 10px 10px 10px;
+    -webkit-box-shadow: 0 0 20px gray;
+    box-shadow: 0 0 20px gray;
+    border-radius: 20px;
   }
 `;
 
 
 const SortButton = styled.button`
-  background-color = rgb(220,220,220);
+  background-color: rgb(220, 220, 220, 1);
   border-color: black;
   border: solid;
   width: 100px;

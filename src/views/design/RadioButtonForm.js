@@ -1,16 +1,59 @@
 import React from "react";
 import styled from "styled-components";
 
-const IOSButtonContainer = styled.div`
+const PopUpContentContainer = styled.div`
+  display: flex;
+  heigth: 600px;
+  width: 100%;
 
 `;
 
-const AndroidButtonContainer = styled.div`
-
+const IOSContainer = styled.div`
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  border-right-color: gray;
+  border-right-style: solid;
+  border-right-width: thin;
 `;
 
-const RadioButton = styled.div`
+const IOSTitle = styled.div`
+  font-size: 24px;
+  font-weight: bold;
+  background-color: green;
+  
+`;
 
+const IOSRadioButtonContainer = styled.div`
+  background-color: yellow;
+`;
+
+const AndroidContainer = styled.div`
+  width: 50%;
+  display: flex;
+  justify-content: center;
+`;
+
+const AndroidTitle = styled.div`
+  font-size: 24px;
+  font-weight: bold;
+`;
+
+const AndroidRadioButtonContainer = styled.div`
+  
+`;
+
+const RadioButtonContainer = styled.div`
+  
+`;
+
+const RadioButtonLabel = styled.label`
+  font-size: 20px;
+  width: 70%;
+`;
+const RadioButton = styled.input`
+  width: 30%;
 `;
 
 
@@ -39,47 +82,82 @@ class RadioButtonForm extends React.Component {
 
   render() {
     return (
-      <form onSubmit={this.formSubmit}>
-        <div className="radio">
-          <label>
-            <input
-              type="radio"
-              value="Male"
-              checked={this.state.selectedOption === "Male"}
-              onChange={this.onValueChange}
-            />
-            Male
-          </label>
-        </div>
-        <div className="radio">
-          <label>
-            <input
-              type="radio"
-              value="Female"
-              checked={this.state.selectedOption === "Female"}
-              onChange={this.onValueChange}
-            />
-            Female
-          </label>
-        </div>
-        <div className="radio">
-          <label>
-            <input
-              type="radio"
-              value="Other"
-              checked={this.state.selectedOption === "Other"}
-              onChange={this.onValueChange}
-            />
-            Other
-          </label>
-        </div>
-        <div>
-          Selected option is : {this.state.selectedOption}
-        </div>
-        <button className="btn btn-default" type="submit">
-          Submit
-        </button>
-      </form>
+      <PopUpContentContainer>
+        <IOSContainer>
+          <IOSTitle>
+            iOS
+          </IOSTitle>
+          <IOSRadioButtonContainer>
+            <RadioButtonContainer>
+              <RadioButtonLabel>
+                Price
+              </RadioButtonLabel>
+              <RadioButton
+                type="radio"
+                value="Price iOS"
+                checked={this.state.selectedOption === "Male"}
+                onChange={this.onValueChange}
+              />
+            </RadioButtonContainer>
+
+
+            <RadioButtonContainer>
+              <RadioButtonLabel>
+                Rating
+              </RadioButtonLabel>
+              <RadioButton
+                type="radio"
+                value="Rating iOS"
+                checked={this.state.selectedOption === "Male"}
+                onChange={this.onValueChange}
+              />
+            </RadioButtonContainer>
+            <RadioButtonContainer>
+              <RadioButtonLabel>
+                Rating Count iOS
+              </RadioButtonLabel>
+              <RadioButton
+                type="radio"
+                value="Rating Count iOS"
+                checked={this.state.selectedOption === "Male"}
+                onChange={this.onValueChange}
+              />
+            </RadioButtonContainer>
+
+          </IOSRadioButtonContainer>
+        </IOSContainer>
+        <AndroidContainer>
+          <AndroidTitle>
+            Android
+          </AndroidTitle>
+          <AndroidRadioButtonContainer>
+            <RadioButtonLabel>
+              <RadioButton
+                type="radio"
+                value="Price Android"
+                checked={this.state.selectedOption === "Male"}
+                onChange={this.onValueChange}
+              />
+            </RadioButtonLabel>
+            <RadioButtonLabel>
+              <RadioButton
+                type="radio"
+                value="Rating Android"
+                checked={this.state.selectedOption === "Male"}
+                onChange={this.onValueChange}
+              />
+            </RadioButtonLabel>
+            <RadioButtonLabel>
+              <RadioButton
+                type="radio"
+                value="Rating Count Android"
+                checked={this.state.selectedOption === "Male"}
+                onChange={this.onValueChange}
+              />
+            </RadioButtonLabel>
+          </AndroidRadioButtonContainer>
+        </AndroidContainer>
+      </PopUpContentContainer>
     );
   }
 }
