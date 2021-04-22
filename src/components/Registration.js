@@ -29,7 +29,10 @@ class Registration extends React.Component {
     });
     const response = await api.post("/auth/register", requestBody);
 
-    if (response.status == 201){
+    console.log(response.status);
+    console.log(response.data);
+    console.log(response.data.payload);
+    if (response.status === 201){
 
       localStorage.setItem("token", response.data.payload.token);
 
