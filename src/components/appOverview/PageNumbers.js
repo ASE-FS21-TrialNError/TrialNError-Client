@@ -33,7 +33,7 @@ export class PageNumbers extends React.Component{
     let upperBoundary = nrOfPageNrsDisplayed;
     if(this.props.totalPages < nrOfPageNrsDisplayed){
       lowerBoundary = 1;
-      upperBoundary = 10;
+      upperBoundary = this.props.totalPages;
     }else if(this.props.currentPage < Math.round(nrOfPageNrsDisplayed/2)){
       lowerBoundary = 1;
       upperBoundary = nrOfPageNrsDisplayed;

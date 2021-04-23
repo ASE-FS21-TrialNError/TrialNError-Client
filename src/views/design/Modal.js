@@ -12,8 +12,8 @@ const StyledPopup = styled(Popup)`
   }
   // use your custom style for ".popup-content"
   &-content[role=tooltip] {
-    height: 300px;
-    width: 400px;
+    height: 280px;
+    width: 600px;
     background-color: white;
     padding: 10px 10px 10px 10px;
     -webkit-box-shadow: 0 0 20px gray;
@@ -24,9 +24,10 @@ const StyledPopup = styled(Popup)`
 
 
 const SortButton = styled.button`
-  background-color: rgb(220, 220, 220, 1);
-  border-color: black;
-  border: solid;
+  background-color: rgb(243, 243, 243);
+  border-color: gray;
+  border-style: solid;
+  border-width: thin;
   width: 100px;
   height: 50px;
   font-size: 24px;
@@ -40,12 +41,12 @@ const SortButton = styled.button`
 
 
 const Modal = ((props) => (
-  <StyledPopup trigger={<SortButton> Trigger</SortButton>} position="bottom center"
+  <StyledPopup trigger={<SortButton> Sort</SortButton>} position="bottom center"
     closeOnDocumentClick
   >
 
     <div>
-      <RadioButtonForm sex={props.sex} updateSex={props.updateSex}/>
+      <RadioButtonForm sex={props.sex} updateSort={props.updateSort}/>
     </div>
   </StyledPopup>
 ));

@@ -174,6 +174,7 @@ class AppsOverview extends React.Component {
       apps: null,
       totalPages: null,
       currentPage: null,
+      searchString: "",
       nrOfAppsPerPage: 10,
       errorMessage:null,
       sex: null
@@ -210,7 +211,7 @@ class AppsOverview extends React.Component {
   async updatePageNumber(value){
 
     console.log("page number", value);
-    const url = "/apps?page=".concat(value.toString(), "&limit=", this.state.nrOfAppsPerPage.toString())
+    const url = "/apps?page=".concat(value.toString(), "&limit=", this.state.nrOfAppsPerPage.toString(),"&name=", this.state.searchString)
     const response = await api.get(url,
       {
         headers: {
@@ -223,7 +224,56 @@ class AppsOverview extends React.Component {
     this.setState({currentPage: value});
   }
 
-  updateSex(value){
+  async updateSort(value){
+    let url = "/apps?page=".concat("1", "&limit=", this.state.nrOfAppsPerPage.toString())
+    switch (value) {
+      case "Most Expensive iOS":
+        url = url.concat("&sort=price_ios-D");
+        break;
+      case "Cheapest iOS":
+        url = url.concat("&sort=price_ios-A");
+        break;
+      case "Highest Rating iOS":
+        url = url.concat("&sort=rating_ios-D");
+        break;
+      case "Lowest Rating iOS":
+        url = url.concat("&sort=rating_ios-A");
+        break;
+      case "Highest Rating Count iOS":
+        url = url.concat("&sort=rating_count_ios-D");
+        break;
+      case "Lowest Rating Count iOS":
+        url = url.concat("&sort=rating_count_ios-A");
+        break;
+      case "Most Expensive Android":
+        url = url.concat("&sort=price_andr-D");
+        break;
+      case "Cheapest Android":
+        url = url.concat("&sort=price_andr-A");
+        break;
+      case "Highest Rating Android":
+        url = url.concat("&sort=rating_andr-D");
+        break;
+      case "Lowest Rating Android":
+        url = url.concat("&sort=rating_andr-A");
+        break;
+      case "Highest Rating Count Android":
+        url = url.concat("&sort=rating_count_andr-D");
+        break;
+      case "Lowest Rating Count Android":
+        url = url.concat("&sort=rating_count_andr-A");
+        break;
+      default:
+    }
+    const response = await api.get(url,
+    {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`
+      }
+    });
+    this.setState({apps: response.data.items });
+    this.setState({totalPages: response.data.totalPages})
+    this.setState({currentPage: 1});
     this.setState({sex: value});
   }
 
@@ -232,6 +282,20 @@ class AppsOverview extends React.Component {
       pathname: "/appDetails",
       state: { appId: appId },
     });
+  }
+
+  async handleSearchRequest(value){
+    const url = "/apps?page=".concat("1", "&limit=", this.state.nrOfAppsPerPage.toString(), "&name=", value)
+    const response = await api.get(url,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`
+          }
+        });
+    this.setState({searchString: value})
+    this.setState({apps: response.data.items });
+    this.setState({totalPages: response.data.totalPages})
+    this.setState({currentPage: 1});
   }
 
 
@@ -251,7 +315,7 @@ class AppsOverview extends React.Component {
                   <SearchBar
                     placeholder="Enter the name of the app here..."
                     onChange={(e) => {
-                      this.handleInputChange("email", e.target.value);
+                      this.handleSearchRequest(e.target.value);
                     }}
                   />
                 </SearchBarContainer>
@@ -260,9 +324,8 @@ class AppsOverview extends React.Component {
               <FilterContainer>
                 <Modal
                   sex={this.state.sex}
-                  updateSex={this.updateSex.bind(this)}
+                  updateSort={this.updateSort.bind(this)}
                 />
-
               </FilterContainer>
             </PageHeaderContainer>
             <AppsContainer>
