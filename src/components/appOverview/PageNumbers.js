@@ -15,6 +15,9 @@ const PageNumberContainer = styled.div`
   font-size: 30px;
   font-weight: normal;
   color: blue;
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 export class PageNumbers extends React.Component{

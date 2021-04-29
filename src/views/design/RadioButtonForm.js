@@ -21,7 +21,7 @@ const IOSContainer = styled.div`
 
 const IOSTitle = styled.div`
   font-size: 24px;
-  font-weight: bold;s
+  font-weight: bold;
   
 `;
 
@@ -106,6 +106,7 @@ class RadioButtonForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      selectedOption: null
     };
     this.onValueChange = this.onValueChange.bind(this);
     this.formSubmit = this.formSubmit.bind(this);
@@ -115,8 +116,7 @@ class RadioButtonForm extends React.Component {
     this.setState({
       selectedOption: event.target.value
     });
-    this.props.updateSort(event.target.value);
-    console.log("sex:", event.target.value);
+    this.props.updateListOfApps(event.target.value);
   }
 
   formSubmit(event) {

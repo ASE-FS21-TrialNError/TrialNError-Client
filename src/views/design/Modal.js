@@ -2,23 +2,25 @@ import styled from 'styled-components';
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
 import RadioButtonForm from './RadioButtonForm';
+import MultipleChoice from "./MultipleChoice";
 
 const StyledPopup = styled(Popup)`
   
-  height: 500px;
-  width: 1000px;
+
+  
   // use your custom style for ".popup-overlay"
   &-overlay {
   }
   // use your custom style for ".popup-content"
   &-content[role=tooltip] {
-    height: 280px;
-    width: 600px;
+    height: ${props => props.height}px;
+    width: ${props => props.width}px;
     background-color: white;
     padding: 10px 10px 10px 10px;
     -webkit-box-shadow: 0 0 20px gray;
     box-shadow: 0 0 20px gray;
     border-radius: 20px;
+    
   }
 `;
 
@@ -28,8 +30,8 @@ const SortButton = styled.button`
   border-color: gray;
   border-style: solid;
   border-width: thin;
-  width: 100px;
-  height: 50px;
+  width: ${props => props.width}px;
+  height: ${props => props.height}px;
   font-size: 24px;
   fond-weight: bold;
   overflow: hidden;
@@ -37,16 +39,34 @@ const SortButton = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-right: 10px;
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
+function loadCorrectForm(props){
+  if(props.name === "Sort"){
+    return(
+      <RadioButtonForm sex={props.sex} updateListOfApps={props.updateListOfApps}/>
+    )
+  }
+  return (
+    <MultipleChoice updateListOfApps={props.updateListOfApps} name={props.name}/>
+  )
+}
 
 const Modal = ((props) => (
-  <StyledPopup trigger={<SortButton> Sort</SortButton>} position="bottom center"
+  <StyledPopup
+    height={props.heightPopUp}
+    width={props.widthPopUp}
+    trigger={<SortButton height={props.heightButton} width={props.widthButton}>{props.name}</SortButton>}
+    position="bottom center"
     closeOnDocumentClick
   >
 
     <div>
-      <RadioButtonForm sex={props.sex} updateSort={props.updateSort}/>
+      {loadCorrectForm(props)}
     </div>
   </StyledPopup>
 ));

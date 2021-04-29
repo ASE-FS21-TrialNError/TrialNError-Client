@@ -42,7 +42,6 @@ class Registration extends React.Component {
         errorMessage: response.data.error,
       });
     }
-    alert(response.data.error);
 
   }
 

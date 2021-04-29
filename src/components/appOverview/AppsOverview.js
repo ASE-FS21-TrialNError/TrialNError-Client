@@ -277,6 +277,21 @@ class AppsOverview extends React.Component {
     this.setState({sex: value});
   }
 
+  async filterCategoryIOS(value){
+    let url = "/apps?page=".concat("1", "&limit=", this.state.nrOfAppsPerPage.toString()+"&category_ios=" + value)
+
+    const response = await api.get(url,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`
+        }
+      });
+    this.setState({apps: response.data.items });
+    this.setState({totalPages: response.data.totalPages})
+    this.setState({currentPage: 1});
+    this.setState({sex: value})
+  }
+
   goToDetails(appId) {
     this.props.history.push({
       pathname: "/appDetails",
@@ -322,6 +337,45 @@ class AppsOverview extends React.Component {
               </PageHeaderSearchBarContainer>
               
               <FilterContainer>
+                <Modal
+                  sex={this.state.sex}
+                  updateListOfApps={this.updateSort.bind(this)}
+                  name={"Sort"}
+                  heightPopUp={280}
+                  widthPopUp={600}
+                  heightButton={50}
+                  widthButton={100}
+                />
+                <Modal
+                  sex={this.state.sex}
+                  updateListOfApps={this.filterCategoryIOS.bind(this)}
+                  name={"Category iOS"}
+                  heightPopUp={320}
+                  widthPopUp={800}
+                  heightButton={50}
+                  widthButton={160}
+                />
+                <Modal
+                  sex={this.state.sex}
+                  updateListOfApps={this.filterCategoryIOS.bind(this)}
+                  name={"Category Android"}
+                  heightPopUp={360}
+                  widthPopUp={800}
+                  heightButton={50}
+                  widthButton={160}
+                />
+                <Modal
+                  sex={this.state.sex}
+                  updateSort={this.updateSort.bind(this)}
+                />
+                <Modal
+                  sex={this.state.sex}
+                  updateSort={this.updateSort.bind(this)}
+                />
+                <Modal
+                  sex={this.state.sex}
+                  updateSort={this.updateSort.bind(this)}
+                />
                 <Modal
                   sex={this.state.sex}
                   updateSort={this.updateSort.bind(this)}
