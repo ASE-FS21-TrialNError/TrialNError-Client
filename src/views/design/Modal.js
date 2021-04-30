@@ -3,6 +3,8 @@ import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
 import RadioButtonForm from './RadioButtonForm';
 import MultipleChoice from "./MultipleChoice";
+import {InputField} from "./LoginRegistration";
+import InputFieldForm from "./InputFieldForm";
 
 const StyledPopup = styled(Popup)`
   
@@ -51,9 +53,15 @@ function loadCorrectForm(props){
       <RadioButtonForm sex={props.sex} updateListOfApps={props.updateListOfApps}/>
     )
   }
-  return (
-    <MultipleChoice updateListOfApps={props.updateListOfApps} name={props.name}/>
-  )
+  if(props.name === "Price iOS" || props.name === "Price Android" || props.name === "Rating Count iOS" || props.name === "Rating Count Android"){
+    return(
+      <InputFieldForm updateListOfApps={props.updateListOfApps} name={props.name}/>
+    )
+  } else {
+    return (
+      <MultipleChoice updateListOfApps={props.updateListOfApps} name={props.name}/>
+    )
+  }
 }
 
 const Modal = ((props) => (

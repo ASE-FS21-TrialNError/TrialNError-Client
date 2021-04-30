@@ -177,7 +177,9 @@ class AppsOverview extends React.Component {
       searchString: "",
       nrOfAppsPerPage: 10,
       errorMessage:null,
-      sex: null
+      sex: null,
+      "&category_ios": null,
+      categoryAndroid: null
     };
   }
 
@@ -223,6 +225,7 @@ class AppsOverview extends React.Component {
     this.setState({totalPages: response.data.totalPages})
     this.setState({currentPage: value});
   }
+
 
   async updateSort(value){
     let url = "/apps?page=".concat("1", "&limit=", this.state.nrOfAppsPerPage.toString())
@@ -277,7 +280,23 @@ class AppsOverview extends React.Component {
     this.setState({sex: value});
   }
 
-  async filterCategoryIOS(value){
+  async updateApps(){
+
+    let url = "/apps?page=".concat("1", "&limit=", this.state.nrOfAppsPerPage.toString()+"&category_ios=" + this)
+    const response = await api.get(url,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`
+        }
+      });
+    this.setState({apps: response.data.items });
+    this.setState({totalPages: response.data.totalPages})
+    this.setState({currentPage: 1});
+  }
+
+  // category IOS: category_ios= + value
+  async filterCategoryIOS(value, filter){
+    this.setState({ [filter]: value });
     let url = "/apps?page=".concat("1", "&limit=", this.state.nrOfAppsPerPage.toString()+"&category_ios=" + value)
 
     const response = await api.get(url,
@@ -289,7 +308,6 @@ class AppsOverview extends React.Component {
     this.setState({apps: response.data.items });
     this.setState({totalPages: response.data.totalPages})
     this.setState({currentPage: 1});
-    this.setState({sex: value})
   }
 
   goToDetails(appId) {
@@ -347,7 +365,6 @@ class AppsOverview extends React.Component {
                   widthButton={100}
                 />
                 <Modal
-                  sex={this.state.sex}
                   updateListOfApps={this.filterCategoryIOS.bind(this)}
                   name={"Category iOS"}
                   heightPopUp={320}
@@ -356,7 +373,6 @@ class AppsOverview extends React.Component {
                   widthButton={160}
                 />
                 <Modal
-                  sex={this.state.sex}
                   updateListOfApps={this.filterCategoryIOS.bind(this)}
                   name={"Category Android"}
                   heightPopUp={360}
@@ -365,20 +381,68 @@ class AppsOverview extends React.Component {
                   widthButton={160}
                 />
                 <Modal
-                  sex={this.state.sex}
-                  updateSort={this.updateSort.bind(this)}
+                  updateListOfApps={this.filterCategoryIOS.bind(this)}
+                  name={"Rating iOS"}
+                  heightPopUp={360}
+                  widthPopUp={800}
+                  heightButton={50}
+                  widthButton={160}
                 />
                 <Modal
-                  sex={this.state.sex}
-                  updateSort={this.updateSort.bind(this)}
+                  updateListOfApps={this.filterCategoryIOS.bind(this)}
+                  name={"Rating Android"}
+                  heightPopUp={360}
+                  widthPopUp={800}
+                  heightButton={50}
+                  widthButton={160}
                 />
                 <Modal
-                  sex={this.state.sex}
-                  updateSort={this.updateSort.bind(this)}
+                  updateListOfApps={this.filterCategoryIOS.bind(this)}
+                  name={"Content Rating iOS"}
+                  heightPopUp={360}
+                  widthPopUp={800}
+                  heightButton={50}
+                  widthButton={160}
                 />
                 <Modal
-                  sex={this.state.sex}
-                  updateSort={this.updateSort.bind(this)}
+                  updateListOfApps={this.filterCategoryIOS.bind(this)}
+                  name={"Content Rating Android"}
+                  heightPopUp={360}
+                  widthPopUp={800}
+                  heightButton={50}
+                  widthButton={160}
+                />
+                <Modal
+                  updateListOfApps={this.filterCategoryIOS.bind(this)}
+                  name={"Price iOS"}
+                  heightPopUp={360}
+                  widthPopUp={800}
+                  heightButton={50}
+                  widthButton={160}
+                />
+                <Modal
+                  updateListOfApps={this.filterCategoryIOS.bind(this)}
+                  name={"Price Android"}
+                  heightPopUp={360}
+                  widthPopUp={800}
+                  heightButton={50}
+                  widthButton={160}
+                />
+                <Modal
+                  updateListOfApps={this.filterCategoryIOS.bind(this)}
+                  name={"Rating Count iOS"}
+                  heightPopUp={360}
+                  widthPopUp={800}
+                  heightButton={50}
+                  widthButton={160}
+                />
+                <Modal
+                  updateListOfApps={this.filterCategoryIOS.bind(this)}
+                  name={"Rating Count Android"}
+                  heightPopUp={150}
+                  widthPopUp={280}
+                  heightButton={50}
+                  widthButton={160}
                 />
               </FilterContainer>
             </PageHeaderContainer>
