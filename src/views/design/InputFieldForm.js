@@ -20,7 +20,7 @@ const PopUpContentTitle = styled.div`
 
 const PopUpContentBody = styled.div`
   display: flex;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
 
 `;
 
@@ -75,28 +75,51 @@ const InputField = styled.input`
   background-color: #ecf7fa;
 `;
 
+const SubmitButtonContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-top: 20px;
+`;
+
+const SubmitButton = styled.button`
+  &:hover {
+    transform: translateY(-2px);
+    cursor: pointer;
+  }
+  padding: 6px;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 13px;
+  text-align: center;
+  color: rgba(255, 255, 255, 1);
+  height: 35px;
+  border: none;
+  border-radius: 20px;
+  background: rgb(16, 89, 255);
+  transition: all 0.3s ease;
+  width: 50%;
+  min-width: 30%;
+`;
+
 class InputFieldForm extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      selectedOption: null
+      selectedOption: null,
+      lowerBoundary: 1,
+      upperBoundary: 5
     };
-    this.onValueChange = this.onValueChange.bind(this);
     this.formSubmit = this.formSubmit.bind(this);
   }
 
-  onValueChange(event) {
-    this.setState({
-      selectedOption: event.target.value
-    });
-    //this.props.updateListOfApps(event.target.value, radioButtonData[this.props.name].filter);
-    console.log("sex:", event.target.value);
+  handleInputChange(key, value) {
+    this.setState({ [key]: value });
   }
 
-  formSubmit(event) {
-    event.preventDefault();
-    console.log(this.state.selectedOption)
+  formSubmit() {
+
   }
 
 
@@ -118,6 +141,9 @@ class InputFieldForm extends React.Component {
             <InputFieldContainer>
               <InputField
                 placeholder={1}
+                onChange={(e) => {
+                  this.handleInputChange("lowerBoundary", e.target.value);
+                }}
               >
 
               </InputField>
@@ -132,11 +158,21 @@ class InputFieldForm extends React.Component {
             <InputFieldContainer>
               <InputField
                 placeholder={5}
+                onChange={(e) => {
+                  this.handleInputChange("upperBoundary", e.target.value);
+                }}
               >
 
               </InputField>
             </InputFieldContainer>
           </ToContainer>
+          <SubmitButtonContainer>
+            <SubmitButton
+              onClick={()=>this.formSubmit()}
+            >
+              Submit
+            </SubmitButton>
+          </SubmitButtonContainer>
         </PopUpContentBody>
       </PopUpContentContainer>
     );

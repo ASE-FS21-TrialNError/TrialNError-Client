@@ -361,88 +361,88 @@ class AppsOverview extends React.Component {
                   name={"Sort"}
                   heightPopUp={280}
                   widthPopUp={600}
-                  heightButton={50}
-                  widthButton={100}
+                  heightButton={80}
+                  widthButton={80}
                 />
                 <Modal
                   updateListOfApps={this.filterCategoryIOS.bind(this)}
                   name={"Category iOS"}
                   heightPopUp={320}
                   widthPopUp={800}
-                  heightButton={50}
-                  widthButton={160}
+                  heightButton={80}
+                  widthButton={120}
                 />
                 <Modal
                   updateListOfApps={this.filterCategoryIOS.bind(this)}
                   name={"Category Android"}
                   heightPopUp={360}
                   widthPopUp={800}
-                  heightButton={50}
-                  widthButton={160}
+                  heightButton={80}
+                  widthButton={120}
                 />
                 <Modal
                   updateListOfApps={this.filterCategoryIOS.bind(this)}
                   name={"Rating iOS"}
                   heightPopUp={360}
                   widthPopUp={800}
-                  heightButton={50}
-                  widthButton={160}
+                  heightButton={80}
+                  widthButton={100}
                 />
                 <Modal
                   updateListOfApps={this.filterCategoryIOS.bind(this)}
                   name={"Rating Android"}
                   heightPopUp={360}
                   widthPopUp={800}
-                  heightButton={50}
-                  widthButton={160}
+                  heightButton={80}
+                  widthButton={120}
                 />
                 <Modal
                   updateListOfApps={this.filterCategoryIOS.bind(this)}
                   name={"Content Rating iOS"}
                   heightPopUp={360}
                   widthPopUp={800}
-                  heightButton={50}
-                  widthButton={160}
+                  heightButton={80}
+                  widthButton={150}
                 />
                 <Modal
                   updateListOfApps={this.filterCategoryIOS.bind(this)}
                   name={"Content Rating Android"}
                   heightPopUp={360}
                   widthPopUp={800}
-                  heightButton={50}
-                  widthButton={160}
+                  heightButton={80}
+                  widthButton={220}
                 />
                 <Modal
                   updateListOfApps={this.filterCategoryIOS.bind(this)}
                   name={"Price iOS"}
-                  heightPopUp={360}
-                  widthPopUp={800}
-                  heightButton={50}
-                  widthButton={160}
+                  heightPopUp={180}
+                  widthPopUp={220}
+                  heightButton={80}
+                  widthButton={90}
                 />
                 <Modal
                   updateListOfApps={this.filterCategoryIOS.bind(this)}
                   name={"Price Android"}
-                  heightPopUp={360}
-                  widthPopUp={800}
-                  heightButton={50}
-                  widthButton={160}
+                  heightPopUp={180}
+                  widthPopUp={220}
+                  heightButton={80}
+                  widthButton={120}
                 />
                 <Modal
                   updateListOfApps={this.filterCategoryIOS.bind(this)}
                   name={"Rating Count iOS"}
-                  heightPopUp={360}
-                  widthPopUp={800}
-                  heightButton={50}
-                  widthButton={160}
+                  heightPopUp={180}
+                  widthPopUp={240}
+                  heightButton={80}
+                  widthButton={140}
                 />
                 <Modal
                   updateListOfApps={this.filterCategoryIOS.bind(this)}
                   name={"Rating Count Android"}
-                  heightPopUp={150}
+                  heightPopUp={180}
                   widthPopUp={280}
-                  heightButton={50}
-                  widthButton={160}
+                  heightButton={80}
+                  widthButton={200}
                 />
               </FilterContainer>
             </PageHeaderContainer>

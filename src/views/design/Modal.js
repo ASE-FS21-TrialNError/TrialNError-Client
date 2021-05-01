@@ -32,16 +32,16 @@ const SortButton = styled.button`
   border-color: gray;
   border-style: solid;
   border-width: thin;
-  width: ${props => props.width}px;
-  height: ${props => props.height}px;
-  font-size: 24px;
-  fond-weight: bold;
+  width: ${props => props.width}%;
+  height: ${props => props.height}%;
+  font-size: 18px;
+  font-weight: bold;
   overflow: hidden;
   border-radius: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-right: 10px;
+  margin-right: 5px;
   &:hover {
     cursor: pointer;
   }

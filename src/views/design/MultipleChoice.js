@@ -202,6 +202,27 @@ const radioButtonData = (
         "2 to 1",
         "All"
       ]
+    },
+    "Content Rating iOS":{
+      "filter": "&rating_android=",
+      "categories": [
+        "4+",
+        "12+",
+        "17+",
+        "9+",
+        "Not yet rated",
+        "All"
+      ]
+    },
+    "Content Rating Android":{
+      "filter": "&rating_android=",
+      "categories": [
+        "Everyone 10+",
+        "Teen",
+        "Mature 17+",
+        "Everyone",
+        "All"
+      ]
     }
   }
 )
