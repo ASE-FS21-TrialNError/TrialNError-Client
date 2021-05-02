@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-
+import {radioButtonData} from "../../helpers/FilterCategoryData";
 
 const PopUpContentContainer = styled.div`
   display: flex;
@@ -44,22 +44,21 @@ class MultipleChoice extends React.Component {
       selectedOption: null
     };
     this.onValueChange = this.onValueChange.bind(this);
-    this.formSubmit = this.formSubmit.bind(this);
   }
 
   onValueChange(event) {
+    console.log(event.target.value)
     this.setState({
       selectedOption: event.target.value
     });
-    this.props.updateListOfApps(event.target.value, radioButtonData[this.props.name].filter);
-    console.log("sex:", event.target.value);
-  }
 
-  formSubmit(event) {
-    event.preventDefault();
-    console.log(this.state.selectedOption)
-  }
+    if(this.props.name === "Category iOS" || this.props.name === "Category Android"){
+      this.props.updateListOfApps(radioButtonData[this.props.name].filter, event.target.value);
+    }else{
+      this.props.updateListOfApps(radioButtonData[this.props.name].filter, radioButtonData[event.target.value]);
+    }
 
+  }
 
 
   render() {
@@ -69,7 +68,7 @@ class MultipleChoice extends React.Component {
         {
           radioButtonData[this.props.name].categories.map((category)=>{
             return(
-              <ButtonContainer nrOfColumns={this.props.nrOfColumns}>
+              <ButtonContainer nrOfColumns={this.props.nrOfColumns} key={category}>
                 <ButtonTextContainer>
                   <ButtonText>
                     {category}
@@ -95,137 +94,7 @@ class MultipleChoice extends React.Component {
   }
 }
 
-const radioButtonData = (
-  {
-    "Category iOS": {
-      "filter": "&category_ios=",
-      "categories": [
-        "Games",
-        "Education",
-        "Entertainment",
-        "Business",
-        "Music",
-        "Finance",
-        "Lifestyle",
-        "Utilities",
-        "Photo & Video",
-        "Productivity",
-        "Book",
-        "Reference",
-        "Sports",
-        "News",
-        "Travel",
-        "Medical",
-        "Social Networking",
-        "Shopping",
-        "Health & Fitness",
-        "Graphics & Design",
-        "Food & Drink",
-        "Navigation",
-        "Weather",
-        "Developer Tools",
-        "Stickers",
-        "Magazines & Newspapers",
-        "All"
-      ]
-    },
-    "Category Android":{
-      "filter": "&category_android=",
-      "categories": [
-        "Tools",
-        "Arcade",
-        "Casual",
-        "Simulation",
-        "Puzzle",
-        "Education",
-        "Action",
-        "Business",
-        "Entertainment",
-        "Music & Audio",
-        "Sports",
-        "Finance",
-        "Role Playing",
-        "Racing",
-        "Books & Reference",
-        "Lifestyle",
-        "Communication",
-        "Productivity",
-        "Adventure",
-        "Photography",
-        "Strategy",
-        "Personalization",
-        "Educational",
-        "Social",
-        "Board",
-        "Travel & Local",
-        "Card",
-        "Word",
-        "Video Players & Editors",
-        "News & Magazines",
-        "Health & Fitness",
-        "Medical",
-        "Shopping",
-        "Trivia",
-        "Art & Design",
-        "Maps & Navigation",
-        "Auto & Vehicles",
-        "Weather",
-        "Food & Drink",
-        "Casino",
-        "Libraries & Demo",
-        "Events",
-        "Comics",
-        "Dating",
-        "House & Home",
-        "Music",
-        "Parenting",
-        "Beauty",
-        "All"
-      ]
-    },
-    "Rating iOS": {
-      "filter": "&rating_ios=",
-      "categories": [
-        "5 to 4",
-        "4 to 3",
-        "3 to 2",
-        "2 to 1",
-        "All"
-      ]
-    },
-    "Rating Android": {
-      "filter": "&rating_android=",
-      "categories": [
-        "5 to 4",
-        "4 to 3",
-        "3 to 2",
-        "2 to 1",
-        "All"
-      ]
-    },
-    "Content Rating iOS":{
-      "filter": "&rating_android=",
-      "categories": [
-        "4+",
-        "12+",
-        "17+",
-        "9+",
-        "Not yet rated",
-        "All"
-      ]
-    },
-    "Content Rating Android":{
-      "filter": "&rating_android=",
-      "categories": [
-        "Everyone 10+",
-        "Teen",
-        "Mature 17+",
-        "Everyone",
-        "All"
-      ]
-    }
-  }
-)
+
 
 
 export default MultipleChoice;

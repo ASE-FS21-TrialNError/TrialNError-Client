@@ -9,6 +9,7 @@ import Modal from "../../views/design/Modal";
 import placeholder from "../../views/design/image/placeholder.png";
 import TableComparison from "./TableComparison";
 import {PageNumbers} from "./PageNumbers";
+import {ButtonContainer, Button} from "../../views/design/Button";
 
 
 
@@ -71,6 +72,9 @@ const AppImage = styled.img`
   width: 100%;
   max-width: 150px;
   max-height: 150px;
+  &:hover{
+    cursor: pointer;
+  }
 `;
 
 
@@ -97,6 +101,9 @@ const AppDesciptionTitle = styled.div`
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
+  &:hover{
+    cursor: pointer;
+  }
 `;
 
 const AppDescriptionBody = styled.div`
@@ -137,7 +144,9 @@ const AppInfo = styled.div`
 
 const AppAddContainer = styled.div`
   width: 15%;
-  background-color: gold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 const AppAdd = styled.div`
@@ -173,13 +182,39 @@ class AppsOverview extends React.Component {
     this.state = {
       apps: null,
       totalPages: null,
-      currentPage: null,
+      currentPage: 1,
       searchString: "",
       nrOfAppsPerPage: 10,
       errorMessage:null,
-      sex: null,
-      "&category_ios": null,
-      categoryAndroid: null
+      wayOfSorting: null,
+      categoryIos: null,
+      categoryAndroid: null,
+      ratingIos: {
+        min: null,
+        max: null
+      },
+      ratingAndroid: {
+        min: null,
+        max: null
+      },
+      contentRatingIos: null,
+      contentRatingAndroid: null,
+      priceIos: {
+        min: null,
+        max: null
+      },
+      priceAndroid: {
+        min: null,
+        max: null
+      },
+      ratingCountIos: {
+        min: null,
+        max: null
+      },
+      ratingCountAndroid: {
+        min: null,
+        max: null
+      }
     };
   }
 
@@ -212,7 +247,12 @@ class AppsOverview extends React.Component {
 
   async updatePageNumber(value){
 
-    console.log("page number", value);
+    this.setState(
+      {currentPage: value},
+      this.getApps
+      );
+
+    /*console.log("page number", value);
     const url = "/apps?page=".concat(value.toString(), "&limit=", this.state.nrOfAppsPerPage.toString(),"&name=", this.state.searchString)
     const response = await api.get(url,
       {
@@ -223,95 +263,74 @@ class AppsOverview extends React.Component {
     this.setState({apps: response.data.items });
     console.log("apps", this.state.apps);
     this.setState({totalPages: response.data.totalPages})
-    this.setState({currentPage: value});
+    this.setState({currentPage: value});*/
   }
 
+  async getApps(){
 
-  async updateSort(value){
-    let url = "/apps?page=".concat("1", "&limit=", this.state.nrOfAppsPerPage.toString())
-    switch (value) {
-      case "Most Expensive iOS":
-        url = url.concat("&sort=price_ios-D");
-        break;
-      case "Cheapest iOS":
-        url = url.concat("&sort=price_ios-A");
-        break;
-      case "Highest Rating iOS":
-        url = url.concat("&sort=rating_ios-D");
-        break;
-      case "Lowest Rating iOS":
-        url = url.concat("&sort=rating_ios-A");
-        break;
-      case "Highest Rating Count iOS":
-        url = url.concat("&sort=rating_count_ios-D");
-        break;
-      case "Lowest Rating Count iOS":
-        url = url.concat("&sort=rating_count_ios-A");
-        break;
-      case "Most Expensive Android":
-        url = url.concat("&sort=price_andr-D");
-        break;
-      case "Cheapest Android":
-        url = url.concat("&sort=price_andr-A");
-        break;
-      case "Highest Rating Android":
-        url = url.concat("&sort=rating_andr-D");
-        break;
-      case "Lowest Rating Android":
-        url = url.concat("&sort=rating_andr-A");
-        break;
-      case "Highest Rating Count Android":
-        url = url.concat("&sort=rating_count_andr-D");
-        break;
-      case "Lowest Rating Count Android":
-        url = url.concat("&sort=rating_count_andr-A");
-        break;
-      default:
+    let url = "/apps?page=" + this.state.currentPage + "&limit=" + this.state.nrOfAppsPerPage;
+    console.log(this.state.categoryIos)
+    if( this.state.wayOfSorting !== null){
+      url = url + "&sort=" + this.state.wayOfSorting;
     }
+    if(this.state.categoryIos !== null){
+      url = url + "&category_ios=" + this.state.categoryIos;
+    }
+    if(this.state.categoryAndroid !== null){
+      url = url + "&category_andr=" + this.state.categoryAndroid;
+    }
+    if(this.state.ratingIos.min !== null && this.state.ratingIos.max !== null){
+      url = url + "&rating_ios=" + this.state.ratingIos.min + "_" + this.state.ratingIos.max;
+    }
+    if(this.state.ratingAndroid.min !== null && this.state.ratingAndroid.max !== null){
+      url=url + "&rating_ios=" + this.state.ratingAndroid.min + "_" + this.state.ratingAndroid.max;
+    }
+    if(this.state.contentRatingIos !== null){
+      url= url + "&content_rating_ios=" + this.state.contentRatingIos;
+    }
+    if(this.state.contentRatingAndroid !== null){
+      url= url + "&content_rating_andr=" + this.state.contentRatingAndroid;
+    }
+    if(this.state.priceIos.min !== null && this.state.priceIos.max !== null){
+      url= url + "&price_ios=" + this.state.priceIos.min + "_" + this.state.priceIos.max;
+    }
+    if(this.state.priceAndroid.min !== null && this.state.priceAndroid.max !== null){
+      url= url + "&price_andr=" + this.state.priceAndroid.min + "_" + this.state.priceAndroid.max;
+    }
+    if(this.state.ratingCountIos.min !== null && this.state.ratingCountIos.max !== null){
+      url= url + "&rating_count_ios=" + this.state.ratingCountIos.min + "_" + this.state.ratingCountIos.max;
+    }
+    if(this.state.ratingCountAndroid.min !== null && this.state.ratingCountAndroid.max !== null){
+      url= url + "&rating_count_andr=" + this.state.ratingCountAndroid.min + "_" + this.state.ratingCountAndroid.max;
+    }
+    if(this.state.searchString !== ""){
+      url = url + "&name=" + this.state.searchString
+    }
+
+    console.log(url);
+
     const response = await api.get(url,
-    {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`
-      }
-    });
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`
+        }
+      });
 
     console.log(response);
 
     this.setState({apps: response.data.items });
     this.setState({totalPages: response.data.totalPages});
-    this.setState({currentPage: 1});
-    this.setState({sex: value});
   }
 
-  async updateApps(){
-
-    let url = "/apps?page=".concat("1", "&limit=", this.state.nrOfAppsPerPage.toString()+"&category_ios=" + this)
-    const response = await api.get(url,
-      {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`
-        }
-      });
-    this.setState({apps: response.data.items });
-    this.setState({totalPages: response.data.totalPages})
-    this.setState({currentPage: 1});
+  updateFilter(key, value){
+    console.log(key, value);
+    this.setState(
+      {[key]: value,
+      currentPage: 1},
+      this.getApps
+      );
   }
 
-  // category IOS: category_ios= + value
-  async filterCategoryIOS(value, filter){
-    this.setState({ [filter]: value });
-    let url = "/apps?page=".concat("1", "&limit=", this.state.nrOfAppsPerPage.toString()+"&category_ios=" + value)
-
-    const response = await api.get(url,
-      {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`
-        }
-      });
-    this.setState({apps: response.data.items });
-    this.setState({totalPages: response.data.totalPages})
-    this.setState({currentPage: 1});
-  }
 
   goToDetails(appId) {
     this.props.history.push({
@@ -321,17 +340,14 @@ class AppsOverview extends React.Component {
   }
 
   async handleSearchRequest(value){
-    const url = "/apps?page=".concat("1", "&limit=", this.state.nrOfAppsPerPage.toString(), "&name=", value)
-    const response = await api.get(url,
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`
-          }
-        });
-    this.setState({searchString: value})
-    this.setState({apps: response.data.items });
-    this.setState({totalPages: response.data.totalPages})
-    this.setState({currentPage: 1});
+
+    this.setState(
+      {searchString: value, currentPage: 1},
+      this.getApps)
+  }
+
+  async addAppToWishlist(){
+    // add API call
   }
 
 
@@ -360,7 +376,7 @@ class AppsOverview extends React.Component {
               <FilterContainer>
                 <Modal
                   sex={this.state.sex}
-                  updateListOfApps={this.updateSort.bind(this)}
+                  updateListOfApps={this.updateFilter.bind(this)}
                   name={"Sort"}
                   heightPopUp={280}
                   widthPopUp={600}
@@ -368,7 +384,7 @@ class AppsOverview extends React.Component {
                   widthButton={80}
                 />
                 <Modal
-                  updateListOfApps={this.filterCategoryIOS.bind(this)}
+                  updateListOfApps={this.updateFilter.bind(this)}
                   name={"Category iOS"}
                   heightPopUp={320}
                   widthPopUp={800}
@@ -377,16 +393,16 @@ class AppsOverview extends React.Component {
                   nrOfColumns={3}
                 />
                 <Modal
-                  updateListOfApps={this.filterCategoryIOS.bind(this)}
+                  updateListOfApps={this.updateFilter.bind(this)}
                   name={"Category Android"}
-                  heightPopUp={360}
+                  heightPopUp={400}
                   widthPopUp={800}
                   heightButton={80}
                   widthButton={120}
                   nrOfColumns={3}
                 />
                 <Modal
-                  updateListOfApps={this.filterCategoryIOS.bind(this)}
+                  updateListOfApps={this.updateFilter.bind(this)}
                   name={"Rating iOS"}
                   heightPopUp={300}
                   widthPopUp={110}
@@ -395,7 +411,7 @@ class AppsOverview extends React.Component {
                   nrOfColumns={1}
                 />
                 <Modal
-                  updateListOfApps={this.filterCategoryIOS.bind(this)}
+                  updateListOfApps={this.updateFilter.bind(this)}
                   name={"Rating Android"}
                   heightPopUp={300}
                   widthPopUp={100}
@@ -404,7 +420,7 @@ class AppsOverview extends React.Component {
                   nrOfColumns={1}
                 />
                 <Modal
-                  updateListOfApps={this.filterCategoryIOS.bind(this)}
+                  updateListOfApps={this.updateFilter.bind(this)}
                   name={"Content Rating iOS"}
                   heightPopUp={300}
                   widthPopUp={150}
@@ -414,7 +430,7 @@ class AppsOverview extends React.Component {
                   nrOfColumns={1}
                 />
                 <Modal
-                  updateListOfApps={this.filterCategoryIOS.bind(this)}
+                  updateListOfApps={this.updateFilter.bind(this)}
                   name={"Content Rating Android"}
                   heightPopUp={300}
                   widthPopUp={150}
@@ -423,7 +439,7 @@ class AppsOverview extends React.Component {
                   nrOfColumns={1}
                 />
                 <Modal
-                  updateListOfApps={this.filterCategoryIOS.bind(this)}
+                  updateListOfApps={this.updateFilter.bind(this)}
                   name={"Price iOS"}
                   heightPopUp={180}
                   widthPopUp={220}
@@ -431,7 +447,7 @@ class AppsOverview extends React.Component {
                   widthButton={90}
                 />
                 <Modal
-                  updateListOfApps={this.filterCategoryIOS.bind(this)}
+                  updateListOfApps={this.updateFilter.bind(this)}
                   name={"Price Android"}
                   heightPopUp={180}
                   widthPopUp={220}
@@ -439,7 +455,7 @@ class AppsOverview extends React.Component {
                   widthButton={120}
                 />
                 <Modal
-                  updateListOfApps={this.filterCategoryIOS.bind(this)}
+                  updateListOfApps={this.updateFilter.bind(this)}
                   name={"Rating Count iOS"}
                   heightPopUp={180}
                   widthPopUp={240}
@@ -447,7 +463,7 @@ class AppsOverview extends React.Component {
                   widthButton={140}
                 />
                 <Modal
-                  updateListOfApps={this.filterCategoryIOS.bind(this)}
+                  updateListOfApps={this.updateFilter.bind(this)}
                   name={"Rating Count Android"}
                   heightPopUp={180}
                   widthPopUp={280}
@@ -460,7 +476,7 @@ class AppsOverview extends React.Component {
               {!this.state.apps ? (
                 <h1>loading</h1>
               ) : (
-                <h1>
+                <div>
                   <PageNumberContainer>
                     <PageNumbers
                       updatePageNumber={this.updatePageNumber.bind(this)}
@@ -501,7 +517,14 @@ class AppsOverview extends React.Component {
                           </AppTableContainer>
                         </AppInfoContainer>
                         <AppAddContainer>
-                          bbbbbbbbbbbbbbbbbb
+                          <ButtonContainer style={{marginTop: "0", width: "80%"}}>
+                            <Button
+                              style={{width: "100%"}}
+                              onClick={()=>this.addAppToWishlist()}
+                            >
+                              Add to wishlist
+                            </Button>
+                          </ButtonContainer>
                         </AppAddContainer>
 
                       </SingleAppContainer>
@@ -515,7 +538,7 @@ class AppsOverview extends React.Component {
                       currentPage={this.state.currentPage}
                     />
                   </PageNumberContainer>
-                </h1>
+                </div>
 
               )}
             </AppsContainer>

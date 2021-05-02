@@ -3,7 +3,7 @@
 
 import React from "react";
 import styled from "styled-components";
-
+import {radioButtonData} from "../../helpers/FilterCategoryData";
 
 const PopUpContentContainer = styled.div`
   height: 300px;
@@ -119,7 +119,14 @@ class InputFieldForm extends React.Component {
   }
 
   formSubmit() {
-
+    let value = (
+      {
+        "min": this.state.lowerBoundary,
+        "max": this.state.upperBoundary
+      }
+    )
+    console.log(this.props.name);
+    this.props.updateListOfApps(radioButtonData[this.props.name].filter, value);
   }
 
 
@@ -141,6 +148,7 @@ class InputFieldForm extends React.Component {
             <InputFieldContainer>
               <InputField
                 placeholder={1}
+                type="number"
                 onChange={(e) => {
                   this.handleInputChange("lowerBoundary", e.target.value);
                 }}
@@ -157,6 +165,7 @@ class InputFieldForm extends React.Component {
             </TitleInputContainer>
             <InputFieldContainer>
               <InputField
+                type="number"
                 placeholder={5}
                 onChange={(e) => {
                   this.handleInputChange("upperBoundary", e.target.value);
@@ -178,5 +187,8 @@ class InputFieldForm extends React.Component {
     );
   }
 }
+
+
+
 
 export default InputFieldForm;

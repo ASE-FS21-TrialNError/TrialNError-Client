@@ -3,6 +3,7 @@ import styled from "styled-components";
 export const Button = styled.button`
   &:hover {
     transform: translateY(-2px);
+    cursor: pointer;
   }
   &:disabled{
     background: rgb(16, 89, 255, 0.4);

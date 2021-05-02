@@ -116,7 +116,7 @@ class RadioButtonForm extends React.Component {
     this.setState({
       selectedOption: event.target.value
     });
-    this.props.updateListOfApps(event.target.value);
+    this.props.updateListOfApps("wayOfSorting", valueConverter[event.target.value]);
   }
 
   formSubmit(event) {
@@ -329,6 +329,21 @@ class RadioButtonForm extends React.Component {
       </PopUpContentContainer>
     );
   }
+}
+
+const valueConverter = {
+  "Most Expensive iOS": "price_ios-D",
+  "Cheapest iOS": "price_ios-A",
+  "Highest Rating iOS": "rating_ios-D",
+  "Lowest Rating iOS": "rating_ios-A",
+  "Highest Rating Count iOS": "rating_count_ios-D",
+  "Lowest Rating Count iOS": "rating_count_ios-A",
+  "Most Expensive Android": "price_andr-D",
+  "Cheapest Android": "price_andr-A",
+  "Highest Rating Android": "rating_andr-D",
+  "Lowest Rating Android": "rating_andr-A",
+  "Highest Rating Count Android": "rating_count_andr-D",
+  "Lowest Rating Count Android": "rating_count_andr-A"
 }
 
 export default RadioButtonForm;
