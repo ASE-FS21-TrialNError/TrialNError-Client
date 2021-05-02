@@ -274,8 +274,11 @@ class AppsOverview extends React.Component {
         Authorization: `Bearer ${localStorage.getItem("token")}`
       }
     });
+
+    console.log(response);
+
     this.setState({apps: response.data.items });
-    this.setState({totalPages: response.data.totalPages})
+    this.setState({totalPages: response.data.totalPages});
     this.setState({currentPage: 1});
     this.setState({sex: value});
   }
@@ -371,6 +374,7 @@ class AppsOverview extends React.Component {
                   widthPopUp={800}
                   heightButton={80}
                   widthButton={120}
+                  nrOfColumns={3}
                 />
                 <Modal
                   updateListOfApps={this.filterCategoryIOS.bind(this)}
@@ -379,38 +383,44 @@ class AppsOverview extends React.Component {
                   widthPopUp={800}
                   heightButton={80}
                   widthButton={120}
+                  nrOfColumns={3}
                 />
                 <Modal
                   updateListOfApps={this.filterCategoryIOS.bind(this)}
                   name={"Rating iOS"}
-                  heightPopUp={360}
-                  widthPopUp={800}
+                  heightPopUp={300}
+                  widthPopUp={110}
                   heightButton={80}
                   widthButton={100}
+                  nrOfColumns={1}
                 />
                 <Modal
                   updateListOfApps={this.filterCategoryIOS.bind(this)}
                   name={"Rating Android"}
-                  heightPopUp={360}
-                  widthPopUp={800}
+                  heightPopUp={300}
+                  widthPopUp={100}
                   heightButton={80}
                   widthButton={120}
+                  nrOfColumns={1}
                 />
                 <Modal
                   updateListOfApps={this.filterCategoryIOS.bind(this)}
                   name={"Content Rating iOS"}
-                  heightPopUp={360}
-                  widthPopUp={800}
+                  heightPopUp={300}
+                  widthPopUp={150}
                   heightButton={80}
                   widthButton={150}
+                  nrOfColumns={1}
+                  nrOfColumns={1}
                 />
                 <Modal
                   updateListOfApps={this.filterCategoryIOS.bind(this)}
                   name={"Content Rating Android"}
-                  heightPopUp={360}
-                  widthPopUp={800}
+                  heightPopUp={300}
+                  widthPopUp={150}
                   heightButton={80}
                   widthButton={220}
+                  nrOfColumns={1}
                 />
                 <Modal
                   updateListOfApps={this.filterCategoryIOS.bind(this)}
@@ -447,7 +457,6 @@ class AppsOverview extends React.Component {
               </FilterContainer>
             </PageHeaderContainer>
             <AppsContainer>
-              <h1>{this.state.sex} Hello </h1>
               {!this.state.apps ? (
                 <h1>loading</h1>
               ) : (

@@ -55,12 +55,12 @@ export default class TableComparison extends React.Component{
         <tbody>
           <tr>
             <RowHeader>Price</RowHeader>
-            {this.props.app.price_ios ? (
+            {this.props.app.price_ios >= 0 && this.props.app.price_ios !== null? (
                 <TableData>{this.props.app.price_ios}$</TableData>
               ) : (
                 <TableData>N/A</TableData>
               )}
-            {this.props.app.price_andr ? (
+            {this.props.app.price_andr >= 0 && this.props.app.price_andr !== null? (
               <TableData>{this.props.app.price_andr}$</TableData>
             ) : (
               <TableData>N/A</TableData>
@@ -68,12 +68,12 @@ export default class TableComparison extends React.Component{
           </tr>
           <tr>
             <RowHeader>Rating</RowHeader>
-            {this.props.app.rating_ios ? (
+            {this.props.app.rating_ios >= 0 && this.props.app.rating_ios !== null? (
               <TableData>{this.props.app.rating_ios}</TableData>
             ) : (
               <TableData>N/A</TableData>
             )}
-            {this.props.app.rating_andr ? (
+            {this.props.app.rating_andr >= 0 && this.props.app.rating_andr !== null? (
               <TableData>{this.props.app.rating_andr}</TableData>
             ) : (
               <TableData>N/A</TableData>
@@ -81,12 +81,12 @@ export default class TableComparison extends React.Component{
           </tr>
           <tr>
             <RowHeader>Rating Count</RowHeader>
-            {this.props.app.rating_count_ios ? (
+            {this.props.app.rating_count_ios >= 0 && this.props.app.rating_count_ios !== null? (
               <TableData>{this.props.app.rating_count_ios}</TableData>
             ) : (
               <TableData>N/A</TableData>
             )}
-            {this.props.app.rating_count_andr ? (
+            {this.props.app.rating_count_andr >= 0 && this.props.app.rating_count_andr !== null? (
               <TableData>{this.props.app.rating_count_andr}</TableData>
             ) : (
               <TableData>N/A</TableData>
@@ -94,12 +94,12 @@ export default class TableComparison extends React.Component{
           </tr>
           <tr>
             <RowHeader>Min. Version</RowHeader>
-            {this.props.app.min_vers_ios ? (
+            {this.props.app.min_vers_ios >= 0 && this.props.app.min_vers_ios !== ""? (
               <TableData>{this.props.app.min_vers_ios}</TableData>
             ) : (
               <TableData>N/A</TableData>
             )}
-            {this.props.app.min_vers_andr ? (
+            {this.props.app.min_vers_andr >= 0 && this.props.app.min_vers_andr !== ""? (
               <TableData>{this.props.app.min_vers_andr}</TableData>
             ) : (
               <TableData>N/A</TableData>

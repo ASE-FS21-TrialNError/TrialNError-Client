@@ -59,7 +59,7 @@ function loadCorrectForm(props){
     )
   } else {
     return (
-      <MultipleChoice updateListOfApps={props.updateListOfApps} name={props.name}/>
+      <MultipleChoice updateListOfApps={props.updateListOfApps} name={props.name} nrOfColumns={props.nrOfColumns}/>
     )
   }
 }

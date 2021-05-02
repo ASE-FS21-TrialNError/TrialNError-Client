@@ -12,7 +12,7 @@ const PopUpContentContainer = styled.div`
 `;
 
 const ButtonContainer = styled.div`
-  width: 33%;
+  width: ${(props)=> 100 / props.nrOfColumns}%;
   display: flex;
   flex-wrap: wrap;
 `;
@@ -69,7 +69,7 @@ class MultipleChoice extends React.Component {
         {
           radioButtonData[this.props.name].categories.map((category)=>{
             return(
-              <ButtonContainer>
+              <ButtonContainer nrOfColumns={this.props.nrOfColumns}>
                 <ButtonTextContainer>
                   <ButtonText>
                     {category}
