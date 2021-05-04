@@ -79,10 +79,10 @@ const SubmitButtonContainer = styled.div`
   display: flex;
   justify-content: center;
   width: 100%;
-  margin-top: 20px;
+  margin-top: 15px;
 `;
 
-const SubmitButton = styled.button`
+const Button = styled.button`
   &:hover {
     transform: translateY(-2px);
     cursor: pointer;
@@ -129,7 +129,15 @@ class InputFieldForm extends React.Component {
     this.props.updateListOfApps(radioButtonData[this.props.name].filter, value);
   }
 
-
+  resetState(){
+    let value = (
+      {
+        "min": null,
+        "max": null
+      }
+    )
+    this.props.updateListOfApps(radioButtonData[this.props.name].filter, value);
+  }
 
   render() {
 
@@ -176,11 +184,18 @@ class InputFieldForm extends React.Component {
             </InputFieldContainer>
           </ToContainer>
           <SubmitButtonContainer>
-            <SubmitButton
+            <Button
               onClick={()=>this.formSubmit()}
             >
               Submit
-            </SubmitButton>
+            </Button>
+          </SubmitButtonContainer>
+          <SubmitButtonContainer>
+            <Button
+              onClick={()=>this.resetState()}
+            >
+              Reset
+            </Button>
           </SubmitButtonContainer>
         </PopUpContentBody>
       </PopUpContentContainer>

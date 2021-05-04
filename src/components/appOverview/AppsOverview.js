@@ -353,6 +353,7 @@ class AppsOverview extends React.Component {
 
   render() {
 
+
     return (
       <div>
         <Header history={this.props.history}/>
@@ -372,10 +373,9 @@ class AppsOverview extends React.Component {
                   />
                 </SearchBarContainer>
               </PageHeaderSearchBarContainer>
-              
               <FilterContainer>
                 <Modal
-                  sex={this.state.sex}
+                  filterState={this.state.wayOfSorting}
                   updateListOfApps={this.updateFilter.bind(this)}
                   name={"Sort"}
                   heightPopUp={280}
@@ -384,6 +384,7 @@ class AppsOverview extends React.Component {
                   widthButton={80}
                 />
                 <Modal
+                  filterState={this.state.categoryIos}
                   updateListOfApps={this.updateFilter.bind(this)}
                   name={"Category iOS"}
                   heightPopUp={320}
@@ -393,6 +394,7 @@ class AppsOverview extends React.Component {
                   nrOfColumns={3}
                 />
                 <Modal
+                  filterState={this.state.categoryAndroid}
                   updateListOfApps={this.updateFilter.bind(this)}
                   name={"Category Android"}
                   heightPopUp={400}
@@ -402,6 +404,7 @@ class AppsOverview extends React.Component {
                   nrOfColumns={3}
                 />
                 <Modal
+                  filterState={this.state.ratingIos}
                   updateListOfApps={this.updateFilter.bind(this)}
                   name={"Rating iOS"}
                   heightPopUp={300}
@@ -411,6 +414,7 @@ class AppsOverview extends React.Component {
                   nrOfColumns={1}
                 />
                 <Modal
+                  filterState={this.state.ratingAndroid}
                   updateListOfApps={this.updateFilter.bind(this)}
                   name={"Rating Android"}
                   heightPopUp={300}
@@ -420,6 +424,7 @@ class AppsOverview extends React.Component {
                   nrOfColumns={1}
                 />
                 <Modal
+                  filterState={this.state.contentRatingIos}
                   updateListOfApps={this.updateFilter.bind(this)}
                   name={"Content Rating iOS"}
                   heightPopUp={300}
@@ -430,6 +435,7 @@ class AppsOverview extends React.Component {
                   nrOfColumns={1}
                 />
                 <Modal
+                  filterState={this.state.contentRatingAndroid}
                   updateListOfApps={this.updateFilter.bind(this)}
                   name={"Content Rating Android"}
                   heightPopUp={300}
@@ -441,7 +447,7 @@ class AppsOverview extends React.Component {
                 <Modal
                   updateListOfApps={this.updateFilter.bind(this)}
                   name={"Price iOS"}
-                  heightPopUp={180}
+                  heightPopUp={220}
                   widthPopUp={220}
                   heightButton={80}
                   widthButton={90}
@@ -449,7 +455,7 @@ class AppsOverview extends React.Component {
                 <Modal
                   updateListOfApps={this.updateFilter.bind(this)}
                   name={"Price Android"}
-                  heightPopUp={180}
+                  heightPopUp={220}
                   widthPopUp={220}
                   heightButton={80}
                   widthButton={120}
@@ -457,7 +463,7 @@ class AppsOverview extends React.Component {
                 <Modal
                   updateListOfApps={this.updateFilter.bind(this)}
                   name={"Rating Count iOS"}
-                  heightPopUp={180}
+                  heightPopUp={220}
                   widthPopUp={240}
                   heightButton={80}
                   widthButton={140}
@@ -465,7 +471,7 @@ class AppsOverview extends React.Component {
                 <Modal
                   updateListOfApps={this.updateFilter.bind(this)}
                   name={"Rating Count Android"}
-                  heightPopUp={180}
+                  heightPopUp={220}
                   widthPopUp={280}
                   heightButton={80}
                   widthButton={200}

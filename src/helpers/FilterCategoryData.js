@@ -96,7 +96,11 @@ export const radioButtonData = (
         "3 to 2",
         "2 to 1",
         "All"
-      ]
+      ],
+      "All": {
+        "min": null,
+        "max": null
+      }
     },
     "Rating Android": {
       "filter": "ratingAndroid",
@@ -106,7 +110,11 @@ export const radioButtonData = (
         "3 to 2",
         "2 to 1",
         "All"
-      ]
+      ],
+      "All": {
+        "min": null,
+        "max": null
+      }
     },
     "Content Rating iOS":{
       "filter": "contentRatingIos",
@@ -117,7 +125,8 @@ export const radioButtonData = (
         "9+",
         "Not yet rated",
         "All"
-      ]
+      ],
+      "All": null
     },
     "Content Rating Android":{
       "filter": "contentRatingAndroid",
@@ -127,7 +136,8 @@ export const radioButtonData = (
         "Mature 17+",
         "Everyone",
         "All"
-      ]
+      ],
+      "All": null
     },
     "Price iOS":{
       "filter": "priceIos"
@@ -151,7 +161,7 @@ export const radioButtonData = (
     },
     "3 to 2": {
       "min": "2",
-      "max": "2"
+      "max": "3"
     },
     "2 to 1": {
       "min": "1",

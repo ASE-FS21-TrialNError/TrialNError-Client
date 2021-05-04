@@ -2,10 +2,15 @@ import React from "react";
 import styled from "styled-components";
 
 const PopUpContentContainer = styled.div`
-  display: flex;
   heigth: 600px;
   width: 100%;
 
+`;
+
+const SortingContainer = styled.div`
+  display: flex;
+  width: 100%;
+  height: 85%;
 `;
 
 const IOSContainer = styled.div`
@@ -100,232 +105,249 @@ const CustomRadioButton = styled.span`
   }*/
 `;
 
+const NoSortContainer = styled.div`
+  width: 100%;
+  height: 15%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
 
 
 class RadioButtonForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedOption: null
     };
     this.onValueChange = this.onValueChange.bind(this);
-    this.formSubmit = this.formSubmit.bind(this);
   }
 
   onValueChange(event) {
-    this.setState({
-      selectedOption: event.target.value
-    });
     this.props.updateListOfApps("wayOfSorting", valueConverter[event.target.value]);
   }
 
-  formSubmit(event) {
-    event.preventDefault();
-    console.log(this.state.selectedOption)
-  }
 
   render() {
     return (
       <PopUpContentContainer>
-        <IOSContainer>
-          <IOSTitle>
-            iOS
-          </IOSTitle>
-          <IOSRadioButtonContainer>
-            <LabelAndRadioButtonContainer>
-              <RadioButtonLabelContainer>
-                <RadioButtonLabel>
-                  Most Expensive
-                </RadioButtonLabel>
-              </RadioButtonLabelContainer>
-              <RadioButtonContainer>
-                <RadioButton
-                    type="radio"
-                    value="Most Expensive iOS"
-                    checked={this.state.selectedOption === "Most Expensive iOS"}
-                    onChange={this.onValueChange}
-                />
-                <CustomRadioButton/>
-              </RadioButtonContainer>
-            </LabelAndRadioButtonContainer>
-            <LabelAndRadioButtonContainer>
-              <RadioButtonLabelContainer>
-                <RadioButtonLabel>
-                  Cheapest
-                </RadioButtonLabel>
-              </RadioButtonLabelContainer>
-              <RadioButtonContainer>
-                <RadioButton
-                    type="radio"
-                    value="Cheapest iOS"
-                    checked={this.state.selectedOption === "Cheapest iOS"}
-                    onChange={this.onValueChange}
-                />
+        <SortingContainer>
+          <IOSContainer>
+            <IOSTitle>
+              iOS
+            </IOSTitle>
+            <IOSRadioButtonContainer>
+              <LabelAndRadioButtonContainer>
+                <RadioButtonLabelContainer>
+                  <RadioButtonLabel>
+                    Most Expensive
+                  </RadioButtonLabel>
+                </RadioButtonLabelContainer>
+                <RadioButtonContainer>
+                  <RadioButton
+                      type="radio"
+                      value="Most Expensive iOS"
+                      checked={this.props.filterState === "price_ios-D"}
+                      onChange={this.onValueChange}
+                  />
+                  <CustomRadioButton/>
                 </RadioButtonContainer>
-            </LabelAndRadioButtonContainer>
-            <LabelAndRadioButtonContainer>
-              <RadioButtonLabelContainer>
-                <RadioButtonLabel>
-                  Highest Rating
-                </RadioButtonLabel>
-              </RadioButtonLabelContainer>
-              <RadioButtonContainer>
-                <RadioButton
-                    type="radio"
-                    value="Highest Rating iOS"
-                    checked={this.state.selectedOption === "Highest Rating iOS"}
-                    onChange={this.onValueChange}
-                />
-              </RadioButtonContainer>
-            </LabelAndRadioButtonContainer>
-            <LabelAndRadioButtonContainer>
-              <RadioButtonLabelContainer>
-                <RadioButtonLabel>
-                  Lowest Rating
-                </RadioButtonLabel>
-              </RadioButtonLabelContainer>
-              <RadioButtonContainer>
-                <RadioButton
-                    type="radio"
-                    value="Lowest Rating iOS"
-                    checked={this.state.selectedOption === "Lowest Rating iOS"}
-                    onChange={this.onValueChange}
-                />
-              </RadioButtonContainer>
-            </LabelAndRadioButtonContainer>
-            <LabelAndRadioButtonContainer>
-              <RadioButtonLabelContainer>
-                <RadioButtonLabel>
-                  Hightest Rating Count
-                </RadioButtonLabel>
-              </RadioButtonLabelContainer>
-              <RadioButtonContainer>
-                <RadioButton
-                    type="radio"
-                    value="Highest Rating Count iOS"
-                    checked={this.state.selectedOption === "Highest Rating Count iOS"}
-                    onChange={this.onValueChange}
-                />
-              </RadioButtonContainer>
-            </LabelAndRadioButtonContainer>
-            <LabelAndRadioButtonContainer>
-              <RadioButtonLabelContainer>
-                <RadioButtonLabel>
-                  Lowest Rating Count
-                </RadioButtonLabel>
-              </RadioButtonLabelContainer>
-              <RadioButtonContainer>
-                <RadioButton
-                    type="radio"
-                    value="Lowest Rating Count iOS"
-                    checked={this.state.selectedOption === "Lowest Rating Count iOS"}
-                    onChange={this.onValueChange}
-                />
-              </RadioButtonContainer>
-            </LabelAndRadioButtonContainer>
-          </IOSRadioButtonContainer>
-        </IOSContainer>
+              </LabelAndRadioButtonContainer>
+              <LabelAndRadioButtonContainer>
+                <RadioButtonLabelContainer>
+                  <RadioButtonLabel>
+                    Cheapest
+                  </RadioButtonLabel>
+                </RadioButtonLabelContainer>
+                <RadioButtonContainer>
+                  <RadioButton
+                      type="radio"
+                      value="Cheapest iOS"
+                      checked={this.props.filterState === "price_ios-A"}
+                      onChange={this.onValueChange}
+                  />
+                  </RadioButtonContainer>
+              </LabelAndRadioButtonContainer>
+              <LabelAndRadioButtonContainer>
+                <RadioButtonLabelContainer>
+                  <RadioButtonLabel>
+                    Highest Rating
+                  </RadioButtonLabel>
+                </RadioButtonLabelContainer>
+                <RadioButtonContainer>
+                  <RadioButton
+                      type="radio"
+                      value="Highest Rating iOS"
+                      checked={this.props.filterState === "rating_ios-D"}
+                      onChange={this.onValueChange}
+                  />
+                </RadioButtonContainer>
+              </LabelAndRadioButtonContainer>
+              <LabelAndRadioButtonContainer>
+                <RadioButtonLabelContainer>
+                  <RadioButtonLabel>
+                    Lowest Rating
+                  </RadioButtonLabel>
+                </RadioButtonLabelContainer>
+                <RadioButtonContainer>
+                  <RadioButton
+                      type="radio"
+                      value="Lowest Rating iOS"
+                      checked={this.props.filterState === "rating_ios-A"}
+                      onChange={this.onValueChange}
+                  />
+                </RadioButtonContainer>
+              </LabelAndRadioButtonContainer>
+              <LabelAndRadioButtonContainer>
+                <RadioButtonLabelContainer>
+                  <RadioButtonLabel>
+                    Hightest Rating Count
+                  </RadioButtonLabel>
+                </RadioButtonLabelContainer>
+                <RadioButtonContainer>
+                  <RadioButton
+                      type="radio"
+                      value="Highest Rating Count iOS"
+                      checked={this.props.filterState === "rating_count_ios-D"}
+                      onChange={this.onValueChange}
+                  />
+                </RadioButtonContainer>
+              </LabelAndRadioButtonContainer>
+              <LabelAndRadioButtonContainer>
+                <RadioButtonLabelContainer>
+                  <RadioButtonLabel>
+                    Lowest Rating Count
+                  </RadioButtonLabel>
+                </RadioButtonLabelContainer>
+                <RadioButtonContainer>
+                  <RadioButton
+                      type="radio"
+                      value="Lowest Rating Count iOS"
+                      checked={this.props.filterState === "rating_count_ios-A"}
+                      onChange={this.onValueChange}
+                  />
+                </RadioButtonContainer>
+              </LabelAndRadioButtonContainer>
+            </IOSRadioButtonContainer>
+          </IOSContainer>
 
 
 
-        <AndroidContainer>
-          <AndroidTitle>
-            Android
-          </AndroidTitle>
-          <IOSRadioButtonContainer>
-            <LabelAndRadioButtonContainer>
-              <RadioButtonLabelContainer>
-                <RadioButtonLabel>
-                  Most Expensive
-                </RadioButtonLabel>
-              </RadioButtonLabelContainer>
-              <RadioButtonContainer>
-                <RadioButton
-                    type="radio"
-                    value="Most Expensive Android"
-                    checked={this.state.selectedOption === "Most Expensive Android"}
-                    onChange={this.onValueChange}
-                />
-                <CustomRadioButton/>
-              </RadioButtonContainer>
-            </LabelAndRadioButtonContainer>
-            <LabelAndRadioButtonContainer>
-              <RadioButtonLabelContainer>
-                <RadioButtonLabel>
-                  Cheapest
-                </RadioButtonLabel>
-              </RadioButtonLabelContainer>
-              <RadioButtonContainer>
-                <RadioButton
-                    type="radio"
-                    value="Cheapest Android"
-                    checked={this.state.selectedOption === "Cheapest Android"}
-                    onChange={this.onValueChange}
-                />
-              </RadioButtonContainer>
-            </LabelAndRadioButtonContainer>
-            <LabelAndRadioButtonContainer>
-              <RadioButtonLabelContainer>
-                <RadioButtonLabel>
-                  Highest Rating
-                </RadioButtonLabel>
-              </RadioButtonLabelContainer>
-              <RadioButtonContainer>
-                <RadioButton
-                    type="radio"
-                    value="Highest Rating Android"
-                    checked={this.state.selectedOption === "Highest Rating Android"}
-                    onChange={this.onValueChange}
-                />
-              </RadioButtonContainer>
-            </LabelAndRadioButtonContainer>
-            <LabelAndRadioButtonContainer>
-              <RadioButtonLabelContainer>
-                <RadioButtonLabel>
-                  Lowest Rating
-                </RadioButtonLabel>
-              </RadioButtonLabelContainer>
-              <RadioButtonContainer>
-                <RadioButton
-                    type="radio"
-                    value="Lowest Rating Android"
-                    checked={this.state.selectedOption === "Lowest Rating Android"}
-                    onChange={this.onValueChange}
-                />
-              </RadioButtonContainer>
-            </LabelAndRadioButtonContainer>
-            <LabelAndRadioButtonContainer>
-              <RadioButtonLabelContainer>
-                <RadioButtonLabel>
-                  Hightest Rating Count
-                </RadioButtonLabel>
-              </RadioButtonLabelContainer>
-              <RadioButtonContainer>
-                <RadioButton
-                    type="radio"
-                    value="Highest Rating Count Android"
-                    checked={this.state.selectedOption === "Highest Rating Count Android"}
-                    onChange={this.onValueChange}
-                />
-              </RadioButtonContainer>
-            </LabelAndRadioButtonContainer>
-            <LabelAndRadioButtonContainer>
-              <RadioButtonLabelContainer>
-                <RadioButtonLabel>
-                  Lowest Rating Count
-                </RadioButtonLabel>
-              </RadioButtonLabelContainer>
-              <RadioButtonContainer>
-                <RadioButton
-                    type="radio"
-                    value="Lowest Rating Count Android"
-                    checked={this.state.selectedOption === "Lowest Rating Count Android"}
-                    onChange={this.onValueChange}
-                />
-              </RadioButtonContainer>
-            </LabelAndRadioButtonContainer>
-          </IOSRadioButtonContainer>
-        </AndroidContainer>
+          <AndroidContainer>
+            <AndroidTitle>
+              Android
+            </AndroidTitle>
+            <IOSRadioButtonContainer>
+              <LabelAndRadioButtonContainer>
+                <RadioButtonLabelContainer>
+                  <RadioButtonLabel>
+                    Most Expensive
+                  </RadioButtonLabel>
+                </RadioButtonLabelContainer>
+                <RadioButtonContainer>
+                  <RadioButton
+                      type="radio"
+                      value="Most Expensive Android"
+                      checked={this.props.filterState === "price_andr-D"}
+                      onChange={this.onValueChange}
+                  />
+                  <CustomRadioButton/>
+                </RadioButtonContainer>
+              </LabelAndRadioButtonContainer>
+              <LabelAndRadioButtonContainer>
+                <RadioButtonLabelContainer>
+                  <RadioButtonLabel>
+                    Cheapest
+                  </RadioButtonLabel>
+                </RadioButtonLabelContainer>
+                <RadioButtonContainer>
+                  <RadioButton
+                      type="radio"
+                      value="Cheapest Android"
+                      checked={this.props.filterState === "price_andr-A"}
+                      onChange={this.onValueChange}
+                  />
+                </RadioButtonContainer>
+              </LabelAndRadioButtonContainer>
+              <LabelAndRadioButtonContainer>
+                <RadioButtonLabelContainer>
+                  <RadioButtonLabel>
+                    Highest Rating
+                  </RadioButtonLabel>
+                </RadioButtonLabelContainer>
+                <RadioButtonContainer>
+                  <RadioButton
+                      type="radio"
+                      value="Highest Rating Android"
+                      checked={this.props.filterState === "rating_andr-D"}
+                      onChange={this.onValueChange}
+                  />
+                </RadioButtonContainer>
+              </LabelAndRadioButtonContainer>
+              <LabelAndRadioButtonContainer>
+                <RadioButtonLabelContainer>
+                  <RadioButtonLabel>
+                    Lowest Rating
+                  </RadioButtonLabel>
+                </RadioButtonLabelContainer>
+                <RadioButtonContainer>
+                  <RadioButton
+                      type="radio"
+                      value="Lowest Rating Android"
+                      checked={this.props.filterState === "rating_andr-A"}
+                      onChange={this.onValueChange}
+                  />
+                </RadioButtonContainer>
+              </LabelAndRadioButtonContainer>
+              <LabelAndRadioButtonContainer>
+                <RadioButtonLabelContainer>
+                  <RadioButtonLabel>
+                    Hightest Rating Count
+                  </RadioButtonLabel>
+                </RadioButtonLabelContainer>
+                <RadioButtonContainer>
+                  <RadioButton
+                      type="radio"
+                      value="Highest Rating Count Android"
+                      checked={this.props.filterState === "rating_count_andr-D"}
+                      onChange={this.onValueChange}
+                  />
+                </RadioButtonContainer>
+              </LabelAndRadioButtonContainer>
+              <LabelAndRadioButtonContainer>
+                <RadioButtonLabelContainer>
+                  <RadioButtonLabel>
+                    Lowest Rating Count
+                  </RadioButtonLabel>
+                </RadioButtonLabelContainer>
+                <RadioButtonContainer>
+                  <RadioButton
+                      type="radio"
+                      value="Lowest Rating Count Android"
+                      checked={this.props.filterState === "rating_count_andr-A"}
+                      onChange={this.onValueChange}
+                  />
+                </RadioButtonContainer>
+              </LabelAndRadioButtonContainer>
+            </IOSRadioButtonContainer>
+          </AndroidContainer>
+        </SortingContainer>
+        <NoSortContainer>
+          <LabelAndRadioButtonContainer style={{width: "20%"}}>
+            <RadioButtonLabelContainer>
+              <RadioButtonLabel>
+                Unsorted
+              </RadioButtonLabel>
+            </RadioButtonLabelContainer>
+            <RadioButtonContainer>
+              <RadioButton
+                type="radio"
+                value="Unsorted"
+                checked={this.props.filterState === null}
+                onChange={this.onValueChange}
+              />
+            </RadioButtonContainer>
+          </LabelAndRadioButtonContainer>
+        </NoSortContainer>
       </PopUpContentContainer>
     );
   }
@@ -343,7 +365,8 @@ const valueConverter = {
   "Highest Rating Android": "rating_andr-D",
   "Lowest Rating Android": "rating_andr-A",
   "Highest Rating Count Android": "rating_count_andr-D",
-  "Lowest Rating Count Android": "rating_count_andr-A"
+  "Lowest Rating Count Android": "rating_count_andr-A",
+  "Unsorted": null
 }
 
 export default RadioButtonForm;
