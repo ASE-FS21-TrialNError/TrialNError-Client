@@ -25,6 +25,7 @@ class Login extends React.Component {
         email: this.state.email,
         password: this.state.password,
       });
+      console.log(requestBody);
       const response = await api.post("/auth/login", requestBody);
 
       console.log(response.status);
@@ -37,7 +38,7 @@ class Login extends React.Component {
         });
       }
     }catch(error){
-      console.log(error.response);
+      console.log(error);
       this.setState({
         errorMessage: error.response.data.error
       });
