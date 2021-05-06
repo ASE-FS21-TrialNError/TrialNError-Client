@@ -3,7 +3,7 @@ import React from "react";
 import styled from "styled-components";
 import { api } from "../../helpers/api";
 import { withRouter } from "react-router-dom";
-import { Header } from "../../views/design/Header";
+import Header  from "../../views/design/Header";
 import { BaseContainer, ContentContainer, PageHeaderContainer, PageHeading, PageHeaderSearchBarContainer} from "../../views/design/PageContent";
 import Modal from "../../views/design/Modal";
 import placeholder from "../../views/design/image/placeholder.png";
@@ -219,6 +219,8 @@ class AppsOverview extends React.Component {
   }
 
 
+
+
   async componentDidMount() {
     try {
 
@@ -350,13 +352,19 @@ class AppsOverview extends React.Component {
     // add API call
   }
 
+  pushAppsOverview(){
+    window.location.reload(false);
+  }
 
   render() {
 
 
     return (
       <div>
-        <Header history={this.props.history}/>
+        <Header
+          history={this.props.history}
+          pushAppsOverview={this.pushAppsOverview.bind(this)}
+        />
         <BaseContainer>
           <ContentContainer>
             <PageHeaderContainer>
@@ -448,7 +456,7 @@ class AppsOverview extends React.Component {
                   updateListOfApps={this.updateFilter.bind(this)}
                   name={"Price iOS"}
                   heightPopUp={220}
-                  widthPopUp={220}
+                  widthPopUp={300}
                   heightButton={80}
                   widthButton={90}
                 />
@@ -456,7 +464,7 @@ class AppsOverview extends React.Component {
                   updateListOfApps={this.updateFilter.bind(this)}
                   name={"Price Android"}
                   heightPopUp={220}
-                  widthPopUp={220}
+                  widthPopUp={300}
                   heightButton={80}
                   widthButton={120}
                 />

@@ -1,11 +1,12 @@
 
 import React from "react";
 import styled from "styled-components";
-import {Header} from "../../views/design/Header";
+import Header from "../../views/design/Header";
 import {ContentContainer, PageHeaderContainer, PageHeading, PageHeaderSearchBarContainer} from "../../views/design/PageContent";
 import {api} from "../../helpers/api";
+import { withRouter } from "react-router-dom";
 
-export default class AppDetails extends React.Component{
+class AppDetails extends React.Component{
 
   async componentDidMount() {
     try {
@@ -33,10 +34,16 @@ export default class AppDetails extends React.Component{
     }
   }
 
+  pushAppsOverview(){
+    this.props.history.push("/appsOverview");
+  }
+
   render(){
     return (
       <div>
-        <Header/>
+        <Header
+          pushAppsOverview={this.pushAppsOverview.bind(this)}
+        />
         <ContentContainer>
           <PageHeaderContainer>
             <PageHeaderSearchBarContainer>
@@ -50,3 +57,6 @@ export default class AppDetails extends React.Component{
     )
   }
 }
+
+
+export default withRouter(AppDetails);
