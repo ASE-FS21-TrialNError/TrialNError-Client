@@ -348,13 +348,29 @@ class AppsOverview extends React.Component {
       this.getApps)
   }
 
-  async addAppToWishlist(){
+  async addAppToWishlist(appId){
     // add API call
+    console.log(appId);
+    let url = ".wishlist/add/" + appId;
+    console.log(url);
+    const response = await api.get(url,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`
+        }
+      });
+
+    console.log(response);
   }
 
   pushAppsOverview(){
     window.location.reload(false);
   }
+
+  pushDashboard(){
+    this.props.history.push("/dashboard");
+  }
+
 
   render() {
 
@@ -364,6 +380,7 @@ class AppsOverview extends React.Component {
         <Header
           history={this.props.history}
           pushAppsOverview={this.pushAppsOverview.bind(this)}
+          pushDashboard={this.pushDashboard.bind(this)}
         />
         <BaseContainer>
           <ContentContainer>
@@ -534,7 +551,7 @@ class AppsOverview extends React.Component {
                           <ButtonContainer style={{marginTop: "0", width: "80%"}}>
                             <Button
                               style={{width: "100%"}}
-                              onClick={()=>this.addAppToWishlist()}
+                              onClick={()=>this.addAppToWishlist(app._id)}
                             >
                               Add to wishlist
                             </Button>

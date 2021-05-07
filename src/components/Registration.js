@@ -34,9 +34,9 @@ class Registration extends React.Component {
     console.log(response.data.payload);
     if (response.status === 201){
 
-      localStorage.setItem("token", response.data.payload.token);
+      //localStorage.setItem("token", response.data.payload.token);
 
-      this.props.history.push("/AppsOverview");
+      this.props.history.push("/Login");
     }else{
       this.setState({
         errorMessage: response.data.error,

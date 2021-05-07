@@ -74,7 +74,11 @@ class Header extends React.Component {
         </TitleContainer>
         <NavigationContainer>
           <NavButtonContainer>
-            <NavButton>
+            <NavButton
+              onClick={()=>{
+                this.props.pushDashboard()
+              }}
+            >
               Dashboard
             </NavButton>
           </NavButtonContainer>

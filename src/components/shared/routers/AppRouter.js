@@ -8,6 +8,8 @@ import { RegistrationGuard } from "../routeProtectors/RegistrationGuard";
 import Registration from "../../Registration";
 import AppsOverview from "../../appOverview/AppsOverview";
 import AppDetails from "../../appDetails/AppDetails";
+import Dashboard from "../../dashboard/Dashboard";
+import {DashboardGuard} from "../routeProtectors/DashboardGuard";
 
 class AppRouter extends React.Component {
   render() {
@@ -29,6 +31,14 @@ class AppRouter extends React.Component {
                 <AppDetailsGuard>
                   <AppDetails/>
                 </AppDetailsGuard>
+              )}
+            />
+            <Route
+              path="/dashboard"
+              render={() => (
+                <DashboardGuard>
+                  <Dashboard/>
+                </DashboardGuard>
               )}
             />
             <Route
