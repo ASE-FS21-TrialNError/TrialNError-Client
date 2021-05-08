@@ -16,7 +16,7 @@ const HeaderWishlist = styled.h2`
   
 `;
 
-const NoAppsInWhishlistText = styled.p`
+const NoAppsInWhishlistText = styled.div`
   
 `;
 

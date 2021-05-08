@@ -351,7 +351,7 @@ class AppsOverview extends React.Component {
   async addAppToWishlist(appId){
     // add API call
     console.log(appId);
-    let url = ".wishlist/add/" + appId;
+    let url = "/wishlist/add/" + appId;
     console.log(url);
     const response = await api.get(url,
       {
