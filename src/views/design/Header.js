@@ -1,15 +1,16 @@
 import React from "react";
 import styled from "styled-components";
+import {Button} from "./Button";
 import { withRouter } from "react-router-dom";
-import {Button, ButtonContainer} from "./Button";
+import {Link} from "react-router-dom";
 
 const HeaderContainer = styled.div`
   height: 100px;
   background-color: rgb(169, 222, 253);
-  
+  display: flex;
+  flex-direction: row;
   justify-content: left;
   align-items: center;
-  
 `;
 
 const TitleContainer = styled.div`
@@ -17,54 +18,48 @@ const TitleContainer = styled.div`
   color: white;
   text-align: center;
   background: linear-gradient(rgb(55, 134, 252), rgb(4, 31, 184));
-  margin-padding: 50px;
   width: 20%;
   height: 100px;
-  float: left;
+  justify-content: center;
+  align-items: center;
 `;
 const Title = styled.h1`
   font-weight: bold;
   color: white;
   text-align: center;
-  margin-padding: 50px;
 `;
 
 const NavigationContainer = styled.div`
-  float: right;
-  width: 80%;
-  height: 100px;
   display: flex;
+  justify-content: flex-end;
   align-items: center;
-  overflow: auto;
-  backround-color: red;
+  height: 100px;
+  width: 80%;
 `;
 
 const NavButton = styled(Button)`
-  float: right;
   min-width: 150px;
+  padding-right: 0;
 `;
 
 const NavButtonContainer = styled.div`
-  float: right;
-  display-flex: none;
-  margin-top: 0px;
-  padding-right: 50px;
-  backround-color: green;
-  width: 200;
+  margin-top: 0;
+  margin-right: 50px;
   overflow: hidden;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  height: 100px;
 `;
 
-export class Header extends React.Component {
-
+class Header extends React.Component {
   constructor() {
     super();
-
   }
 
   logout() {
 
     localStorage.removeItem("token");
-    localStorage.removeItem("loginUserid");
     this.props.history.push("/login");
 
   }
@@ -79,14 +74,28 @@ export class Header extends React.Component {
         </TitleContainer>
         <NavigationContainer>
           <NavButtonContainer>
-            <NavButton>
+            <NavButton
+              onClick={()=>{
+                this.props.pushDashboard()
+              }}
+            >
               Dashboard
             </NavButton>
           </NavButtonContainer>
           <NavButtonContainer>
-            <NavButton>
-              AppsOverview
-            </NavButton>
+            {/*<Link
+              to={{
+                pathname: "/appsOverview"
+              }}
+            >*/}
+              <NavButton
+                onClick={()=>{
+                  this.props.pushAppsOverview()
+                }}
+              >
+                AppsOverview
+              </NavButton>
+            {/*</Link>*/}
           </NavButtonContainer>
           <NavButtonContainer>
             <NavButton
@@ -104,3 +113,4 @@ export class Header extends React.Component {
   }
 }
 
+export default withRouter(Header);
