@@ -57,6 +57,10 @@ class AppDetails extends React.Component{
     this.props.history.push("/appsOverview");
   }
 
+  pushDashboard(){
+    this.props.history.push("/dashboard");
+  }
+
   handleCheckboxChange = event =>
     {this.setState({checked: event.target.checked})}
   
@@ -81,10 +85,13 @@ class AppDetails extends React.Component{
       ButtonContent = "Description - Collapse";
     }
 
+
+
     return (
       <div>
         <Header
           pushAppsOverview={this.pushAppsOverview.bind(this)}
+          pushDashboard={this.pushDashboard.bind(this)}
         />
         <ContentContainer>
           <PageHeaderContainer>

@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import Header from "../../views/design/Header";
 import {ContentContainer, PageHeaderContainer, PageHeading, PageHeaderSearchBarContainer} from "../../views/design/PageContent";
-import {api} from "../../helpers/api";
+import {api, apiRecommender} from "../../helpers/api";
 import { withRouter } from "react-router-dom";
 import AppsCard from "./AppsCard";
 
@@ -20,6 +20,12 @@ const NoAppsInWhishlistText = styled.div`
   
 `;
 
+const AppCardsContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+`;
+
+
 
 class Dashboard extends React.Component{
   constructor(props) {
@@ -35,8 +41,8 @@ class Dashboard extends React.Component{
     try {
 
       console.log(localStorage.getItem("token"));
-      const url = "/wishlist/getApps"
-      const response = await api.get(url,
+      let url = "/wishlist/getApps"
+      let response = await api.get(url,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`
@@ -44,7 +50,21 @@ class Dashboard extends React.Component{
 
         });
 
-      this.setState({ apps: response.data});
+      this.setState({ whishlistApps: response.data});
+      console.log(response.data);
+
+      url = "/wishlist/getApp/id"
+      response = await api.get(url,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`
+          }
+
+        });
+
+      url = "/recommender?appIds=" + "[6097f8f6845687a0fcad2e76]";
+      response = await apiRecommender.get(url);
+      this.setState({ recommendedApps: response.data});
       console.log(response.data);
     } catch (error) {
       this.setState({
@@ -63,6 +83,7 @@ class Dashboard extends React.Component{
       <div>
         <Header
           pushAppsOverview={this.pushAppsOverview.bind(this)}
+          push
         />
         <ContentContainer>
           <PageHeaderContainer>
@@ -94,13 +115,20 @@ class Dashboard extends React.Component{
                There are not any apps in your whishlist. Go to the apps overview and add some apps!
              </NoAppsInWhishlistText>
             ):(
-              <AppsCard>
-
-              </AppsCard>
+              <AppCardsContainer>
+                {this.state.whishlistApps.map((app) =>
+                  {
+                    return (
+                      <AppsCard
+                        app={app}
+                      />
+                    )
+                  }
+                )}
+              </AppCardsContainer>
             )
 
           }
-          <AppsCard/>
         </ContentContainer>
       </div>
     )

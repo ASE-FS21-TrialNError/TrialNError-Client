@@ -351,16 +351,22 @@ class AppsOverview extends React.Component {
   async addAppToWishlist(appId){
     // add API call
     console.log(appId);
-    let url = "/wishlist/add/" + appId;
-    console.log(url);
-    const response = await api.get(url,
-      {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`
-        }
-      });
+    try{
+      let url = "/wishlist/add/" + appId;
+      console.log(url);
+      const response = await api.get(url,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`
+          }
+        });
+      console.log(response);
+    }catch (error){
+      console.log(error.response)
+    }
 
-    console.log(response);
+
+
   }
 
   pushAppsOverview(){
