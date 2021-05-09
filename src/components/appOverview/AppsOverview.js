@@ -334,10 +334,10 @@ class AppsOverview extends React.Component {
   }
 
 
-  goToDetails(appId) {
+  goToDetails(app) {
     this.props.history.push({
       pathname: "/appDetails",
-      state: { appId: appId },
+      state: { app: app },
     });
   }
 
@@ -522,7 +522,7 @@ class AppsOverview extends React.Component {
                           <AppImage
                             src={placeholder} alt={'missing'}
                             onClick={() => {
-                              this.goToDetails(app._id);
+                              this.goToDetails(app);
                             }}
                           />
                         </AppImageContainer>
@@ -530,7 +530,7 @@ class AppsOverview extends React.Component {
                           <AppDescription>
                             <AppDesciptionTitle
                               onClick={() => {
-                                this.goToDetails(app._id);
+                                this.goToDetails(app);
                               }}
                             >
                               {app.name}
