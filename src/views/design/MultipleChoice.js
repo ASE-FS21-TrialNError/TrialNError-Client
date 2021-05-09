@@ -52,14 +52,47 @@ class MultipleChoice extends React.Component {
       selectedOption: event.target.value
     });
 
-    if(this.props.name === "Category iOS" || this.props.name === "Category Android"){
-      this.props.updateListOfApps(radioButtonData[this.props.name].filter, event.target.value);
+    if(this.props.name === "Category iOS" || this.props.name === "Category Android" || this.props.name === "Content Rating iOS" || this.props.name === "Content Rating Android"){
+      if(event.target.value !== "All") {
+        this.props.updateListOfApps(radioButtonData[this.props.name].filter, event.target.value);
+      }else{
+        this.props.updateListOfApps(radioButtonData[this.props.name].filter, null);
+      }
     }else{
-      this.props.updateListOfApps(radioButtonData[this.props.name].filter, radioButtonData[event.target.value]);
+      if(event.target.value !== "All") {
+        this.props.updateListOfApps(radioButtonData[this.props.name].filter, radioButtonData[event.target.value]);
+      }else{
+        this.props.updateListOfApps(radioButtonData[this.props.name].filter, radioButtonData[this.props.name][event.target.value]);
+      }
+
     }
 
   }
 
+  checkCategory(category) {
+    let isChecked;
+    var objectConstructor = ({}).constructor;
+    if (this.props.filterState !== null) {
+      if (this.props.filterState.constructor !== objectConstructor) {
+
+        // Specific Button case for the buttons Category iOS and Android, Content Rating iOS and Android
+        isChecked = this.props.filterState === category;
+
+      } else {
+        // Button case for the buttons Rating iOS and Rating Android
+        if(this.props.filterState.max !== null) {
+          isChecked = this.props.filterState.max + " to " + this.props.filterState.min === category;
+        }else{
+          isChecked = category === "All";
+        }
+
+      }
+    }else {
+      isChecked = category === "All";
+    }
+    // All case for the buttons Category iOS and Android, Content Rating iOS and Android
+    return isChecked;
+  }
 
   render() {
 
@@ -78,7 +111,7 @@ class MultipleChoice extends React.Component {
                   <RadioButton
                     type="radio"
                     value={category}
-                    checked={this.state.selectedOption === category}
+                    checked={this.checkCategory(category)}
                     onChange={this.onValueChange}
                   />
                 </RadioButtonContainer>

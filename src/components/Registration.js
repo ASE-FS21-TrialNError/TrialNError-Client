@@ -36,7 +36,7 @@ class Registration extends React.Component {
 
       localStorage.setItem("token", response.data.payload.token);
 
-      this.props.history.push("/AppsOverview");
+      this.props.history.push("/appsOverview");
     }else{
       this.setState({
         errorMessage: response.data.error,

@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import {Button} from "./Button";
+import { withRouter } from "react-router-dom";
 import {Link} from "react-router-dom";
 
 const HeaderContainer = styled.div`
@@ -51,7 +52,10 @@ const NavButtonContainer = styled.div`
   height: 100px;
 `;
 
-export class Header extends React.Component {
+class Header extends React.Component {
+  constructor() {
+    super();
+  }
 
   logout() {
 
@@ -70,20 +74,28 @@ export class Header extends React.Component {
         </TitleContainer>
         <NavigationContainer>
           <NavButtonContainer>
-            <NavButton>
+            <NavButton
+              onClick={()=>{
+                this.props.pushDashboard()
+              }}
+            >
               Dashboard
             </NavButton>
           </NavButtonContainer>
           <NavButtonContainer>
-            <Link
+            {/*<Link
               to={{
                 pathname: "/appsOverview"
               }}
-            >
-              <NavButton>
+            >*/}
+              <NavButton
+                onClick={()=>{
+                  this.props.pushAppsOverview()
+                }}
+              >
                 AppsOverview
               </NavButton>
-            </Link>
+            {/*</Link>*/}
           </NavButtonContainer>
           <NavButtonContainer>
             <NavButton
@@ -101,3 +113,4 @@ export class Header extends React.Component {
   }
 }
 
+export default withRouter(Header);

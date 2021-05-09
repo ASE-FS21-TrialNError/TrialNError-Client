@@ -25,10 +25,11 @@ class Login extends React.Component {
         email: this.state.email,
         password: this.state.password,
       });
+      console.log(requestBody);
       const response = await api.post("/auth/login", requestBody);
 
       console.log(response.status);
-      if(response.status == 200){
+      if(response.status === 200 && response.data.errorCode !== 202){
         localStorage.setItem("token", response.data.payload.token);
         this.props.history.push("/appsOverview");
       }else{
@@ -37,7 +38,7 @@ class Login extends React.Component {
         });
       }
     }catch(error){
-      console.log(error.response);
+      console.log(error);
       this.setState({
         errorMessage: error.response.data.error
       });

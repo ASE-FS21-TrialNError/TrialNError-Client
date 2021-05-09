@@ -24,7 +24,7 @@ const PopUpContentBody = styled.div`
 
 `;
 
-const FromContainer = styled.div`
+const FromContainer = styled.form`
   display: flex;
   flex-wrap: nowrap;
   margin-top: 20px;
@@ -79,10 +79,10 @@ const SubmitButtonContainer = styled.div`
   display: flex;
   justify-content: center;
   width: 100%;
-  margin-top: 20px;
+  margin-top: 15px;
 `;
 
-const SubmitButton = styled.button`
+const Button = styled.button`
   &:hover {
     transform: translateY(-2px);
     cursor: pointer;
@@ -102,36 +102,117 @@ const SubmitButton = styled.button`
   min-width: 30%;
 `;
 
+function onlyNumbers(input){
+  var regex = /[^0-9]/g;
+  console.log(input)
+  //input.value = input.value.replace(regex, "");
+}
+
 class InputFieldForm extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
       selectedOption: null,
-      lowerBoundary: 1,
-      upperBoundary: 5
+      lowerBoundary: "",
+      upperBoundary: ""
     };
     this.formSubmit = this.formSubmit.bind(this);
   }
 
-  handleInputChange(key, value) {
+  handleInputChangeRatingCount(key, value) {
+    value = value.replace(/[^0-5]/g, "");
+    if(value.length > 0){
+      value = value.charAt(0);
+    }
+
+    /*value = value.replace(/[A-Za-z\-6-9,]/g, "");
+    let stringArray = value.split(".");
+    let preDecimalPlaces = value.charAt(0);
+    let dot = "";
+    let decimalPlaces = "";
+
+    if(value.charAt(1) === "."){
+      dot = ".";
+    }
+    if(stringArray.length === 2){
+      decimalPlaces = stringArray[1];
+      if(stringArray[1].length >= 2){
+        decimalPlaces = stringArray[1].charAt(0) + stringArray[1].charAt(1);
+      }
+    }
+    value = preDecimalPlaces + dot + decimalPlaces;*/
+
+    this.setState({ [key]: value });
+  }
+
+  handleInputChangePrice(key, value) {
+    value = value.replace(/[A-Za-z-,]/g, "");
     this.setState({ [key]: value });
   }
 
   formSubmit() {
+    let lowerBoundary = this.state.lowerBoundary;
+    let upperBoundary = this.state.upperBoundary;
+    if(this.state.lowerBoundary !== "" && this.state.upperBoundary !== ""){
+      if(lowerBoundary.length === 2 && lowerBoundary.charAt(1) === "."){
+        lowerBoundary = lowerBoundary + "0";
+      }
+      if(upperBoundary.length === 2 && upperBoundary.charAt(1) === "."){
+        upperBoundary = upperBoundary + "0";
+      }
+
+      let value = (
+        {
+          "min": lowerBoundary,
+          "max": upperBoundary
+        }
+      )
+      if(parseFloat(lowerBoundary) > parseFloat(upperBoundary)){
+        value = (
+          {
+            "min": upperBoundary,
+            "max": lowerBoundary
+          }
+        )
+      }
+      console.log(this.props.name);
+      this.setState(
+        {
+          lowerBoundary: lowerBoundary,
+          upperBoundary: upperBoundary
+        }
+      );
+      this.props.updateListOfApps(radioButtonData[this.props.name].filter, value)
+
+    }
+
+  }
+
+  resetState(){
+    this.setState({
+      lowerBoundary: "",
+      upperBoundary: ""
+    })
     let value = (
       {
-        "min": this.state.lowerBoundary,
-        "max": this.state.upperBoundary
+        "min": null,
+        "max": null
       }
     )
-    console.log(this.props.name);
     this.props.updateListOfApps(radioButtonData[this.props.name].filter, value);
   }
 
-
-
   render() {
+
+    let prevVal = "";
+    document.querySelector('input').addEventListener('input', function(e){
+      if(this.checkValidity()){
+        prevVal = this.value;
+      } else {
+        this.value = prevVal;
+      }
+    });
 
     return (
       <PopUpContentContainer>
@@ -148,9 +229,11 @@ class InputFieldForm extends React.Component {
             <InputFieldContainer>
               <InputField
                 placeholder={1}
-                type="number"
+                value={this.state.lowerBoundary}
                 onChange={(e) => {
-                  this.handleInputChange("lowerBoundary", e.target.value);
+                  this.props.name === "Price iOS"?
+                    this.handleInputChangePrice("lowerBoundary", e.target.value)
+                    :this.handleInputChangeRatingCount("lowerBoundary", e.target.value);
                 }}
               >
 
@@ -165,10 +248,12 @@ class InputFieldForm extends React.Component {
             </TitleInputContainer>
             <InputFieldContainer>
               <InputField
-                type="number"
                 placeholder={5}
+                value={this.state.upperBoundary}
                 onChange={(e) => {
-                  this.handleInputChange("upperBoundary", e.target.value);
+                  this.props.name === "Price iOS"?
+                    this.handleInputChangePrice("upperBoundary", e.target.value)
+                    :this.handleInputChangeRatingCount("upperBoundary", e.target.value);
                 }}
               >
 
@@ -176,11 +261,18 @@ class InputFieldForm extends React.Component {
             </InputFieldContainer>
           </ToContainer>
           <SubmitButtonContainer>
-            <SubmitButton
+            <Button
               onClick={()=>this.formSubmit()}
             >
               Submit
-            </SubmitButton>
+            </Button>
+          </SubmitButtonContainer>
+          <SubmitButtonContainer>
+            <Button
+              onClick={()=>this.resetState()}
+            >
+              Reset
+            </Button>
           </SubmitButtonContainer>
         </PopUpContentBody>
       </PopUpContentContainer>

@@ -50,7 +50,7 @@ const SortButton = styled.button`
 function loadCorrectForm(props){
   if(props.name === "Sort"){
     return(
-      <RadioButtonForm sex={props.sex} updateListOfApps={props.updateListOfApps}/>
+      <RadioButtonForm filterState={props.filterState} updateListOfApps={props.updateListOfApps}/>
     )
   }
   if(props.name === "Price iOS" || props.name === "Price Android" || props.name === "Rating Count iOS" || props.name === "Rating Count Android"){
@@ -59,7 +59,7 @@ function loadCorrectForm(props){
     )
   } else {
     return (
-      <MultipleChoice updateListOfApps={props.updateListOfApps} name={props.name} nrOfColumns={props.nrOfColumns}/>
+      <MultipleChoice filterState={props.filterState} updateListOfApps={props.updateListOfApps} name={props.name} nrOfColumns={props.nrOfColumns}/>
     )
   }
 }

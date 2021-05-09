@@ -1,10 +1,10 @@
 import React from "react";
 import styled from "styled-components";
-import {Header} from "../../views/design/Header";
+import Header from "../../views/design/Header";
 import {ContentContainer, PageHeaderContainer, PageHeading, PageHeaderSearchBarContainer} from "../../views/design/PageContent";
 import {TableDetailsGIC, TableDetails} from "../appOverview/TableComparison";
 import placeholder from "../../views/design/image/placeholder.png";
-import {withRouter} from "react-router";
+import {withRouter} from "react-router-dom";
 
 const Line = styled.div`
   border-bottom-color: gray;
@@ -53,6 +53,10 @@ class AppDetails extends React.Component{
 
   state = {checked: false}
 
+  pushAppsOverview(){
+    this.props.history.push("/appsOverview");
+  }
+
   handleCheckboxChange = event =>
     {this.setState({checked: event.target.checked})}
   
@@ -79,7 +83,9 @@ class AppDetails extends React.Component{
 
     return (
       <div>
-        <Header/>
+        <Header
+          pushAppsOverview={this.pushAppsOverview.bind(this)}
+        />
         <ContentContainer>
           <PageHeaderContainer>
             <PageHeaderSearchBarContainer>

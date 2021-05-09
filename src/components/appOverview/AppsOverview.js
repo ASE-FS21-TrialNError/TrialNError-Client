@@ -3,7 +3,7 @@ import React from "react";
 import styled from "styled-components";
 import { api } from "../../helpers/api";
 import { withRouter } from "react-router-dom";
-import { Header } from "../../views/design/Header";
+import Header  from "../../views/design/Header";
 import { BaseContainer, ContentContainer, PageHeaderContainer, PageHeading, PageHeaderSearchBarContainer} from "../../views/design/PageContent";
 import Modal from "../../views/design/Modal";
 import placeholder from "../../views/design/image/placeholder.png";
@@ -219,6 +219,8 @@ class AppsOverview extends React.Component {
   }
 
 
+
+
   async componentDidMount() {
     try {
 
@@ -346,16 +348,40 @@ class AppsOverview extends React.Component {
       this.getApps)
   }
 
-  async addAppToWishlist(){
+  async addAppToWishlist(appId){
     // add API call
+    console.log(appId);
+    let url = "/wishlist/add/" + appId;
+    console.log(url);
+    const response = await api.get(url,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`
+        }
+      });
+
+    console.log(response);
+  }
+
+  pushAppsOverview(){
+    window.location.reload(false);
+  }
+
+  pushDashboard(){
+    this.props.history.push("/dashboard");
   }
 
 
   render() {
 
+
     return (
       <div>
-        <Header history={this.props.history}/>
+        <Header
+          history={this.props.history}
+          pushAppsOverview={this.pushAppsOverview.bind(this)}
+          pushDashboard={this.pushDashboard.bind(this)}
+        />
         <BaseContainer>
           <ContentContainer>
             <PageHeaderContainer>
@@ -372,10 +398,9 @@ class AppsOverview extends React.Component {
                   />
                 </SearchBarContainer>
               </PageHeaderSearchBarContainer>
-              
               <FilterContainer>
                 <Modal
-                  sex={this.state.sex}
+                  filterState={this.state.wayOfSorting}
                   updateListOfApps={this.updateFilter.bind(this)}
                   name={"Sort"}
                   heightPopUp={280}
@@ -384,6 +409,7 @@ class AppsOverview extends React.Component {
                   widthButton={80}
                 />
                 <Modal
+                  filterState={this.state.categoryIos}
                   updateListOfApps={this.updateFilter.bind(this)}
                   name={"Category iOS"}
                   heightPopUp={320}
@@ -393,6 +419,7 @@ class AppsOverview extends React.Component {
                   nrOfColumns={3}
                 />
                 <Modal
+                  filterState={this.state.categoryAndroid}
                   updateListOfApps={this.updateFilter.bind(this)}
                   name={"Category Android"}
                   heightPopUp={400}
@@ -402,6 +429,7 @@ class AppsOverview extends React.Component {
                   nrOfColumns={3}
                 />
                 <Modal
+                  filterState={this.state.ratingIos}
                   updateListOfApps={this.updateFilter.bind(this)}
                   name={"Rating iOS"}
                   heightPopUp={300}
@@ -411,6 +439,7 @@ class AppsOverview extends React.Component {
                   nrOfColumns={1}
                 />
                 <Modal
+                  filterState={this.state.ratingAndroid}
                   updateListOfApps={this.updateFilter.bind(this)}
                   name={"Rating Android"}
                   heightPopUp={300}
@@ -420,6 +449,7 @@ class AppsOverview extends React.Component {
                   nrOfColumns={1}
                 />
                 <Modal
+                  filterState={this.state.contentRatingIos}
                   updateListOfApps={this.updateFilter.bind(this)}
                   name={"Content Rating iOS"}
                   heightPopUp={300}
@@ -430,6 +460,7 @@ class AppsOverview extends React.Component {
                   nrOfColumns={1}
                 />
                 <Modal
+                  filterState={this.state.contentRatingAndroid}
                   updateListOfApps={this.updateFilter.bind(this)}
                   name={"Content Rating Android"}
                   heightPopUp={300}
@@ -441,23 +472,23 @@ class AppsOverview extends React.Component {
                 <Modal
                   updateListOfApps={this.updateFilter.bind(this)}
                   name={"Price iOS"}
-                  heightPopUp={180}
-                  widthPopUp={220}
+                  heightPopUp={220}
+                  widthPopUp={300}
                   heightButton={80}
                   widthButton={90}
                 />
                 <Modal
                   updateListOfApps={this.updateFilter.bind(this)}
                   name={"Price Android"}
-                  heightPopUp={180}
-                  widthPopUp={220}
+                  heightPopUp={220}
+                  widthPopUp={300}
                   heightButton={80}
                   widthButton={120}
                 />
                 <Modal
                   updateListOfApps={this.updateFilter.bind(this)}
                   name={"Rating Count iOS"}
-                  heightPopUp={180}
+                  heightPopUp={220}
                   widthPopUp={240}
                   heightButton={80}
                   widthButton={140}
@@ -465,7 +496,7 @@ class AppsOverview extends React.Component {
                 <Modal
                   updateListOfApps={this.updateFilter.bind(this)}
                   name={"Rating Count Android"}
-                  heightPopUp={180}
+                  heightPopUp={220}
                   widthPopUp={280}
                   heightButton={80}
                   widthButton={200}
@@ -520,7 +551,7 @@ class AppsOverview extends React.Component {
                           <ButtonContainer style={{marginTop: "0", width: "80%"}}>
                             <Button
                               style={{width: "100%"}}
-                              onClick={()=>this.addAppToWishlist()}
+                              onClick={()=>this.addAppToWishlist(app._id)}
                             >
                               Add to wishlist
                             </Button>
