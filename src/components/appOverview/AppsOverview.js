@@ -181,6 +181,7 @@ class AppsOverview extends React.Component {
     super(props);
     this.state = {
       apps: null,
+      appsInWhishlist: null,
       totalPages: null,
       currentPage: 1,
       searchString: "",
@@ -226,7 +227,7 @@ class AppsOverview extends React.Component {
 
       console.log(localStorage.getItem("token"));
 
-      const response = await api.get("/apps?page=1&limit=10",
+      let response = await api.get("/apps?page=1&limit=10",
       {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`
@@ -235,10 +236,28 @@ class AppsOverview extends React.Component {
       });
 
       this.setState({ apps: response.data.items });
-      this.setState({totalPages: response.data.totalPages})
-      this.setState({currentPage: 1})
+      this.setState({totalPages: response.data.totalPages});
+      this.setState({currentPage: 1});
       console.log("total pages", this.state.totalPages);
       console.log(response.data);
+
+      let url = "/wishlist/getApps"
+      response = await api.get(url,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`
+          }
+
+        })
+        .then(response =>{
+          console.log(response.data);
+          this.setState({ appsInWhishlist: response.data})
+        }
+      );
+
+
+
+
     } catch (error) {
       this.setState({
         errorMessage: error.message,
@@ -354,19 +373,63 @@ class AppsOverview extends React.Component {
     try{
       let url = "/wishlist/add/" + appId;
       console.log(url);
-      const response = await api.get(url,
+      let response = await api.get(url,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`
           }
         });
       console.log(response);
+
+      url = "/wishlist/getApps"
+      response = await api.get(url,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`
+          }
+
+        });
+
+      this.setState({ appsInWhishlist: response.data});
+
+
     }catch (error){
       console.log(error.response)
     }
+  }
+
+  async removeAppFromWishlist(appId){
+    // add API call
+    console.log(appId);
+    try{
+      let url = "/wishlist/delete/" + appId;
+      console.log(url);
+      let response = await api.get(url,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`
+          }
+        });
 
 
+      console.log(response);
 
+      url = "/wishlist/getApps"
+      response = await api.get(url,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`
+          }
+
+        });
+
+      console.log(response);
+      this.setState({ appsInWhishlist: response.data});
+
+
+    }catch (error){
+      console.log(error.response)
+    }
   }
 
   pushAppsOverview(){
@@ -375,6 +438,44 @@ class AppsOverview extends React.Component {
 
   pushDashboard(){
     this.props.history.push("/dashboard");
+  }
+
+  isAppInWhishlist(app){
+    let found = false;
+    for(let i = 0; i < this.state.appsInWhishlist.length; i++) {
+      if (this.state.appsInWhishlist[i]._id === app._id) {
+        found = true;
+        break;
+      }
+    }
+    return found;
+  }
+
+  displayCorrectButton(app){
+    if(this.isAppInWhishlist(app)){
+      return(
+        <ButtonContainer style={{marginTop: "0", width: "80%"}}>
+          <Button
+            style={{width: "100%"}}
+            onClick={()=>this.removeAppFromWishlist(app._id)}
+          >
+            Remove from wishlist
+          </Button>
+        </ButtonContainer>
+      )
+    }else{
+      return (
+        <ButtonContainer style={{marginTop: "0", width: "80%"}}>
+          <Button
+            style={{width: "100%"}}
+            onClick={()=>this.addAppToWishlist(app._id)}
+          >
+            Add to wishlist
+          </Button>
+        </ButtonContainer>
+      )
+    }
+
   }
 
 
@@ -526,7 +627,7 @@ class AppsOverview extends React.Component {
                       <SingleAppContainer>
                         <AppImageContainer>
                           <AppImage
-                            src={placeholder} alt={'missing'}
+                            src={app.logo_url} alt={'missing'}
                             onClick={() => {
                               this.goToDetails(app);
                             }}
@@ -554,14 +655,14 @@ class AppsOverview extends React.Component {
                           </AppTableContainer>
                         </AppInfoContainer>
                         <AppAddContainer>
-                          <ButtonContainer style={{marginTop: "0", width: "80%"}}>
-                            <Button
-                              style={{width: "100%"}}
-                              onClick={()=>this.addAppToWishlist(app._id)}
-                            >
-                              Add to wishlist
-                            </Button>
-                          </ButtonContainer>
+                          {this.state.appsInWhishlist === null?
+                            (
+                              ""
+                            ):(
+                              this.displayCorrectButton(app)
+
+                            )
+                          }
                         </AppAddContainer>
 
                       </SingleAppContainer>

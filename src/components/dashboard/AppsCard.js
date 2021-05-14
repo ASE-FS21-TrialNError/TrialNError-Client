@@ -10,10 +10,9 @@ const Card = styled.div`
   border-color: gray;
   border-width: thin;
   -webkit-box-shadow: 0 0 5px gray;
-  height: 270px;
-  width: 19%;
+  height: 100%;
+  width: 100%;
   background-color: white;
-  margin: 10px 10px 10px 10px;
   padding-right: 10px;
   padding-left: 10px;
   &:hover{
@@ -84,24 +83,16 @@ class AppsCard extends React.Component{
     super();
   }
 
-  goToDetails(app){
-    console.log(app)
-    this.props.history.push({
-      pathname: "/appDetails",
-      state: { app: app },
-    });
-  }
+
 
   render(){
     return (
       <Card
-        onClick={() => {
-          this.goToDetails(this.props.app);
-        }}
+
       >
         <CardImageContainer>
           <CardImage
-            src={placeholder} alt={'missing'}
+            src={this.props.app.logo_url} alt={'missing'}
             onClick={() => {
               //this.goToDetails(app._id);
             }}

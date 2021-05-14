@@ -5,15 +5,24 @@ import {ContentContainer, PageHeaderContainer, PageHeading, PageHeaderSearchBarC
 import {api, apiRecommender} from "../../helpers/api";
 import { withRouter } from "react-router-dom";
 import AppsCard from "./AppsCard";
+import {Button} from "../../views/design/Button";
 
 
 const HeaderRecommender = styled.h2`
   
 `;
 
+const HeaderWishlistContainer = styled.div`
+  display: flex;
+  align-items: center;
+  border-bottom-style: solid;
+  border-bottom-width: thin;
+  border-bottom-color: gray;
+`;
 
 const HeaderWishlist = styled.h2`
-  
+  width: 25%;
+  min-width: 250px;
 `;
 
 const NoAppsInWhishlistText = styled.div`
@@ -25,14 +34,22 @@ const AppCardsContainer = styled.div`
   flex-wrap: wrap;
 `;
 
+const AppCardCont = styled.div`
+  height: 270px;
+  width: 18%;
+  margin: 1%;
+`;
+
 
 
 class Dashboard extends React.Component{
   constructor(props) {
     super(props);
     this.state = {
-      recommendedApps: null,
-      whishlistApps: null
+      recommendedApps: [],
+      whishlistApps: [],
+      isStatusRemove: false,
+      appsToRemove: []
     };
   }
 
@@ -62,10 +79,33 @@ class Dashboard extends React.Component{
 
         });
 
-      url = "/recommender?appIds=" + "[6097f8f6845687a0fcad2e76]";
-      response = await apiRecommender.get(url);
-      this.setState({ recommendedApps: response.data});
       console.log(response.data);
+
+      let appsId = ["6097f8f6845687a0fcad2e88"]
+
+      url = "/recommender?appIds=" + "[" + appsId + "]";//"[" + response.data.apps + "]";
+      console.log(url);
+      const responseRecommender = await apiRecommender.get(url)
+        .then(response => {
+          /*let newResponse = response.data.replaceAll(NaN, null);
+          console.log(newResponse);
+          console.log(newResponse.canApprove);
+          console.log(JSON.parse(newResponse));
+          this.setState({recommendedApps: JSON.parse(newResponse)});*/
+          console.log(response);
+          this.setState({recommendedApps: response.data});
+        });
+
+
+
+      //const obj = JSON.parse(responseRecommender);
+      /*console.log(obj)
+
+      this.setState({ recommendedApps: obj});*/
+
+     // console.log(responseRecommender.data);
+
+
     } catch (error) {
       this.setState({
         errorMessage: error.message,
@@ -78,12 +118,62 @@ class Dashboard extends React.Component{
     this.props.history.push("/appsOverview");
   }
 
+  pushDashboard(){
+    window.location.reload(false);
+  }
+
+  setStatus(){
+    console.log(this.state.appsToRemove)
+    if(this.state.isStatusRemove){
+      this.setState({isStatusRemove: false});
+    }else{
+      this.setState({isStatusRemove: true});
+    }
+  }
+
+  goToDetails(app){
+    console.log(app)
+    this.props.history.push({
+      pathname: "/appDetails",
+      state: { app: app },
+    });
+  }
+
+  addOrRemoveAppToAppsToRemove(app){
+    let appsToRemove = this.state.appsToRemove;
+    if(appsToRemove.includes(app._id)){
+      let index = appsToRemove.indexOf(app._id);
+      appsToRemove.splice(index, 1);
+    }else{
+      appsToRemove.push(app._id);
+    }
+    this.setState({appsToRemove: appsToRemove})
+  }
+
+  isCardChosenToBeRemoved(app){
+    if(this.state.appsToRemove.includes(app._id)){
+      return true;
+    }else{
+      return false;
+    }
+  }
+
+  removeAppsFromWishlist(){
+    // api call for removing apps
+
+    this.setState(
+      {
+        appsToRemove: [],
+        isStatusRemove: false
+    });
+  }
+
   render(){
     return (
       <div>
         <Header
           pushAppsOverview={this.pushAppsOverview.bind(this)}
-          push
+          pushDashboard={this.pushDashboard.bind(this)}
         />
         <ContentContainer>
           <PageHeaderContainer>
@@ -96,38 +186,120 @@ class Dashboard extends React.Component{
           <HeaderRecommender>
             Recommended Apps
           </HeaderRecommender>
-          {!this.state.recommendedApps ?
+          {this.state.recommendedApps === []?
             (
               <NoAppsInWhishlistText>
                 Only after you added some apps to your wishlist, can we give you recommendations for additional apps.
               </NoAppsInWhishlistText>
             ):(
-              ""
+              <AppCardsContainer>
+                {this.state.recommendedApps.map((app) =>
+                  {
+                    return (
+                      <AppCardCont>
+                        <AppsCard
+                          key={app._id}
+                          app={app}
+                        />
+                      </AppCardCont>
+
+                    )
+                  }
+                )}
+              </AppCardsContainer>
+
             )
 
           }
-          <HeaderWishlist>
-            Whishlist with apps
-          </HeaderWishlist>
-          {!this.state.whishlistApps ?
+          <HeaderWishlistContainer>
+            <HeaderWishlist>
+              Whishlist with apps
+            </HeaderWishlist>
+
+            {this.state.isStatusRemove?
+              (
+                [
+                 <Button
+                  style={{minWidth: "15%", marginRight: "5%"}}
+                  onClick={()=>this.setStatus()}
+                >
+                  Cancel
+                </Button>,
+                <Button
+                  style={this.state.appsToRemove.length === 0? {minWidth: "15%", opacity: "0.4"} : {minWidth: "15%"}}
+                  disabled={this.state.appsToRemove.length === 0}
+                  onClick={()=>this.removeAppsFromWishlist()}
+                >
+                  Submit
+                </Button>]
+              ):(
+                <Button
+                  style={{minWidth: "15%", marginRight: "5%"}}
+                  onClick={()=>this.setStatus()}
+                >
+                  Remove apps
+                </Button>
+              )
+            }
+          </HeaderWishlistContainer>
+
+          {this.state.whishlistApps.length === 0?
             (
              <NoAppsInWhishlistText>
                There are not any apps in your whishlist. Go to the apps overview and add some apps!
              </NoAppsInWhishlistText>
             ):(
+
               <AppCardsContainer>
+                {this.state.isStatusRemove?
+                  (
+                    <div style={{width: "100%"}}>
+                      Click on the apps to mark them for removal and then remove them with a click on the submit button.
+                    </div>
+                  ):(
+                    ""
+                  )
+                }
+
                 {this.state.whishlistApps.map((app) =>
                   {
-                    return (
-                      <AppsCard
-                        app={app}
-                      />
-                    )
+                    if(this.state.isStatusRemove){
+                      return (
+                        <AppCardCont
+                          style={this.isCardChosenToBeRemoved(app)?{WebkitBoxShadow: `0 0 20px red`} : {WebkitBoxShadow: `0 0 0px green`}}
+                          onClick={() => {
+                            this.addOrRemoveAppToAppsToRemove(app);
+                          }}
+                        >
+                          <AppsCard
+                            key={app._id}
+                            app={app}
+                            isStatusRemove={this.state.isStatusRemove}
+                          />
+                        </AppCardCont>
+                      )
+                    }else{
+                      return (
+                        <AppCardCont
+                          onClick={() => {
+                            this.goToDetails(app);
+                          }}
+                        >
+                          <AppsCard
+                            style={{backgroundColor: "red"}}
+                            key={app._id}
+                            app={app}
+                            isStatusRemove={this.state.isStatusRemove}
+
+                          />
+                        </AppCardCont>
+                      )
+                    }
+
                   }
                 )}
               </AppCardsContainer>
             )
-
           }
         </ContentContainer>
       </div>
