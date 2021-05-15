@@ -81,9 +81,9 @@ class Dashboard extends React.Component{
 
       console.log(response.data);
 
-      let appsId = ["6097f8f6845687a0fcad2e88"]
+      //let appsId = ["6097f8f6845687a0fcad2e88"] "[" + appsId + "]";
 
-      url = "/recommender?appIds=" + "[" + appsId + "]";//"[" + response.data.apps + "]";
+      url = "/recommender?appIds=" + "[" + response.data.apps + "]";
       console.log(url);
       const responseRecommender = await apiRecommender.get(url)
         .then(response => {
@@ -158,14 +158,37 @@ class Dashboard extends React.Component{
     }
   }
 
-  removeAppsFromWishlist(){
+  async removeAppsFromWishlist(){
     // api call for removing apps
 
-    this.setState(
+    let url = "/wishlist/deleteApps"
+    const requestBody = {
+      apps: this.state.appsToRemove
+    }
+    const response = await api.put(url, requestBody,
       {
-        appsToRemove: [],
-        isStatusRemove: false
-    });
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`
+        }
+      });
+
+    url = "/wishlist/getApps"
+    await api.get(url,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`
+        }
+
+      }).then(response => {
+      this.setState(
+        {
+          whishlistApps: response.data,
+          appsToRemove: [],
+          isStatusRemove: false
+        });
+      });
+
+
   }
 
   render(){

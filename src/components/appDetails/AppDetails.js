@@ -104,7 +104,7 @@ class AppDetails extends React.Component{
           <Line/>
           <GeneralInfoContainer>
             <AppImageGIC
-              src={placeholder} alt={'missing'}
+              src={this.props.location.state.app.logo_url} alt={'missing'}
             />
             <AppTitleGIC class="box">
               <AppTitlepGIC>
