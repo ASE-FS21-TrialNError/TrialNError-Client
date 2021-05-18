@@ -63,8 +63,12 @@ const numberFormatFloat = (value) =>
     maximumFractionDigits: 1
   }).format(value);
 
+
 const numberFormatInt = (value) =>
   new Intl.NumberFormat('en-US').format(value);
+
+
+
 
 export default class TableComparison extends React.Component{
 

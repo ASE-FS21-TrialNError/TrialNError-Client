@@ -5,6 +5,8 @@ import { withRouter } from "react-router-dom";
 import { Button, ButtonContainer } from "../views/design/Button";
 import Error from "../views/Error";
 import {BaseContainer, Introduction, IntroductionContainer, Label, Form, FormContainer, InputField} from "../views/design/LoginRegistration";
+import {NotificationContainer, NotificationManager} from 'react-notifications';
+import {isEmailFormatCorrect} from "../helpers/isEmailFormatCorrect";
 
 
 class Login extends React.Component {
@@ -19,30 +21,33 @@ class Login extends React.Component {
   }
 
   async login() {
-    try{
+    if(isEmailFormatCorrect(this.state.email)){
+      try{
 
-      const requestBody = JSON.stringify({
-        email: this.state.email,
-        password: this.state.password,
-      });
-      console.log(requestBody);
-      const response = await api.post("/auth/login", requestBody);
-
-      console.log(response.status);
-      if(response.status === 200 && response.data.errorCode !== 202){
-        localStorage.setItem("token", response.data.payload.token);
-        this.props.history.push("/appsOverview");
-      }else{
-        this.setState({
-          errorMessage: response.data.error
+        const requestBody = JSON.stringify({
+          email: this.state.email,
+          password: this.state.password,
         });
+        console.log(requestBody);
+        const response = await api.post("/auth/login", requestBody);
+
+        console.log(response.status);
+        if(response.status === 200 && response.data.errorCode !== 202){
+          localStorage.setItem("token", response.data.payload.token);
+          this.props.history.push("/appsOverview");
+        }else{
+          NotificationManager.error('Error: Account does not exist','',3000);
+        }
+      }catch(error){
+        console.log(error);
+        // User not found
+        NotificationManager.error('Error: Password is invalid','',3000);
+
       }
-    }catch(error){
-      console.log(error);
-      this.setState({
-        errorMessage: error.response.data.error
-      });
+    }else{
+      NotificationManager.error('Error: Email format is incorrect','',3000);
     }
+
     
 
   }
@@ -59,6 +64,7 @@ class Login extends React.Component {
     return (
       <BaseContainer>
         <FormContainer>
+          <NotificationContainer/>
           <IntroductionContainer>
             <Introduction>
               <h1>Welcome to the AppCom</h1>
@@ -106,7 +112,6 @@ class Login extends React.Component {
               
             </Form>
           </IntroductionContainer>
-          <Error message={this.state.errorMessage}/>  
         </FormContainer>
       </BaseContainer>
     );
