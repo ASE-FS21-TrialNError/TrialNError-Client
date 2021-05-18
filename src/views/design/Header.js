@@ -35,11 +35,13 @@ const NavigationContainer = styled.div`
   align-items: center;
   height: 100px;
   width: 80%;
+  padding-right: 5%;
 `;
 
 const NavButton = styled(Button)`
-  min-width: 150px;
-  padding-right: 0;
+  min-width: 220px;
+  padding: 0;
+  font-size: 20px;
 `;
 
 const NavButtonContainer = styled.div`
@@ -93,7 +95,7 @@ class Header extends React.Component {
                   this.props.pushAppsOverview()
                 }}
               >
-                AppsOverview
+                Apps Overview
               </NavButton>
             {/*</Link>*/}
           </NavButtonContainer>
