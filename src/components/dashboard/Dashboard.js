@@ -6,7 +6,7 @@ import {api, apiRecommender} from "../../helpers/api";
 import { withRouter } from "react-router-dom";
 import AppsCard from "./AppsCard";
 import {Button} from "../../views/design/Button";
-
+import LoadingOverlay from "react-loading-overlay";
 
 const HeaderRecommender = styled.h2`
   
@@ -26,7 +26,8 @@ const HeaderWishlist = styled.h2`
 `;
 
 const NoAppsInWhishlistText = styled.div`
-  
+  margin-top: 10px;
+  margin-bottom: 10px;
 `;
 
 const AppCardsContainer = styled.div`
@@ -38,6 +39,12 @@ const AppCardCont = styled.div`
   height: 270px;
   width: 18%;
   margin: 1%;
+`;
+
+const PlaceholoderForLoading = styled.div`
+  height: 270px;
+  width: 100%;
+  margin-top: 10px;
 `;
 
 
@@ -206,20 +213,39 @@ class Dashboard extends React.Component{
               </PageHeading>
             </PageHeaderSearchBarContainer>
           </PageHeaderContainer>
-          <HeaderRecommender>
-            Recommended Apps
-          </HeaderRecommender>
-          {this.state.recommendedApps === []?
+          <HeaderWishlistContainer>
+            <HeaderRecommender>
+              Recommended Apps
+            </HeaderRecommender>
+          </HeaderWishlistContainer>
+          {this.state.recommendedApps.length === 0?
             (
-              <NoAppsInWhishlistText>
-                Only after you added some apps to your wishlist, can we give you recommendations for additional apps.
-              </NoAppsInWhishlistText>
+              this.state.whishlistApps.length === 0?
+                (
+                  <NoAppsInWhishlistText>
+                    Only after you added some apps to your wishlist, we can give you recommendations for additional apps.
+                  </NoAppsInWhishlistText>
+                ):(
+                  <LoadingOverlay
+                    active={true}
+                    spinner
+                    text='Loading ...'
+                  >
+                    <PlaceholoderForLoading/>
+                  </LoadingOverlay>
+                )
             ):(
+
               <AppCardsContainer>
+
                 {this.state.recommendedApps.map((app) =>
                   {
                     return (
-                      <AppCardCont>
+                      <AppCardCont
+                        onClick={() => {
+                          this.goToDetails(app);
+                        }}
+                      >
                         <AppsCard
                           key={app._id}
                           app={app}

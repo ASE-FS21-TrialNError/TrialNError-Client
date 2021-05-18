@@ -116,13 +116,6 @@ const AppDescriptionBody = styled.div`
   position: relative;
 `;
 
-const FadeOutElement = styled.div`
-  position: absolute;
-  height: 500px;
-  width: 500px;
-  background-color: red;
-  z-index: 9;
-`;
 
 const AppInfoContainer = styled.div`
   width: 35%;
@@ -456,7 +449,7 @@ class AppsOverview extends React.Component {
       return(
         <ButtonContainer style={{marginTop: "0", width: "80%"}}>
           <Button
-            style={{width: "100%"}}
+            style={{width: "100%", backgroundColor: "rgb(94,120,135)"}}
             onClick={()=>this.removeAppFromWishlist(app._id)}
           >
             Remove from wishlist
