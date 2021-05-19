@@ -10,6 +10,8 @@ import AppsOverview from "../../appOverview/AppsOverview";
 import AppDetails from "../../appDetails/AppDetails";
 import Dashboard from "../../dashboard/Dashboard";
 import {DashboardGuard} from "../routeProtectors/DashboardGuard";
+import EmailVerification from "../../emailVerification/EmailVerification";
+import {EmailVerificationGuard} from "../routeProtectors/EmailVerificationGuard";
 
 class AppRouter extends React.Component {
   render() {
@@ -48,6 +50,15 @@ class AppRouter extends React.Component {
                 <LoginGuard>
                   <Login />
                 </LoginGuard>
+              )}
+            />
+            <Route
+              path="/emailVerification"
+              exact
+              render={() => (
+                <EmailVerificationGuard>
+                  <EmailVerification />
+                </EmailVerificationGuard>
               )}
             />
             <Route

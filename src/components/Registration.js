@@ -28,20 +28,26 @@ class Registration extends React.Component {
         email: this.state.email,
         password: this.state.password
       });
-      const response = await api.post("/auth/register", requestBody);
+      const response = await api.post("/auth/email/register", requestBody);
 
       console.log(response.status);
       console.log(response.data);
       console.log(response.data.payload);
-      if (response.status === 201){
+      if (response.data.message === "LOGIN.EMAIL_VERIFIED"){
 
         localStorage.setItem("token", response.data.payload.token);
 
-        this.props.history.push("/appsOverview");
+        this.props.history.push({
+          pathname: "/emailVerification",
+          state: {email: this.state.email}
+        });
 
       }else{
-        NotificationManager.error('Error: Account with this email address already exists','',3000);
-
+        if(response.data.error === "ERROR.REGISTRATION.EMAIL_NOT_SENT"){
+          NotificationManager.error('Error: Verification email could not be sent to your email address','',3000);
+        }else{
+          NotificationManager.error('Error: Account with this email address already exists','',3000);
+        }
       }
     }else{
       NotificationManager.error('Error: Email format is incorrect','',3000);
