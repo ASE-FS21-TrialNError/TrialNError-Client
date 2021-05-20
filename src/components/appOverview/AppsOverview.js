@@ -6,7 +6,6 @@ import { withRouter } from "react-router-dom";
 import Header  from "../../views/design/Header";
 import { BaseContainer, ContentContainer, PageHeaderContainer, PageHeading, PageHeaderSearchBarContainer} from "../../views/design/PageContent";
 import Modal from "../../views/design/Modal";
-import placeholder from "../../views/design/image/placeholder.png";
 import TableComparison from "./TableComparison";
 import {PageNumbers} from "./PageNumbers";
 import {ButtonContainer, Button} from "../../views/design/Button";
@@ -132,29 +131,9 @@ const AppTableContainer = styled.div`
   position: relative;
 `;
 
-const AppInfo = styled.div`
-`;
 
 const AppAddContainer = styled.div`
   width: 15%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
-const AppAdd = styled.div`
-`;
-
-const SortButton = styled.div`
-  background-color: rgb(220,220,220);
-  border-color: black;
-  border: solid;
-  width: 100px;
-  height: 50px;
-  font-size: 24px;
-  fond-weight: bold;
-  overflow: hidden;
-  border-radius: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -235,7 +214,7 @@ class AppsOverview extends React.Component {
       console.log(response.data);
 
       let url = "/wishlist/getApps"
-      response = await api.get(url,
+      await api.get(url,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`
@@ -557,7 +536,6 @@ class AppsOverview extends React.Component {
                   heightButton={80}
                   widthButton={150}
                   nrOfColumns={1}
-                  nrOfColumns={1}
                 />
                 <Modal
                   filterState={this.state.contentRatingAndroid}
@@ -570,6 +548,7 @@ class AppsOverview extends React.Component {
                   nrOfColumns={1}
                 />
                 <Modal
+                  filterState={this.state.priceIos}
                   updateListOfApps={this.updateFilter.bind(this)}
                   name={"Price iOS"}
                   heightPopUp={220}
@@ -578,6 +557,7 @@ class AppsOverview extends React.Component {
                   widthButton={90}
                 />
                 <Modal
+                  filterState={this.state.priceAndroid}
                   updateListOfApps={this.updateFilter.bind(this)}
                   name={"Price Android"}
                   heightPopUp={220}
@@ -586,6 +566,7 @@ class AppsOverview extends React.Component {
                   widthButton={120}
                 />
                 <Modal
+                  filterState={this.state.ratingCountIos}
                   updateListOfApps={this.updateFilter.bind(this)}
                   name={"Rating Count iOS"}
                   heightPopUp={220}
@@ -594,6 +575,7 @@ class AppsOverview extends React.Component {
                   widthButton={140}
                 />
                 <Modal
+                  filterState={this.state.ratingCountAndroid}
                   updateListOfApps={this.updateFilter.bind(this)}
                   name={"Rating Count Android"}
                   heightPopUp={220}
@@ -617,18 +599,28 @@ class AppsOverview extends React.Component {
                   </PageNumberContainer>
                   {this.state.apps.map((app)=>{
                     return (
-                      <SingleAppContainer>
-                        <AppImageContainer>
+                      <SingleAppContainer
+                        key={app._id + "appCon"}
+                      >
+                        <AppImageContainer
+                          key={app._id + "imageCon"}
+                        >
                           <AppImage
+                            key={app._id + "image"}
                             src={app.logo_url} alt={'missing'}
                             onClick={() => {
                               this.goToDetails(app);
                             }}
                           />
                         </AppImageContainer>
-                        <AppDescriptionContainer>
-                          <AppDescription>
+                        <AppDescriptionContainer
+                          key={app._id + "appDescCon"}
+                        >
+                          <AppDescription
+                            key={app._id + "appDesc"}
+                          >
                             <AppDesciptionTitle
+                              key={app._id + "appDescTitle"}
                               onClick={() => {
                                 this.goToDetails(app);
                               }}
@@ -642,12 +634,21 @@ class AppsOverview extends React.Component {
                           </AppDescription>
 
                         </AppDescriptionContainer>
-                        <AppInfoContainer>
-                          <AppTableContainer>
-                            <TableComparison app={app}/>
+                        <AppInfoContainer
+                          key={app._id + "appInfoCon"}
+                        >
+                          <AppTableContainer
+                            key={app._id + "appTableCon"}
+                          >
+                            <TableComparison
+                              key={app._id + "tableComp"}
+                              app={app}
+                            />
                           </AppTableContainer>
                         </AppInfoContainer>
-                        <AppAddContainer>
+                        <AppAddContainer
+                          key={app._id + "addCon"}
+                        >
                           {this.state.appsInWhishlist === null?
                             (
                               ""

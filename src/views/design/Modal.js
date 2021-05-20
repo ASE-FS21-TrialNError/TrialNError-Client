@@ -3,7 +3,6 @@ import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
 import RadioButtonForm from './RadioButtonForm';
 import MultipleChoice from "./MultipleChoice";
-import {InputField} from "./LoginRegistration";
 import InputFieldForm from "./InputFieldForm";
 
 const StyledPopup = styled(Popup)`
@@ -28,7 +27,7 @@ const StyledPopup = styled(Popup)`
 
 
 const SortButton = styled.button`
-  background-color: rgb(243, 243, 243);
+  background-color: ${props => isNoFilterChosen(props)  ? "rgb(243, 243, 243)" : "rgb(220, 220, 220)"};
   border-color: gray;
   border-style: solid;
   border-width: thin;
@@ -46,6 +45,19 @@ const SortButton = styled.button`
     cursor: pointer;
   }
 `;
+
+function isNoFilterChosen(props){
+  if(props.filterState === null){
+    return true;
+  }
+  if(props.name === "Rating iOS" || props.name === "Rating Android" ||props.name === "Price iOS" || props.name === "Price Android"
+    || props.name === "Rating Count iOS" || props.name === "Rating Count Android" ){
+    if(props.filterState.min === null && props.filterState.max === null){
+      return true;
+    }
+  }
+  return false;
+}
 
 function loadCorrectForm(props){
   if(props.name === "Sort"){
@@ -68,7 +80,16 @@ const Modal = ((props) => (
   <StyledPopup
     height={props.heightPopUp}
     width={props.widthPopUp}
-    trigger={<SortButton height={props.heightButton} width={props.widthButton}>{props.name}</SortButton>}
+    trigger={
+      <SortButton
+        filterState={props.filterState}
+        name={props.name}
+        height={props.heightButton}
+        width={props.widthButton}
+      >
+        {props.name}
+      </SortButton>
+    }
     position="bottom center"
     closeOnDocumentClick
   >

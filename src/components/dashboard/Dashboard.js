@@ -92,7 +92,7 @@ class Dashboard extends React.Component{
 
       url = "/recommender?appIds=" + "[" + response.data.apps + "]";
       console.log(url);
-      const responseRecommender = await apiRecommender.get(url)
+      await apiRecommender.get(url)
         .then(response => {
           /*let newResponse = response.data.replaceAll(NaN, null);
           console.log(newResponse);
@@ -172,7 +172,7 @@ class Dashboard extends React.Component{
     const requestBody = {
       apps: this.state.appsToRemove
     }
-    const response = await api.put(url, requestBody,
+    await api.put(url, requestBody,
       {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`
@@ -242,6 +242,7 @@ class Dashboard extends React.Component{
                   {
                     return (
                       <AppCardCont
+                        key={app._id + "1"}
                         onClick={() => {
                           this.goToDetails(app);
                         }}
@@ -315,6 +316,7 @@ class Dashboard extends React.Component{
                     if(this.state.isStatusRemove){
                       return (
                         <AppCardCont
+                          key={app._id + "1"}
                           style={this.isCardChosenToBeRemoved(app)?{WebkitBoxShadow: `0 0 20px red`} : {WebkitBoxShadow: `0 0 0px green`}}
                           onClick={() => {
                             this.addOrRemoveAppToAppsToRemove(app);
@@ -330,6 +332,7 @@ class Dashboard extends React.Component{
                     }else{
                       return (
                         <AppCardCont
+                          key={app._id + "1"}
                           onClick={() => {
                             this.goToDetails(app);
                           }}
