@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Ratings from 'react-ratings-declarative';
 
 const Table = styled.table`
-  heigth: 100%;
+  height: 100%;
   width: 100%;
   font-size: 16px;
 `;
@@ -69,12 +69,11 @@ const numberFormatInt = (value) =>
 
 
 
-
+// table with most important data for the single apps in the Apps overview
 export default class TableComparison extends React.Component{
 
   constructor(props) {
     super(props);
-
   }
 
   render(){
@@ -87,7 +86,6 @@ export default class TableComparison extends React.Component{
       let appRatingAndroid = this.props.app.rating_count_andr
       appRatingAndroid = appRatingAndroid.toFixed(2);
     }*/
-    
 
     return (
       <Table>
@@ -181,11 +179,11 @@ export default class TableComparison extends React.Component{
   }
 }
 
+// table with most important data on the top of the app details page
 export class TableDetailsGIC extends React.Component{
 
   constructor(props) {
     super(props);
-
   }
 
   render(){
@@ -246,6 +244,7 @@ export class TableDetailsGIC extends React.Component{
             <RowHeaderGIC>Rating Android:</RowHeaderGIC>
             {this.props.app.rating_andr !== null? (
               <TableData>
+                {/*displaying the yellow stars for the rating*/}
                 <Ratings
                   rating={this.props.app.rating_andr}
                   widgetDimensions="20px"
@@ -276,11 +275,11 @@ export class TableDetailsGIC extends React.Component{
 }
 
 
+// table with all additional data on the bottom of the app details page
 export class TableDetails extends React.Component{
 
   constructor(props) {
     super(props);
-
   }
 
   render(){

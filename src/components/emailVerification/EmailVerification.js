@@ -45,6 +45,7 @@ const InputForm = styled.div`
   width: 100%;
 `;
 
+// after a user registered he is directed to the email verification page, to verify his email address
 class EmailVerification extends React.Component{
   constructor() {
     super();
@@ -57,8 +58,8 @@ class EmailVerification extends React.Component{
     this.setState({ [key]: value });
   }
 
+  // send entered code to backend to very the account
   async verifyEmail(){
-
     try{
       const url = "/auth/email/otp"
       let requestBody = {
@@ -76,11 +77,8 @@ class EmailVerification extends React.Component{
       }
 
     }catch (e){
-
+      NotificationManager.error('Sever error', 'Failed',3000);
     }
-
-
-
   }
 
 

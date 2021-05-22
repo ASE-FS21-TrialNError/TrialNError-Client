@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
-import RadioButtonForm from './RadioButtonForm';
-import MultipleChoice from "./MultipleChoice";
+import SortForm from './SortForm';
+import SingleChoice from "./SingleChoice";
 import InputFieldForm from "./InputFieldForm";
 
 const StyledPopup = styled(Popup)`
@@ -26,7 +26,7 @@ const StyledPopup = styled(Popup)`
 `;
 
 
-const SortButton = styled.button`
+const FilterButton = styled.button`
   background-color: ${props => isNoFilterChosen(props)  ? "rgb(243, 243, 243)" : "rgb(210, 210, 210)"};
   border-color: gray;
   border-style: solid;
@@ -46,6 +46,7 @@ const SortButton = styled.button`
   }
 `;
 
+// returns true if the no filter is chosen, used for coloring of button
 function isNoFilterChosen(props){
   if(props.filterState === null){
     return true;
@@ -59,98 +60,53 @@ function isNoFilterChosen(props){
   return false;
 }
 
+
 function loadCorrectForm(props){
+  // if it is the sort button display SortForm
   if(props.name === "Sort"){
     return(
-      <RadioButtonForm filterState={props.filterState} updateListOfApps={props.updateListOfApps}/>
+      <SortForm filterState={props.filterState} updateListOfApps={props.updateListOfApps}/>
     )
   }
+  // if it is a price or rating count button display InputFieldForm
   if(props.name === "Price iOS" || props.name === "Price Android" || props.name === "Rating Count iOS" || props.name === "Rating Count Android"){
     return(
       <InputFieldForm updateListOfApps={props.updateListOfApps} name={props.name}/>
     )
+    // if it is a any other button display SingleChoice
   } else {
     return (
-      <MultipleChoice filterState={props.filterState} updateListOfApps={props.updateListOfApps} name={props.name} nrOfColumns={props.nrOfColumns}/>
+      <SingleChoice filterState={props.filterState} updateListOfApps={props.updateListOfApps} name={props.name} nrOfColumns={props.nrOfColumns}/>
     )
   }
 }
 
 const Modal = ((props) => (
+  // displayed pop up as soon as the displayed button is clicked
   <StyledPopup
     height={props.heightPopUp}
     width={props.widthPopUp}
     trigger={
-      <SortButton
+      /*displayed button*/
+      <FilterButton
         filterState={props.filterState}
         name={props.name}
         height={props.heightButton}
         width={props.widthButton}
       >
         {props.name}
-      </SortButton>
+      </FilterButton>
     }
     position="bottom center"
     closeOnDocumentClick
   >
 
     <div>
+      {/*loading the correct form as soon as filter is clicked*/}
       {loadCorrectForm(props)}
     </div>
   </StyledPopup>
 ));
-
-
-// const Modal = () => (
-//   <Popup
-//     trigger={<button className="button"> Open Modal </button>}
-//     modal
-//     nested
-//   >
-//     {close => (
-//       <div className="modal">
-//         <button className="close" onClick={close}>
-//           &times;
-//         </button>
-//         <div className="header"> Modal Title </div>
-//         <div className="content">
-//           {' '}
-//           Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque, a nostrum.
-//           Dolorem, repellat quidem ut, minima sint vel eveniet quibusdam voluptates
-//           delectus doloremque, explicabo tempore dicta adipisci fugit amet dignissimos?
-//           <br />
-//           Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur sit
-//           commodi beatae optio voluptatum sed eius cumque, delectus saepe repudiandae
-//           explicabo nemo nam libero ad, doloribus, voluptas rem alias. Vitae?
-//         </div>
-//         <div className="actions">
-//           <Popup
-//             trigger={<button className="button"> Trigger </button>}
-//             position="top center"
-//             nested
-//           >
-//             <span>
-//               Lorem ipsum dolor sit amet, consectetur adipisicing elit. Beatae
-//               magni omnis delectus nemo, maxime molestiae dolorem numquam
-//               mollitia, voluptate ea, accusamus excepturi deleniti ratione
-//               sapiente! Laudantium, aperiam doloribus. Odit, aut.
-//             </span>
-//           </Popup>
-//           <button
-//             className="button"
-//             onClick={() => {
-//               console.log('modal closed ');
-//               close();
-//             }}
-//           >
-//             close modal
-//           </button>
-//         </div>
-//       </div>
-//     )}
-//   </Popup>
-// );
-
 
 
 export default Modal;

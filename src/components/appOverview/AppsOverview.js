@@ -200,8 +200,8 @@ class AppsOverview extends React.Component {
   async componentDidMount() {
     try {
 
+      // fetching the first apps when user gets to this page, as well as how many pages there are
       console.log(localStorage.getItem("token"));
-
       let response = await api.get("/apps?page=1&limit=10",
       {
       headers: {
@@ -216,6 +216,8 @@ class AppsOverview extends React.Component {
       console.log("total pages", this.state.totalPages);
       console.log(response.data);
 
+      // get all apps which are in the wish list from the backend, so we know if we should display
+      // add app to wishlist or remove app from wishlist
       let url = "/wishlist/getApps"
       await api.get(url,
         {
@@ -229,39 +231,22 @@ class AppsOverview extends React.Component {
           this.setState({ appsInWhishlist: response.data})
         }
       );
-
-
-
-
     } catch (error) {
       this.setState({
         errorMessage: error.message,
       });
-      //alert(`Something went wrong while fetching the users: \n${handleError(error)}`);
     }
   }
 
   async updatePageNumber(value){
-
     this.setState(
       {currentPage: value},
       this.getApps
       );
 
-    /*console.log("page number", value);
-    const url = "/apps?page=".concat(value.toString(), "&limit=", this.state.nrOfAppsPerPage.toString(),"&name=", this.state.searchString)
-    const response = await api.get(url,
-      {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`
-        }
-    });
-    this.setState({apps: response.data.items });
-    console.log("apps", this.state.apps);
-    this.setState({totalPages: response.data.totalPages})
-    this.setState({currentPage: value});*/
   }
 
+  // generates the correct url with the filtering criteria in it to get the correct apps from the backend
   async getApps(){
 
     let url = "/apps?page=" + this.state.currentPage + "&limit=" + this.state.nrOfAppsPerPage;
@@ -318,6 +303,7 @@ class AppsOverview extends React.Component {
     this.setState({totalPages: response.data.totalPages});
   }
 
+  // updates the state of the filters in this component, is passed down to subcomponent
   updateFilter(key, value){
     console.log(key, value);
     this.setState(
@@ -335,15 +321,14 @@ class AppsOverview extends React.Component {
     });
   }
 
+  // sets the state of string entered in the search bar
   async handleSearchRequest(value){
-
     this.setState(
       {searchString: value, currentPage: 1},
       this.getApps)
   }
 
   async addAppToWishlist(appId){
-    // add API call
     console.log(appId);
     try{
       let url = "/wishlist/add/" + appId;
@@ -356,6 +341,7 @@ class AppsOverview extends React.Component {
         });
       console.log(response);
 
+      // get the updated wishlist for displaying the correct button: "add to wishlist" or "remove from whishlist"
       url = "/wishlist/getApps"
       response = await api.get(url,
         {
@@ -364,9 +350,7 @@ class AppsOverview extends React.Component {
           }
 
         });
-
       this.setState({ appsInWhishlist: response.data});
-
 
     }catch (error){
       console.log(error.response)
@@ -388,7 +372,7 @@ class AppsOverview extends React.Component {
 
 
       console.log(response);
-
+      // get the updated wishlist for displaying the correct button: "add to wishlist" or "remove from whishlist"
       url = "/wishlist/getApps"
       response = await api.get(url,
         {
@@ -407,6 +391,7 @@ class AppsOverview extends React.Component {
     }
   }
 
+  // if appsOverview is clicked in the header the page is reloaded
   pushAppsOverview(){
     window.location.reload(false);
   }
@@ -415,6 +400,7 @@ class AppsOverview extends React.Component {
     this.props.history.push("/dashboard");
   }
 
+  // checks if the app in the parameter is in the wishlist
   isAppInWhishlist(app){
     let found = false;
     for(let i = 0; i < this.state.appsInWhishlist.length; i++) {
@@ -426,6 +412,7 @@ class AppsOverview extends React.Component {
     return found;
   }
 
+  // displays either the button "add to wishlist" or "remove from whishlist"
   displayCorrectButton(app){
     if(this.isAppInWhishlist(app)){
       return(
@@ -453,8 +440,8 @@ class AppsOverview extends React.Component {
 
   }
 
+  // displays a list with active filters
   showCorrectFilterText(){
-
     let displayedText = [];
     if( this.state.wayOfSorting !== null){
       displayedText.push("- Sort: " + sortingData[this.state.wayOfSorting]);
@@ -526,6 +513,8 @@ class AppsOverview extends React.Component {
         <BaseContainer>
           <ContentContainer>
             <PageHeaderContainer>
+
+              {/*header and searchbar section*/}
               <PageHeaderSearchBarContainer>
                 <PageHeading>
                   Apps Overview
@@ -539,6 +528,8 @@ class AppsOverview extends React.Component {
                   />
                 </SearchBarContainer>
               </PageHeaderSearchBarContainer>
+
+              {/*filter section*/}
               <FilterContainer>
                 <Modal
                   filterState={this.state.wayOfSorting}
@@ -647,6 +638,8 @@ class AppsOverview extends React.Component {
                 />
               </FilterContainer>
             </PageHeaderContainer>
+
+            {/*body section with page numbers and apps*/}
             <AppsContainer>
               {!this.state.apps ? (
                 <h1>loading</h1>
@@ -693,9 +686,7 @@ class AppsOverview extends React.Component {
                             <AppDescriptionBody>
                               {app.description}
                             </AppDescriptionBody>
-
                           </AppDescription>
-
                         </AppDescriptionContainer>
                         <AppInfoContainer
                           key={app._id + "appInfoCon"}
@@ -721,9 +712,7 @@ class AppsOverview extends React.Component {
                             )
                           }
                         </AppAddContainer>
-
                       </SingleAppContainer>
-
                     );
                   })}
                   <PageNumberContainer>

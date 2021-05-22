@@ -7,6 +7,7 @@ const ErroLabel = styled.label`
   margin-bottom: 10px;
   text-transform: uppercase;
 `;
+
 const ErrorDiv = styled.div`
   display: flex;
   justify-content: center;

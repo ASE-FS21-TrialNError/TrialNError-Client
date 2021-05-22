@@ -1,5 +1,5 @@
 
-
+// data of the sort
 export const sortingData = (
   {
     "price_ios-D": "Most Expensive iOS",
@@ -17,7 +17,7 @@ export const sortingData = (
   }
 )
 
-
+// data of the filters
 export const radioButtonData = (
   {
     "Category iOS": {

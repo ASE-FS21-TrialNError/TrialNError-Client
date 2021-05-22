@@ -37,7 +37,7 @@ const RadioButton = styled.input`
   }
 `;
 
-class MultipleChoice extends React.Component {
+class SingleChoice extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -130,4 +130,4 @@ class MultipleChoice extends React.Component {
 
 
 
-export default MultipleChoice;
+export default SingleChoice;
