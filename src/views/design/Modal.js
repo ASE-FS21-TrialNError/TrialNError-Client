@@ -27,7 +27,7 @@ const StyledPopup = styled(Popup)`
 
 
 const SortButton = styled.button`
-  background-color: ${props => isNoFilterChosen(props)  ? "rgb(243, 243, 243)" : "rgb(220, 220, 220)"};
+  background-color: ${props => isNoFilterChosen(props)  ? "rgb(243, 243, 243)" : "rgb(210, 210, 210)"};
   border-color: gray;
   border-style: solid;
   border-width: thin;

@@ -9,6 +9,7 @@ import Modal from "../../views/design/Modal";
 import TableComparison from "./TableComparison";
 import {PageNumbers} from "./PageNumbers";
 import {ButtonContainer, Button} from "../../views/design/Button";
+import {sortingData} from "../../helpers/FilterCategoryData";
 
 
 
@@ -146,6 +147,8 @@ const PageNumberContainer = styled.div`
 
 `;
 
+const TextOfActivatedFilters = styled.div`
+`;
 
 
 class AppsOverview extends React.Component {
@@ -450,6 +453,65 @@ class AppsOverview extends React.Component {
 
   }
 
+  showCorrectFilterText(){
+
+    let displayedText = [];
+    if( this.state.wayOfSorting !== null){
+      displayedText.push("- Sort: " + sortingData[this.state.wayOfSorting]);
+    }
+    if(this.state.categoryIos !== null){
+      displayedText.push("- Category iOS: " + this.state.categoryIos);
+    }
+    if(this.state.categoryAndroid !== null){
+      displayedText.push("- Category Android: " + this.state.categoryAndroid);
+    }
+    if(this.state.ratingIos.min !== null && this.state.ratingIos.max !== null){
+      displayedText.push("- Rating iOS: " + this.state.ratingIos.min + " to " + this.state.ratingIos.max);
+    }
+    if(this.state.ratingAndroid.min !== null && this.state.ratingAndroid.max !== null){
+      displayedText.push("- Rating Android: " + this.state.ratingAndroid.min + " to " + this.state.ratingAndroid.max);
+    }
+    if(this.state.contentRatingIos !== null){
+      displayedText.push("- Content Rating iOS: " + this.state.contentRatingIos);
+    }
+    if(this.state.contentRatingAndroid !== null){
+      displayedText.push("- Content Rating Android: " + this.state.contentRatingAndroid);
+    }
+    if(this.state.priceIos.min !== null && this.state.priceIos.max !== null){
+      displayedText.push("- Price iOS: " + this.state.priceIos.min + " to " + this.state.priceIos.max);
+    }
+    if(this.state.priceAndroid.min !== null && this.state.priceAndroid.max !== null){
+      displayedText.push("- Price Android: " + this.state.priceAndroid.min + " to " + this.state.priceAndroid.max);
+    }
+    if(this.state.ratingCountIos.min !== null && this.state.ratingCountIos.max !== null){
+      displayedText.push("- Rating Count iOS" + this.state.ratingCountIos.min + " to " + this.state.ratingCountIos.max);
+    }
+    if(this.state.ratingCountAndroid.min !== null && this.state.ratingCountAndroid.max !== null){
+      displayedText.push("- Rating Count Android" + this.state.ratingCountAndroid.min + " to " + this.state.ratingCountAndroid.max);
+    }
+    if(this.state.searchString !== ""){
+      displayedText.push("- Search bar: " + this.state.searchString);
+    }
+    return (
+      <TextOfActivatedFilters>
+        {displayedText.length === 0?
+          (
+            ""
+          ):(
+            "Currently, the following filters are active:"
+          )
+        }
+        {displayedText.map(filter =>{
+          return(
+            <div>
+              {filter}
+            </div>
+          );
+        })}
+      </TextOfActivatedFilters>
+    )
+
+  }
 
   render() {
 
@@ -590,6 +652,7 @@ class AppsOverview extends React.Component {
                 <h1>loading</h1>
               ) : (
                 <div>
+                  {this.showCorrectFilterText()}
                   <PageNumberContainer>
                     <PageNumbers
                       updatePageNumber={this.updatePageNumber.bind(this)}

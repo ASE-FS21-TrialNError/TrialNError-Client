@@ -3,10 +3,7 @@ import React from "react";
 import { withRouter } from "react-router-dom";
 import {
   BaseContainer,
-  Form,
   FormContainer, InputField,
-  Introduction,
-  IntroductionContainer, Label
 } from "../../views/design/LoginRegistration";
 import {Button, ButtonContainer} from "../../views/design/Button";
 import styled from "styled-components";
@@ -38,10 +35,12 @@ const Heading = styled.div`
 
 const InputForm = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
+  flex-direction: column;
+  align-items: center;
   flex-wrap: wrap;
-  padding-left: 5%;
-  padding-right: 5%;
+  padding-left: 10%;
+  padding-right: 10%;
   height: 80%;
   width: 100%;
 `;
@@ -95,8 +94,16 @@ class EmailVerification extends React.Component{
               <h1>AppCom</h1>
             </Heading>
             <InputForm>
-              <h2>Email Verification</h2>
-              <p>Please enter the code you received per email</p>
+              <h2
+                style={{height: "5%", marginTop: "15%"}}
+              >
+                Email Verification
+              </h2>
+              <p
+                style={{height: "15%", textAlign: "center"}}
+              >
+                Please enter the code you received per email.
+              </p>
               <InputField
                 style={{height: "14%"}}
                 type="password"
@@ -106,12 +113,12 @@ class EmailVerification extends React.Component{
                 }}
               />
               <ButtonContainer
-                style={{width: "100%"}}
+                style={{margin: "0", width: "100%"}}
               >
                 <Button
                   disabled={this.state.code === null}
 
-                  style={{ width: "50%" }}
+                  style={{ width: "75%" }}
                   onClick={() => {
                     this.verifyEmail();
                   }}
