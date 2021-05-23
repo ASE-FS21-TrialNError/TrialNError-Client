@@ -73,9 +73,7 @@ const numberFormatCurr = (value) =>
 
 // card contains the info of an app. the cards shows picture, title, price and rating
 class AppsCard extends React.Component{
-  constructor() {
-    super();
-  }
+ 
 
   render(){
     return (

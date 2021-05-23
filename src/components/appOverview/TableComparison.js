@@ -72,10 +72,7 @@ const numberFormatInt = (value) =>
 // table with most important data for the single apps in the Apps overview
 export default class TableComparison extends React.Component{
 
-  constructor(props) {
-    super(props);
-  }
-
+ 
   render(){
 
     /*if(this.props.app.rating_count_ios){
@@ -182,9 +179,7 @@ export default class TableComparison extends React.Component{
 // table with most important data on the top of the app details page
 export class TableDetailsGIC extends React.Component{
 
-  constructor(props) {
-    super(props);
-  }
+ 
 
   render(){
 
@@ -278,9 +273,6 @@ export class TableDetailsGIC extends React.Component{
 // table with all additional data on the bottom of the app details page
 export class TableDetails extends React.Component{
 
-  constructor(props) {
-    super(props);
-  }
 
   render(){
     console.log(this.props.app);

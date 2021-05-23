@@ -127,6 +127,7 @@ class InputFieldForm extends React.Component {
 
   // for the price filters only numbers and a dot should be allowed to be typed into an input field
   handleInputChangePrice(key, value) {
+    // eslint-disable-next-line no-useless-escape
     value = value.replace(/[^0-9\.]/g, "");
     this.setState({ [key]: value });
   }
