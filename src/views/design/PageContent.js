@@ -3,9 +3,7 @@ import styled from "styled-components";
 
 
 export const BaseContainer = styled.div`
-  
 `;
-
 
 export const ContentContainer = styled.div`
   width: 1200px;
@@ -26,10 +24,7 @@ export const PageHeaderSearchBarContainer = styled.div`
 `;
 
 export const PageHeaderContainer = styled.div`
-  
 `;
-
-
 
 export const PageHeading = styled.div`
   float: left;

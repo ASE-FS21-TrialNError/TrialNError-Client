@@ -1,5 +1,6 @@
 import styled from "styled-components";
 
+// styling of buttons which are used on all the pages
 export const Button = styled.button`
   &:hover {
     transform: translateY(-2px);

@@ -1,7 +1,6 @@
 
 import React from "react";
 import styled from "styled-components";
-import placeholder from "../../views/design/image/placeholder.png";
 import { withRouter } from "react-router-dom";
 import Ratings from "react-ratings-declarative";
 
@@ -70,32 +69,20 @@ const numberFormatCurr = (value) =>
     currency: 'USD'
   }).format(value);
 
-const numberFormatFloat = (value) =>
-  new Intl.NumberFormat('en-US', {
-    minimumFractionDigits: 1,
-    maximumFractionDigits: 1
-  }).format(value);
 
 
-
+// card contains the info of an app. the cards shows picture, title, price and rating
 class AppsCard extends React.Component{
   constructor() {
     super();
   }
 
-
-
   render(){
     return (
-      <Card
-
-      >
+      <Card>
         <CardImageContainer>
           <CardImage
             src={this.props.app.logo_url} alt={'missing'}
-            onClick={() => {
-              //this.goToDetails(app._id);
-            }}
           />
         </CardImageContainer>
         <AppHeader>
@@ -103,73 +90,68 @@ class AppsCard extends React.Component{
         </AppHeader>
         <Table>
           <thead>
-          <tr>
-            <TableHeader>iOS</TableHeader>
-            <TableHeader>Android</TableHeader>
-          </tr>
-          <tr>
-            {this.props.app.price_ios !== null? (
-              <TableData>{numberFormatCurr(this.props.app.price_ios)}</TableData>
-            ) : (
-              <TableData>N/A</TableData>
-            )}
-            {this.props.app.price_andr !== null? (
-              <TableData>{numberFormatCurr(this.props.app.price_andr)}</TableData>
-            ) : (
-              <TableData>N/A</TableData>
-            )}
-
-          </tr>
-          <tr>
-            {this.props.app.rating_ios !== null? (
-              <TableData>
-                <Ratings
-                  rating={this.props.app.rating_ios}
-                  widgetDimensions="15px"
-                  widgetSpacings="1px"
-                >
-                  <Ratings.Widget widgetRatedColor="rgb(255, 165, 0)" widgetEmptyColors ="rgb(255, 240, 200)" />
-                  <Ratings.Widget widgetRatedColor="rgb(255, 165, 0)" widgetEmptyColors ="rgb(255, 240, 200)" />
-                  <Ratings.Widget widgetRatedColor="rgb(255, 165, 0)" widgetEmptyColors ="rgb(255, 240, 200)" />
-                  <Ratings.Widget widgetRatedColor="rgb(255, 165, 0)" widgetEmptyColors ="rgb(255, 240, 200)" />
-                  <Ratings.Widget widgetRatedColor="rgb(255, 165, 0)" widgetEmptyColors ="rgb(255, 240, 200)" />
-                </Ratings>
-              </TableData>
-            ) : (
-              <TableData>N/A</TableData>
-            )}
-            {this.props.app.rating_andr !== null? (
-              <TableData>
-                <Ratings
-                  rating={this.props.app.rating_andr}
-                  widgetDimensions="15px"
-                  widgetSpacings="1px"
-                >
-                  <Ratings.Widget widgetRatedColor="rgb(255, 165, 0)" widgetEmptyColors ="rgb(255, 240, 200)" />
-                  <Ratings.Widget widgetRatedColor="rgb(255, 165, 0)" widgetEmptyColors ="rgb(255, 240, 200)" />
-                  <Ratings.Widget widgetRatedColor="rgb(255, 165, 0)" widgetEmptyColors ="rgb(255, 240, 200)" />
-                  <Ratings.Widget widgetRatedColor="rgb(255, 165, 0)" widgetEmptyColors ="rgb(255, 240, 200)" />
-                  <Ratings.Widget widgetRatedColor="rgb(255, 165, 0)" widgetEmptyColors ="rgb(255, 240, 200)" />
-                </Ratings>
-              </TableData>
-            ) : (
-              <TableData>N/A</TableData>
-            )}
-
-          </tr>
+            <tr>
+              <TableHeader>iOS</TableHeader>
+              <TableHeader>Android</TableHeader>
+            </tr>
           </thead>
           <tbody>
             <tr>
+              {this.props.app.price_ios !== null? (
+                <TableData>{numberFormatCurr(this.props.app.price_ios)}</TableData>
+              ) : (
+                <TableData>N/A</TableData>
+              )}
+              {this.props.app.price_andr !== null? (
+                <TableData>{numberFormatCurr(this.props.app.price_andr)}</TableData>
+              ) : (
+                <TableData>N/A</TableData>
+              )}
 
+            </tr>
+            <tr>
+              {this.props.app.rating_ios !== null? (
+                <TableData>
+                  {/*displaying the yellow stars for the rating*/}
+                  <Ratings
+                    rating={this.props.app.rating_ios}
+                    widgetDimensions="15px"
+                    widgetSpacings="1px"
+                  >
+                    <Ratings.Widget widgetRatedColor="rgb(255, 165, 0)" widgetEmptyColors ="rgb(255, 240, 200)" />
+                    <Ratings.Widget widgetRatedColor="rgb(255, 165, 0)" widgetEmptyColors ="rgb(255, 240, 200)" />
+                    <Ratings.Widget widgetRatedColor="rgb(255, 165, 0)" widgetEmptyColors ="rgb(255, 240, 200)" />
+                    <Ratings.Widget widgetRatedColor="rgb(255, 165, 0)" widgetEmptyColors ="rgb(255, 240, 200)" />
+                    <Ratings.Widget widgetRatedColor="rgb(255, 165, 0)" widgetEmptyColors ="rgb(255, 240, 200)" />
+                  </Ratings>
+                </TableData>
+              ) : (
+                <TableData>N/A</TableData>
+              )}
+              {this.props.app.rating_andr !== null? (
+                <TableData>
+                  {/*displaying the yellow stars for the rating*/}
+                  <Ratings
+                    rating={this.props.app.rating_andr}
+                    widgetDimensions="15px"
+                    widgetSpacings="1px"
+                  >
+                    <Ratings.Widget widgetRatedColor="rgb(255, 165, 0)" widgetEmptyColors ="rgb(255, 240, 200)" />
+                    <Ratings.Widget widgetRatedColor="rgb(255, 165, 0)" widgetEmptyColors ="rgb(255, 240, 200)" />
+                    <Ratings.Widget widgetRatedColor="rgb(255, 165, 0)" widgetEmptyColors ="rgb(255, 240, 200)" />
+                    <Ratings.Widget widgetRatedColor="rgb(255, 165, 0)" widgetEmptyColors ="rgb(255, 240, 200)" />
+                    <Ratings.Widget widgetRatedColor="rgb(255, 165, 0)" widgetEmptyColors ="rgb(255, 240, 200)" />
+                  </Ratings>
+                </TableData>
+              ) : (
+                <TableData>N/A</TableData>
+              )}
             </tr>
           </tbody>
         </Table>
-
-
       </Card>
     )
   }
-
 }
 
 export default withRouter(AppsCard);

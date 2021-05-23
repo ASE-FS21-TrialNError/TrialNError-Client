@@ -2,7 +2,6 @@ import React from "react";
 import { api } from "../helpers/api";
 import { withRouter } from "react-router-dom";
 import { Button, ButtonContainer } from "../views/design/Button";
-import Error from "../views/Error";
 import {BaseContainer, Introduction, IntroductionContainer, Label, Form, FormContainer, InputField} from "../views/design/LoginRegistration";
 import {NotificationContainer, NotificationManager} from 'react-notifications';
 import {isEmailFormatCorrect} from "../helpers/isEmailFormatCorrect"
@@ -20,7 +19,9 @@ class Registration extends React.Component {
     };
   }
 
-  async registration() {
+  // send register request to back end and if approved redirect to email verification page
+  async register() {
+    // check correct format of email address
     if(isEmailFormatCorrect(this.state.email)){
       const requestBody = JSON.stringify({
         firstname: this.state.firstname,
@@ -28,37 +29,35 @@ class Registration extends React.Component {
         email: this.state.email,
         password: this.state.password
       });
-      const response = await api.post("/auth/register", requestBody);
+      const response = await api.post("/auth/email/register", requestBody);
 
       console.log(response.status);
       console.log(response.data);
       console.log(response.data.payload);
-      if (response.status === 201){
+      if (response.data.message === "LOGIN.EMAIL_VERIFIED"){
 
         localStorage.setItem("token", response.data.payload.token);
 
-        this.props.history.push("/appsOverview");
+        this.props.history.push({
+          pathname: "/emailVerification",
+          state: {email: this.state.email}
+        });
 
       }else{
-        NotificationManager.error('Error: Account with this email address already exists','',3000);
-
+        if(response.data.error === "ERROR.REGISTRATION.EMAIL_NOT_SENT"){
+          NotificationManager.error('Error: Verification email could not be sent to your email address','',3000);
+        }else{
+          NotificationManager.error('Error: Account with this email address already exists','',3000);
+        }
       }
     }else{
       NotificationManager.error('Error: Email format is incorrect','',3000);
     }
-
-
   }
-
-
 
   handleInputChange(key, value) {
-
     this.setState({ [key]: value });
   }
-
-
-  componentDidMount() {}
 
   render() {
     return (
@@ -107,7 +106,7 @@ class Registration extends React.Component {
                   width="50%"
                   style={{ margin: "5px" }}
                   onClick={() => {
-                    this.registration();
+                    this.register();
                   }}
                 >
                   registration
@@ -123,7 +122,6 @@ class Registration extends React.Component {
                   Go to Login
                 </Button>
               </ButtonContainer>
-              
             </Form>
             </IntroductionContainer>
         </FormContainer>
