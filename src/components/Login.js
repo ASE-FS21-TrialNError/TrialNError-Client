@@ -3,7 +3,6 @@ import React from "react";
 import { api } from "../helpers/api";
 import { withRouter } from "react-router-dom";
 import { Button, ButtonContainer } from "../views/design/Button";
-import Error from "../views/Error";
 import {BaseContainer, Introduction, IntroductionContainer, Label, Form, FormContainer, InputField} from "../views/design/LoginRegistration";
 import {NotificationContainer, NotificationManager} from 'react-notifications';
 import {isEmailFormatCorrect} from "../helpers/isEmailFormatCorrect";
@@ -20,6 +19,7 @@ class Login extends React.Component {
     };
   }
 
+  // send login request to back end where it is checked and if login is approved redirect to apps overview page
   async login() {
     if(isEmailFormatCorrect(this.state.email)){
       try{
@@ -47,18 +47,12 @@ class Login extends React.Component {
     }else{
       NotificationManager.error('Error: Email format is incorrect','',3000);
     }
-
-    
-
   }
 
 
   handleInputChange(key, value) {
     this.setState({ [key]: value });
   }
-
-
-  componentDidMount() {}
 
   render() {
     return (
@@ -68,7 +62,7 @@ class Login extends React.Component {
           <IntroductionContainer>
             <Introduction>
               <h1>Welcome to the AppCom</h1>
-              <p1>This Website compares apps from the Google Play Store and Apple Store. </p1>
+              <p>This Website compares apps from the Google Play Store and Apple Store. </p>
             </Introduction>
             <Form>
               <h1>Login</h1>

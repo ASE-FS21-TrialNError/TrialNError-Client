@@ -102,12 +102,7 @@ const Button = styled.button`
   min-width: 30%;
 `;
 
-function onlyNumbers(input){
-  var regex = /[^0-9]/g;
-  console.log(input)
-  //input.value = input.value.replace(regex, "");
-}
-
+// component is shown when the price or rating count filters are clicked
 class InputFieldForm extends React.Component {
 
   constructor(props) {
@@ -120,36 +115,22 @@ class InputFieldForm extends React.Component {
     this.formSubmit = this.formSubmit.bind(this);
   }
 
+
   handleInputChangeRatingCount(key, value) {
     value = value.replace(/[^0-5]/g, "");
     if(value.length > 0){
       value = value.charAt(0);
     }
 
-    /*value = value.replace(/[A-Za-z\-6-9,]/g, "");
-    let stringArray = value.split(".");
-    let preDecimalPlaces = value.charAt(0);
-    let dot = "";
-    let decimalPlaces = "";
-
-    if(value.charAt(1) === "."){
-      dot = ".";
-    }
-    if(stringArray.length === 2){
-      decimalPlaces = stringArray[1];
-      if(stringArray[1].length >= 2){
-        decimalPlaces = stringArray[1].charAt(0) + stringArray[1].charAt(1);
-      }
-    }
-    value = preDecimalPlaces + dot + decimalPlaces;*/
-
     this.setState({ [key]: value });
   }
 
+  // for the price filters only numbers and a dot should be allowed to be typed into an input field
   handleInputChangePrice(key, value) {
-    value = value.replace(/[A-Za-z-,]/g, "");
+    value = value.replace(/[^0-9\.]/g, "");
     this.setState({ [key]: value });
   }
+
 
   formSubmit() {
     let lowerBoundary = this.state.lowerBoundary;
@@ -184,11 +165,10 @@ class InputFieldForm extends React.Component {
         }
       );
       this.props.updateListOfApps(radioButtonData[this.props.name].filter, value)
-
     }
-
   }
 
+  // reset state of the of the filter as soon as the reset button is clicked
   resetState(){
     this.setState({
       lowerBoundary: "",

@@ -2,6 +2,8 @@
 
 import styled from "styled-components";
 
+// basic blocks for the registration and login page
+
 
 export const BaseContainer = styled.div`
   margin-left: auto;

@@ -63,7 +63,7 @@ class Dashboard extends React.Component{
 
   async componentDidMount() {
     try {
-
+      // fetching all the apps in the wishlist
       console.log(localStorage.getItem("token"));
       let url = "/wishlist/getApps"
       let response = await api.get(url,
@@ -77,6 +77,7 @@ class Dashboard extends React.Component{
       this.setState({ whishlistApps: response.data});
       console.log(response.data);
 
+      // getting all the ids of the apps in the whishlist
       url = "/wishlist/getApp/id"
       response = await api.get(url,
         {
@@ -88,36 +89,19 @@ class Dashboard extends React.Component{
 
       console.log(response.data);
 
-      //let appsId = ["6097f8f6845687a0fcad2e88"] "[" + appsId + "]";
-
-      url = "/recommender?appIds=" + "[" + response.data.apps + "]";
+      // sending the all ids of apps in the whislist and getting back the recommended apps
+      url = "/recommender?appIds=[" + response.data.apps + "]";
       console.log(url);
-      const responseRecommender = await apiRecommender.get(url)
+      await apiRecommender.get(url)
         .then(response => {
-          /*let newResponse = response.data.replaceAll(NaN, null);
-          console.log(newResponse);
-          console.log(newResponse.canApprove);
-          console.log(JSON.parse(newResponse));
-          this.setState({recommendedApps: JSON.parse(newResponse)});*/
           console.log(response);
           this.setState({recommendedApps: response.data});
         });
-
-
-
-      //const obj = JSON.parse(responseRecommender);
-      /*console.log(obj)
-
-      this.setState({ recommendedApps: obj});*/
-
-     // console.log(responseRecommender.data);
-
 
     } catch (error) {
       this.setState({
         errorMessage: error.message,
       });
-      //alert(`Something went wrong while fetching the users: \n${handleError(error)}`);
     }
   }
 
@@ -125,6 +109,7 @@ class Dashboard extends React.Component{
     this.props.history.push("/appsOverview");
   }
 
+  // reload page when user clicks on Dashboard in the header when he is on Dashboard pagee
   pushDashboard(){
     window.location.reload(false);
   }
@@ -146,6 +131,7 @@ class Dashboard extends React.Component{
     });
   }
 
+  // adds or removes an app to/from the appsToRemove list
   addOrRemoveAppToAppsToRemove(app){
     let appsToRemove = this.state.appsToRemove;
     if(appsToRemove.includes(app._id)){
@@ -166,26 +152,25 @@ class Dashboard extends React.Component{
   }
 
   async removeAppsFromWishlist(){
-    // api call for removing apps
-
+    // api call to remove apps from the wishlist
     let url = "/wishlist/deleteApps"
     const requestBody = {
       apps: this.state.appsToRemove
     }
-    const response = await api.put(url, requestBody,
+    await api.put(url, requestBody,
       {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`
         }
       });
 
+    // get the updated wishlist and the apps in it
     url = "/wishlist/getApps"
     await api.get(url,
       {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`
         }
-
       }).then(response => {
       this.setState(
         {
@@ -194,8 +179,6 @@ class Dashboard extends React.Component{
           isStatusRemove: false
         });
       });
-
-
   }
 
   render(){
@@ -213,11 +196,15 @@ class Dashboard extends React.Component{
               </PageHeading>
             </PageHeaderSearchBarContainer>
           </PageHeaderContainer>
+
+          {/*recommended apps section*/}
           <HeaderWishlistContainer>
             <HeaderRecommender>
               Recommended Apps
             </HeaderRecommender>
           </HeaderWishlistContainer>
+
+          {/*if there is no app in the wishlist loading screen or text should be shown*/}
           {this.state.recommendedApps.length === 0?
             (
               this.state.whishlistApps.length === 0?
@@ -235,13 +222,12 @@ class Dashboard extends React.Component{
                   </LoadingOverlay>
                 )
             ):(
-
               <AppCardsContainer>
-
                 {this.state.recommendedApps.map((app) =>
                   {
                     return (
                       <AppCardCont
+                        key={app._id + "1"}
                         onClick={() => {
                           this.goToDetails(app);
                         }}
@@ -256,15 +242,14 @@ class Dashboard extends React.Component{
                   }
                 )}
               </AppCardsContainer>
-
             )
-
           }
+
+          {/*apps in wishlist section*/}
           <HeaderWishlistContainer>
             <HeaderWishlist>
               Whishlist with apps
             </HeaderWishlist>
-
             {this.state.isStatusRemove?
               (
                 [
@@ -298,7 +283,6 @@ class Dashboard extends React.Component{
                There are not any apps in your whishlist. Go to the apps overview and add some apps!
              </NoAppsInWhishlistText>
             ):(
-
               <AppCardsContainer>
                 {this.state.isStatusRemove?
                   (
@@ -309,12 +293,12 @@ class Dashboard extends React.Component{
                     ""
                   )
                 }
-
                 {this.state.whishlistApps.map((app) =>
                   {
                     if(this.state.isStatusRemove){
                       return (
                         <AppCardCont
+                          key={app._id + "1"}
                           style={this.isCardChosenToBeRemoved(app)?{WebkitBoxShadow: `0 0 20px red`} : {WebkitBoxShadow: `0 0 0px green`}}
                           onClick={() => {
                             this.addOrRemoveAppToAppsToRemove(app);
@@ -330,6 +314,7 @@ class Dashboard extends React.Component{
                     }else{
                       return (
                         <AppCardCont
+                          key={app._id + "1"}
                           onClick={() => {
                             this.goToDetails(app);
                           }}
@@ -339,7 +324,6 @@ class Dashboard extends React.Component{
                             key={app._id}
                             app={app}
                             isStatusRemove={this.state.isStatusRemove}
-
                           />
                         </AppCardCont>
                       )
