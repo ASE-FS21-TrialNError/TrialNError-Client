@@ -1,5 +1,23 @@
 
+// data of the sort
+export const sortingData = (
+  {
+    "price_ios-D": "Most Expensive iOS",
+    "price_ios-A": "Cheapest iOS",
+    "rating_ios-D": "Highest Rating iOS",
+    "rating_ios-A": "Lowest Rating iOS",
+    "rating_count_ios-D": "Highest Rating Count iOS",
+    "rating_count_ios-A": "Lowest Rating Count iOS",
+    "price_andr-D": "Most Expensive Android",
+    "price_andr-A": "Cheapest Android",
+    "rating_andr-D": "Highest Rating Android",
+    "rating_andr-A": "Lowest Rating Android",
+    "rating_count_andr-D": "Highest Rating Count Android",
+    "rating_count_andr-A": "Lowest Rating Count Android",
+  }
+)
 
+// data of the filters
 export const radioButtonData = (
   {
     "Category iOS": {

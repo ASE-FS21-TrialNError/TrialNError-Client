@@ -3,7 +3,6 @@ import styled from "styled-components";
 import Header from "../../views/design/Header";
 import {ContentContainer, PageHeaderContainer, PageHeading, PageHeaderSearchBarContainer} from "../../views/design/PageContent";
 import {TableDetailsGIC, TableDetails} from "../appOverview/TableComparison";
-import placeholder from "../../views/design/image/placeholder.png";
 import {withRouter} from "react-router-dom";
 
 const Line = styled.div`
@@ -49,6 +48,8 @@ const ShowMoreLabel = styled.label`
   border-radius: 10px;
 `;
 
+
+// component which displays the apps details page
 class AppDetails extends React.Component{
 
   state = {checked: false}
@@ -66,6 +67,7 @@ class AppDetails extends React.Component{
   
   render(){
 
+    // styling of the description, how many lines are shown
     let Descriptionp = styled.p`
       display: -webkit-box;
       -webkit-line-clamp: 10;
@@ -75,6 +77,7 @@ class AppDetails extends React.Component{
     
     let ButtonContent = "Description - Show More";
 
+    // if the button was clicked to show more text, styling changes
     if(this.state.checked) {
       Descriptionp = styled.p`
         display: -webkit-box;
@@ -94,6 +97,8 @@ class AppDetails extends React.Component{
           pushDashboard={this.pushDashboard.bind(this)}
         />
         <ContentContainer>
+
+          {/*page header section*/}
           <PageHeaderContainer>
             <PageHeaderSearchBarContainer>
               <PageHeading>
@@ -102,6 +107,8 @@ class AppDetails extends React.Component{
             </PageHeaderSearchBarContainer>
           </PageHeaderContainer>
           <Line/>
+
+          {/*app image and most important info off app section*/}
           <GeneralInfoContainer>
             <AppImageGIC
               src={this.props.location.state.app.logo_url} alt={'missing'}
@@ -113,6 +120,8 @@ class AppDetails extends React.Component{
             </AppTitleGIC>
             <TableDetailsGIC app={this.props.location.state.app}/>
           </GeneralInfoContainer>
+
+          {/*description and further details section*/}
           <Description class="box">
             <input type="checkbox" name="toggle" id="toggle" checked={this.state.checked}
             onChange={this.handleCheckboxChange} style={{display: "none"}}/>

@@ -2,7 +2,6 @@ import React from "react";
 import styled from "styled-components";
 import {Button} from "./Button";
 import { withRouter } from "react-router-dom";
-import {Link} from "react-router-dom";
 
 const HeaderContainer = styled.div`
   height: 100px;
@@ -54,16 +53,12 @@ const NavButtonContainer = styled.div`
   height: 100px;
 `;
 
+// Header component which shows up on the top the following pages: apps overview, app details and dashboard
 class Header extends React.Component {
-  constructor() {
-    super();
-  }
 
   logout() {
-
     localStorage.removeItem("token");
     this.props.history.push("/login");
-
   }
 
   render(){
@@ -85,19 +80,13 @@ class Header extends React.Component {
             </NavButton>
           </NavButtonContainer>
           <NavButtonContainer>
-            {/*<Link
-              to={{
-                pathname: "/appsOverview"
+            <NavButton
+              onClick={()=>{
+                this.props.pushAppsOverview()
               }}
-            >*/}
-              <NavButton
-                onClick={()=>{
-                  this.props.pushAppsOverview()
-                }}
-              >
-                Apps Overview
-              </NavButton>
-            {/*</Link>*/}
+            >
+              Apps Overview
+            </NavButton>
           </NavButtonContainer>
           <NavButtonContainer>
             <NavButton
@@ -109,7 +98,6 @@ class Header extends React.Component {
             </NavButton>
           </NavButtonContainer>
         </NavigationContainer>
-        
       </HeaderContainer>
     )
   }

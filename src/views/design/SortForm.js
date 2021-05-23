@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 const PopUpContentContainer = styled.div`
-  heigth: 600px;
+  height: 600px;
   width: 100%;
 
 `;
@@ -48,9 +48,6 @@ const AndroidTitle = styled.div`
   font-weight: bold;
 `;
 
-const AndroidRadioButtonContainer = styled.div`
-  
-`;
 
 const LabelAndRadioButtonContainer = styled.div`
   width: auto;
@@ -114,7 +111,7 @@ const NoSortContainer = styled.div`
 `;
 
 
-class RadioButtonForm extends React.Component {
+class SortForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -369,4 +366,4 @@ const valueConverter = {
   "Unsorted": null
 }
 
-export default RadioButtonForm;
+export default SortForm;
