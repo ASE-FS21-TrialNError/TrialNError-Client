@@ -54,6 +54,10 @@ class AppDetails extends React.Component{
 
   state = {checked: false}
 
+  componentDidMount() {
+    window.scrollTo(0, 0);
+  }
+
   pushAppsOverview(){
     this.props.history.push("/appsOverview");
   }
@@ -111,9 +115,9 @@ class AppDetails extends React.Component{
           {/*app image and most important info off app section*/}
           <GeneralInfoContainer>
             <AppImageGIC
-              src={this.props.location.state.app.logo_url} alt={'missing'}
+              src={this.props.location.state.app.logo_url} alt={'not available'}
             />
-            <AppTitleGIC class="box">
+            <AppTitleGIC className="box">
               <AppTitlepGIC>
                 {this.props.location.state.app.name}
               </AppTitlepGIC>
@@ -122,7 +126,7 @@ class AppDetails extends React.Component{
           </GeneralInfoContainer>
 
           {/*description and further details section*/}
-          <Description class="box">
+          <Description className="box">
             <input type="checkbox" name="toggle" id="toggle" checked={this.state.checked}
             onChange={this.handleCheckboxChange} style={{display: "none"}}/>
             <Descriptionp>

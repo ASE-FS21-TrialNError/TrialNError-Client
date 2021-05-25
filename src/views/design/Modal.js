@@ -46,12 +46,13 @@ const FilterButton = styled.button`
   }
 `;
 
+
 // returns true if the no filter is chosen, used for coloring of button
 function isNoFilterChosen(props){
   if(props.filterState === null){
     return true;
   }
-  if(props.name === "Rating iOS" || props.name === "Rating Android" ||props.name === "Price iOS" || props.name === "Price Android"
+  if(props.name === "Rating iOS" || props.name === "Rating Android" || props.name === "Price iOS" || props.name === "Price Android"
     || props.name === "Rating Count iOS" || props.name === "Rating Count Android" ){
     if(props.filterState.min === null && props.filterState.max === null){
       return true;
@@ -97,7 +98,8 @@ const Modal = ((props) => (
         {props.name}
       </FilterButton>
     }
-    position="bottom center"
+    position={props.name === "Price iOS" || props.name === "Price Android" || props.name === "Rating Count iOS" || props.name === "Rating Count Android" ?
+      "bottom right": "bottom left"}
     closeOnDocumentClick
   >
 

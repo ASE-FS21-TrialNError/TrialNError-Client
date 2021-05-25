@@ -3,7 +3,7 @@ import { Redirect } from "react-router-dom";
 
 // if there is a token in the local storage, display child else redirect to login page
 export const EmailVerificationGuard = props => {
-  if (localStorage.getItem("token")) {
+  if (localStorage.getItem("email")) {
     return props.children;
   }
   return <Redirect to={"/login"} />;
