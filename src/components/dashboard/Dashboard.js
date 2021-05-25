@@ -62,6 +62,7 @@ class Dashboard extends React.Component{
 
 
   async componentDidMount() {
+    window.scrollTo(0, 0);
     try {
       // fetching all the apps in the wishlist
       console.log(localStorage.getItem("token"));
@@ -204,7 +205,7 @@ class Dashboard extends React.Component{
             </HeaderRecommender>
           </HeaderWishlistContainer>
 
-          {/*if there is no app in the wishlist loading screen or text should be shown*/}
+          {/*if there is no app in the wishlist text should be shown*/}
           {this.state.recommendedApps.length === 0?
             (
               this.state.whishlistApps.length === 0?
@@ -216,7 +217,7 @@ class Dashboard extends React.Component{
                   <LoadingOverlay
                     active={true}
                     spinner
-                    text='Loading ...'
+                    text='Generating personalized recommendations ...'
                   >
                     <PlaceholoderForLoading/>
                   </LoadingOverlay>
@@ -264,7 +265,7 @@ class Dashboard extends React.Component{
                   disabled={this.state.appsToRemove.length === 0}
                   onClick={()=>this.removeAppsFromWishlist()}
                 >
-                  Submit
+                  Remove apps
                 </Button>]
               ):(
                 <Button
@@ -279,15 +280,25 @@ class Dashboard extends React.Component{
 
           {this.state.whishlistApps.length === 0?
             (
-             <NoAppsInWhishlistText>
-               There are not any apps in your whishlist. Go to the apps overview and add some apps!
-             </NoAppsInWhishlistText>
+             [<NoAppsInWhishlistText>
+               There are not any apps in your whishlist. Go to the apps overview by clicking on the button below and add some apps!
+             </NoAppsInWhishlistText>,
+
+              <Button
+                style={{width: "15%", minWidth: "5%"}}
+                onClick={()=>{
+                  this.pushAppsOverview();
+                }}
+              >
+                Apps Overview
+              </Button>
+            ]
             ):(
               <AppCardsContainer>
                 {this.state.isStatusRemove?
                   (
                     <div style={{width: "100%"}}>
-                      Click on the apps to mark them for removal and then remove them with a click on the submit button.
+                      Click on the apps to mark them for removal and then remove them with a click on the "Remove apps" button.
                     </div>
                   ):(
                     ""

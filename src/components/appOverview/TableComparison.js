@@ -29,15 +29,18 @@ const RowHeader = styled.th`
 `;
 
 const RowHeaderGIC = styled.td`
+  font-weight: bold;
   text-align: left;
 `;
 
-const ColumnHeaderDetail = styled.td`
+const ColumnHeaderDetail = styled.th`
   text-align: center;
+  font-weight: bold;
 `;
 
 const RowHeaderDetail = styled.td`
-  width: 15%;  
+  width: 15%;
+  font-weight: bold;
   text-align: left;
 `;
 
@@ -47,8 +50,8 @@ const TableData = styled.td`
 
 const TableDataDetail = styled.td`
   width: 42.5%;
-  text-align: left;
-  padding-left: 50px;
+  text-align: center;
+  border: 1px solid black;
 `;
 
 const numberFormatCurr = (value) =>
@@ -88,7 +91,7 @@ export default class TableComparison extends React.Component{
       <Table>
         <thead>
           <tr>
-            <TableHeader></TableHeader>
+            <TableHeader> </TableHeader>
             <TableHeader>iOS</TableHeader>
             <TableHeader>Android</TableHeader>
           </tr>
@@ -280,7 +283,7 @@ export class TableDetails extends React.Component{
       <TableDet>
         <thead>
           <tr>
-            <ColumnHeaderDetail></ColumnHeaderDetail>
+            <ColumnHeaderDetail> </ColumnHeaderDetail>
             <ColumnHeaderDetail>iOS<br/>Additional Information</ColumnHeaderDetail>
             <ColumnHeaderDetail>Android<br/>Additional Information</ColumnHeaderDetail>
           </tr>          
@@ -367,12 +370,12 @@ export class TableDetails extends React.Component{
           <tr>
             <RowHeaderDetail>App Store URL</RowHeaderDetail>
             {this.props.app.app_url_ios !== null? (
-              <TableDataDetail><a href = {this.props.app.app_url_ios}>{this.props.app.app_url_ios}</a></TableDataDetail>
+              <TableDataDetail><a href = {this.props.app.app_url_ios} target="_blank" rel="noreferrer">{this.props.app.app_url_ios}</a></TableDataDetail>
             ) : (
               <TableDataDetail>N/A</TableDataDetail>
             )}
             {this.props.app.app_url_andr !== null? (
-              <TableDataDetail><a href = {this.props.app.app_url_andr}>{this.props.app.app_url_andr}</a></TableDataDetail>
+              <TableDataDetail><a href = {this.props.app.app_url_andr} target="_blank" rel="noreferrer">{this.props.app.app_url_andr}</a></TableDataDetail>
             ) : (
               <TableDataDetail>N/A</TableDataDetail>
             )}

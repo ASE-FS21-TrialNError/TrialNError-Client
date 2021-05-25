@@ -34,10 +34,8 @@ class Registration extends React.Component {
       console.log(response.status);
       console.log(response.data);
       console.log(response.data.payload);
-      if (response.data.message === "LOGIN.EMAIL_VERIFIED"){
-
-        localStorage.setItem("token", response.data.payload.token);
-
+      if (response.data.message === "REGISTER.EMAIL_VERIFIED"){
+        localStorage.setItem("email", this.state.email)
         this.props.history.push({
           pathname: "/emailVerification",
           state: {email: this.state.email}
@@ -67,7 +65,7 @@ class Registration extends React.Component {
           <IntroductionContainer>
             <Introduction>
               <h1>Welcome to the AppCom</h1>
-              <p1>This Website compares apps from the Google Play Store and Apple Store. </p1>
+              <p>This Website compares apps from the Google Play Store and Apple App Store.</p>
             </Introduction>
             <Form>
               <h1>Registration</h1>

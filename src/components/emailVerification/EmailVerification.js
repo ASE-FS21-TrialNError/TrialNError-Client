@@ -70,14 +70,15 @@ class EmailVerification extends React.Component{
       console.log(response);
       if(response.status === 201){
         NotificationManager.success('Account verified', 'Success',3000);
+        localStorage.setItem("token", response.data.payload.token);
         this.props.history.push("/appsOverview")
       }
       if(response.data.errorCode === 104){
-        NotificationManager.error('Wrong code entered', 'Failed',3000);
+        NotificationManager.error('Wrong code entered', 'Error',3000);
       }
 
     }catch (e){
-      NotificationManager.error('Sever error', 'Failed',3000);
+      NotificationManager.error('Something went wrong', 'Error',3000);
     }
   }
 
