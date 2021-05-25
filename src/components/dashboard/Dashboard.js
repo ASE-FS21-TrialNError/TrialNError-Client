@@ -56,7 +56,8 @@ class Dashboard extends React.Component{
       recommendedApps: [],
       whishlistApps: [],
       isStatusRemove: false,
-      appsToRemove: []
+      appsToRemove: [],
+      areRecommendedAppsUpdated: true
     };
   }
 
@@ -78,32 +79,37 @@ class Dashboard extends React.Component{
       this.setState({ whishlistApps: response.data});
       console.log(response.data);
 
-      // getting all the ids of the apps in the whishlist
-      url = "/wishlist/getApp/id"
-      response = await api.get(url,
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`
-          }
-
-        });
-
-      console.log(response.data);
-
-      // sending the all ids of apps in the whislist and getting back the recommended apps
-      url = "/recommender?appIds=[" + response.data.apps + "]";
-      console.log(url);
-      await apiRecommender.get(url)
-        .then(response => {
-          console.log(response);
-          this.setState({recommendedApps: response.data});
-        });
+      await this.getRecommendedApps();
 
     } catch (error) {
       this.setState({
         errorMessage: error.message,
       });
     }
+  }
+
+  async getRecommendedApps(){
+    let url, response;
+    // getting all the ids of the apps in the whishlist
+    url = "/wishlist/getApp/id"
+    response = await api.get(url,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`
+        }
+
+      });
+
+    console.log(response.data);
+
+    // sending the all ids of apps in the whislist and getting back the recommended apps
+    url = "/recommender?appIds=[" + response.data.apps + "]";
+    console.log(url);
+    await apiRecommender.get(url)
+      .then(response => {
+        console.log(response);
+        this.setState({recommendedApps: response.data});
+      });
   }
 
   pushAppsOverview(){
@@ -180,6 +186,11 @@ class Dashboard extends React.Component{
           isStatusRemove: false
         });
       });
+
+    // also update the recommended apps
+    this.setState({areRecommendedAppsUpdated: false})
+    await this.getRecommendedApps();
+    this.setState({areRecommendedAppsUpdated: true})
   }
 
   render(){
@@ -217,32 +228,62 @@ class Dashboard extends React.Component{
                   <LoadingOverlay
                     active={true}
                     spinner
-                    text='Generating personalized recommendations ...'
+                    text='Generating personalized recommendations (can take up to 15 sec) ...'
                   >
                     <PlaceholoderForLoading/>
                   </LoadingOverlay>
                 )
             ):(
-              <AppCardsContainer>
-                {this.state.recommendedApps.map((app) =>
-                  {
-                    return (
-                      <AppCardCont
-                        key={app._id + "1"}
-                        onClick={() => {
-                          this.goToDetails(app);
-                        }}
-                      >
-                        <AppsCard
-                          key={app._id}
-                          app={app}
-                        />
-                      </AppCardCont>
+              this.state.areRecommendedAppsUpdated?
+                (
+                  <AppCardsContainer>
+                    {this.state.recommendedApps.map((app) =>
+                      {
+                        return (
+                          <AppCardCont
+                            key={app._id + "1"}
+                            onClick={() => {
+                              this.goToDetails(app);
+                            }}
+                          >
+                            <AppsCard
+                              key={app._id}
+                              app={app}
+                            />
+                          </AppCardCont>
 
-                    )
-                  }
-                )}
-              </AppCardsContainer>
+                        )
+                      }
+                    )}
+                  </AppCardsContainer>
+                ):(
+                  <LoadingOverlay
+                    active={true}
+                    spinner
+                    text='Updating personalized recommendations (can take up to 15 sec) ...'
+                  >
+                    <AppCardsContainer>
+                      {this.state.recommendedApps.map((app) =>
+                        {
+                          return (
+                            <AppCardCont
+                              key={app._id + "1"}
+                              onClick={() => {
+                                this.goToDetails(app);
+                              }}
+                            >
+                              <AppsCard
+                                key={app._id}
+                                app={app}
+                              />
+                            </AppCardCont>
+
+                          )
+                        }
+                      )}
+                    </AppCardsContainer>
+                  </LoadingOverlay>
+                )
             )
           }
 

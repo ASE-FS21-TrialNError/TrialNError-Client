@@ -208,6 +208,7 @@ class AppsOverview extends React.Component {
 
 
   async componentDidMount() {
+
     try {
 
       // fetching the first apps when user gets to this page, as well as how many pages there are

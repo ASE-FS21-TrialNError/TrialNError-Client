@@ -71,6 +71,7 @@ class EmailVerification extends React.Component{
       if(response.status === 201){
         NotificationManager.success('Account verified', 'Success',3000);
         localStorage.setItem("token", response.data.payload.token);
+        await new Promise(resolve => setTimeout(resolve, 3000));
         this.props.history.push("/appsOverview")
       }
       if(response.data.errorCode === 104){
