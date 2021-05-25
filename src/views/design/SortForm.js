@@ -2,7 +2,6 @@ import React from "react";
 import styled from "styled-components";
 
 const PopUpContentContainer = styled.div`
-  height: 600px;
   width: 100%;
 
 `;

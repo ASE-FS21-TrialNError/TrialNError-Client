@@ -15,7 +15,7 @@ import {sortingData} from "../../helpers/FilterCategoryData";
 
 const SearchBarContainer = styled.div`
   float: right;
-  width: 700px;
+  width: 650px;
   height: 70px;
 `;
 
@@ -28,7 +28,6 @@ const SearchBar = styled.input`
   padding-left: 15px;
   border: 1px solid #5c5c5c;
   margin-bottom: 20px;
-  margin-left: -4px;
   margin-top: 5px;
   border-radius: 10px;
 
@@ -150,6 +149,17 @@ const PageNumberContainer = styled.div`
 const TextOfActivatedFilters = styled.div`
 `;
 
+const AppsPerPageContainer = styled.div`
+  font-size: 16px;
+`;
+
+const AppsPerPageLabel = styled.div`
+`;
+
+const NrOfAppsPerPageDropdown = styled.select`
+  font-size: 16px;
+`;
+
 
 class AppsOverview extends React.Component {
   constructor(props) {
@@ -267,10 +277,10 @@ class AppsOverview extends React.Component {
       url=url + "&rating_ios=" + this.state.ratingAndroid.min + "_" + this.state.ratingAndroid.max;
     }
     if(this.state.contentRatingIos !== null){
-      url= url + "&content_rating_ios=" + this.state.contentRatingIos;
+      url= url + "&content_rating_ios=" + encodeURIComponent(this.state.contentRatingIos);
     }
     if(this.state.contentRatingAndroid !== null){
-      url= url + "&content_rating_andr=" + this.state.contentRatingAndroid;
+      url= url + "&content_rating_andr=" + encodeURIComponent(this.state.contentRatingAndroid);
     }
     if(this.state.priceIos.min !== null && this.state.priceIos.max !== null){
       url= url + "&price_ios=" + this.state.priceIos.min + "_" + this.state.priceIos.max;
@@ -287,6 +297,7 @@ class AppsOverview extends React.Component {
     if(this.state.searchString !== ""){
       url = url + "&name=" + this.state.searchString
     }
+
 
     console.log(url);
 
@@ -500,6 +511,11 @@ class AppsOverview extends React.Component {
 
   }
 
+  setNrOfAppsPerApps(nrOfAppsPerPage){
+    console.log(nrOfAppsPerPage);
+    this.setState({nrOfAppsPerPage: nrOfAppsPerPage}, this.getApps);
+  }
+
   render() {
 
 
@@ -527,6 +543,21 @@ class AppsOverview extends React.Component {
                     }}
                   />
                 </SearchBarContainer>
+                <AppsPerPageContainer>
+                  <AppsPerPageLabel>
+                    Number of apps per page:
+                  </AppsPerPageLabel>
+                  <NrOfAppsPerPageDropdown
+                    value={this.state.nrOfAppsPerPage}
+                    onChange={(e)=>this.setNrOfAppsPerApps(e.target.value)}
+                  >
+                    <option value={"10"}>10</option>
+                    <option value={"20"}>20</option>
+                    <option value={"50"}>50</option>
+                    <option value={"100"}>100</option>
+                  </NrOfAppsPerPageDropdown>
+                </AppsPerPageContainer>
+
               </PageHeaderSearchBarContainer>
 
               {/*filter section*/}
@@ -663,7 +694,7 @@ class AppsOverview extends React.Component {
                         >
                           <AppImage
                             key={app._id + "image"}
-                            src={app.logo_url} alt={'missing'}
+                            src={app.logo_url} alt={'not available'}
                             onClick={() => {
                               this.goToDetails(app);
                             }}

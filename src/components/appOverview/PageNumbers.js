@@ -23,9 +23,7 @@ const PageNumberContainer = styled.div`
 // subcomponent page numbers which shows up on the apps overview page
 export class PageNumbers extends React.Component{
 
-  constructor(props) {
-    super(props);
-  }
+  
 
   render() {
     let pageNumbers = [];

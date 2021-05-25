@@ -4,6 +4,7 @@
 import React from "react";
 import styled from "styled-components";
 import {radioButtonData} from "../../helpers/FilterCategoryData";
+import { Button} from "./Button";
 
 const PopUpContentContainer = styled.div`
   height: 300px;
@@ -82,7 +83,7 @@ const SubmitButtonContainer = styled.div`
   margin-top: 15px;
 `;
 
-const Button = styled.button`
+const SubmitButton = styled(Button)`
   &:hover {
     transform: translateY(-2px);
     cursor: pointer;
@@ -127,7 +128,8 @@ class InputFieldForm extends React.Component {
 
   // for the price filters only numbers and a dot should be allowed to be typed into an input field
   handleInputChangePrice(key, value) {
-    value = value.replace(/[^0-9\.]/g, "");
+    // eslint-disable-next-line no-useless-escape
+    value = value.replace(/[^0-9]/g, "");
     this.setState({ [key]: value });
   }
 
@@ -211,7 +213,7 @@ class InputFieldForm extends React.Component {
                 placeholder={1}
                 value={this.state.lowerBoundary}
                 onChange={(e) => {
-                  this.props.name === "Price iOS"?
+                  this.props.name === "Price iOS" || this.props.name === "Price Android"?
                     this.handleInputChangePrice("lowerBoundary", e.target.value)
                     :this.handleInputChangeRatingCount("lowerBoundary", e.target.value);
                 }}
@@ -231,7 +233,7 @@ class InputFieldForm extends React.Component {
                 placeholder={5}
                 value={this.state.upperBoundary}
                 onChange={(e) => {
-                  this.props.name === "Price iOS"?
+                  this.props.name === "Price iOS" || this.props.name === "Price Android"?
                     this.handleInputChangePrice("upperBoundary", e.target.value)
                     :this.handleInputChangeRatingCount("upperBoundary", e.target.value);
                 }}
@@ -241,18 +243,19 @@ class InputFieldForm extends React.Component {
             </InputFieldContainer>
           </ToContainer>
           <SubmitButtonContainer>
-            <Button
+            <SubmitButton
+              disabled={this.state.lowerBoundary === "" || this.state.upperBoundary === ""}
               onClick={()=>this.formSubmit()}
             >
               Submit
-            </Button>
+            </SubmitButton>
           </SubmitButtonContainer>
           <SubmitButtonContainer>
-            <Button
+            <SubmitButton
               onClick={()=>this.resetState()}
             >
               Reset
-            </Button>
+            </SubmitButton>
           </SubmitButtonContainer>
         </PopUpContentBody>
       </PopUpContentContainer>

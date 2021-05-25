@@ -62,7 +62,7 @@ class Login extends React.Component {
           <IntroductionContainer>
             <Introduction>
               <h1>Welcome to the AppCom</h1>
-              <p>This Website compares apps from the Google Play Store and Apple Store. </p>
+              <p>This Website compares apps from the Google Play Store and Apple App Store.</p>
             </Introduction>
             <Form>
               <h1>Login</h1>
