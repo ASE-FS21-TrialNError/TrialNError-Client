@@ -329,7 +329,7 @@ export class TableDetails extends React.Component{
             )}
           </tr>
           <tr>
-            <RowHeaderDetail>Release Date</RowHeaderDetail>
+            <RowHeaderDetail>Release Date (YYYY-MM-DD)</RowHeaderDetail>
             {this.props.app.release_date_ios !== null? (
               <TableDataDetail>{this.props.app.release_date_ios}</TableDataDetail>
             ) : (
@@ -342,7 +342,7 @@ export class TableDetails extends React.Component{
             )}
           </tr>
           <tr>
-            <RowHeaderDetail>Last Update Date</RowHeaderDetail>
+            <RowHeaderDetail>Last Update Date (YYYY-MM-DD)</RowHeaderDetail>
             {this.props.app.update_date_ios !== null? (
               <TableDataDetail>{this.props.app.update_date_ios}</TableDataDetail>
             ) : (
@@ -370,12 +370,20 @@ export class TableDetails extends React.Component{
           <tr>
             <RowHeaderDetail>App Store URL</RowHeaderDetail>
             {this.props.app.app_url_ios !== null? (
-              <TableDataDetail><a href = {this.props.app.app_url_ios} target="_blank" rel="noreferrer">{this.props.app.app_url_ios}</a></TableDataDetail>
+              <TableDataDetail>
+                <a href = {this.props.app.app_url_ios} target="_blank" rel="noreferrer" style={{color: "blue", textDecoration: "underline"}}>
+                  {this.props.app.app_url_ios}
+                </a>
+              </TableDataDetail>
             ) : (
               <TableDataDetail>N/A</TableDataDetail>
             )}
             {this.props.app.app_url_andr !== null? (
-              <TableDataDetail><a href = {this.props.app.app_url_andr} target="_blank" rel="noreferrer">{this.props.app.app_url_andr}</a></TableDataDetail>
+              <TableDataDetail>
+                <a href = {this.props.app.app_url_andr} target="_blank" rel="noreferrer" style={{color: "blue", textDecoration: "underline"}}>
+                  {this.props.app.app_url_andr}
+                </a>
+              </TableDataDetail>
             ) : (
               <TableDataDetail>N/A</TableDataDetail>
             )}
