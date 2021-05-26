@@ -78,7 +78,8 @@ class EmailVerification extends React.Component{
         NotificationManager.error('Wrong code entered', 'Error',3000);
       }
 
-    }catch (e){
+    }catch (error){
+      console.log(error);
       NotificationManager.error('Something went wrong', 'Error',3000);
     }
   }

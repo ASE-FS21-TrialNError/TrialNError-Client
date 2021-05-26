@@ -7,6 +7,7 @@ import { withRouter } from "react-router-dom";
 import AppsCard from "./AppsCard";
 import {Button} from "../../views/design/Button";
 import LoadingOverlay from "react-loading-overlay";
+import {NotificationContainer, NotificationManager} from 'react-notifications';
 
 const HeaderRecommender = styled.h2`
   
@@ -61,10 +62,8 @@ class Dashboard extends React.Component{
     };
   }
 
-
-  async componentDidMount() {
-    window.scrollTo(0, 0);
-    try {
+  async getApps(){
+    try{
       // fetching all the apps in the wishlist
       console.log(localStorage.getItem("token"));
       let url = "/wishlist/getApps"
@@ -78,38 +77,52 @@ class Dashboard extends React.Component{
 
       this.setState({ whishlistApps: response.data});
       console.log(response.data);
-
-      await this.getRecommendedApps();
-
-    } catch (error) {
-      this.setState({
-        errorMessage: error.message,
-      });
+    }catch(error){
+      NotificationManager.error('Something went wrong','Error',3000);
     }
+  }
+
+  async componentDidMount() {
+    window.scrollTo(0, 0);
+    await this.getApps();
+    await this.getRecommendedApps();
+
   }
 
   async getRecommendedApps(){
     let url, response;
+
     // getting all the ids of the apps in the whishlist
-    url = "/wishlist/getApp/id"
-    response = await api.get(url,
-      {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`
-        }
+    try{
+      url = "/wishlist/getApp/id"
+      response = await api.get(url,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`
+          }
 
-      });
+        });
 
-    console.log(response.data);
+      console.log(response.data);
+    }catch(error){
+      console.log(error);
+      NotificationManager.error('Something went wrong','Error',3000);
+    }
+
 
     // sending the all ids of apps in the whislist and getting back the recommended apps
-    url = "/recommender?appIds=[" + response.data.apps + "]";
-    console.log(url);
-    await apiRecommender.get(url)
-      .then(response => {
-        console.log(response);
-        this.setState({recommendedApps: response.data});
-      });
+    try{
+      url = "/recommender?appIds=[" + response.data.apps + "]";
+      console.log(url);
+      await apiRecommender.get(url)
+        .then(response => {
+          console.log(response);
+          this.setState({recommendedApps: response.data});
+        });
+    }catch(error){
+      NotificationManager.error('Something went wrong','Error',3000);
+    }
+
   }
 
   pushAppsOverview(){
@@ -151,40 +164,34 @@ class Dashboard extends React.Component{
   }
 
   isCardChosenToBeRemoved(app){
-    if(this.state.appsToRemove.includes(app._id)){
-      return true;
-    }else{
-      return false;
-    }
+    return this.state.appsToRemove.includes(app._id);
   }
 
   async removeAppsFromWishlist(){
     // api call to remove apps from the wishlist
-    let url = "/wishlist/deleteApps"
-    const requestBody = {
-      apps: this.state.appsToRemove
+    try{
+      let url = "/wishlist/deleteApps"
+      const requestBody = {
+        apps: this.state.appsToRemove
+      }
+      await api.put(url, requestBody,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`
+          }
+        });
+    }catch(error){
+      console.log(error);
+      NotificationManager.error('Something went wrong','Error',3000);
     }
-    await api.put(url, requestBody,
-      {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`
-        }
-      });
+
 
     // get the updated wishlist and the apps in it
-    url = "/wishlist/getApps"
-    await api.get(url,
+    await this.getApps();
+    this.setState(
       {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`
-        }
-      }).then(response => {
-      this.setState(
-        {
-          whishlistApps: response.data,
-          appsToRemove: [],
-          isStatusRemove: false
-        });
+        appsToRemove: [],
+        isStatusRemove: false
       });
 
     // also update the recommended apps
@@ -196,6 +203,7 @@ class Dashboard extends React.Component{
   render(){
     return (
       <div>
+        <NotificationContainer/>
         <Header
           pushAppsOverview={this.pushAppsOverview.bind(this)}
           pushDashboard={this.pushDashboard.bind(this)}

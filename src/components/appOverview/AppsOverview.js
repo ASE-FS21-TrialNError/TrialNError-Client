@@ -10,6 +10,7 @@ import TableComparison from "./TableComparison";
 import {PageNumbers} from "./PageNumbers";
 import {ButtonContainer, Button} from "../../views/design/Button";
 import {sortingData} from "../../helpers/FilterCategoryData";
+import {NotificationContainer, NotificationManager} from 'react-notifications';
 
 
 
@@ -171,7 +172,6 @@ class AppsOverview extends React.Component {
       currentPage: 1,
       searchString: "",
       nrOfAppsPerPage: 10,
-      errorMessage:null,
       wayOfSorting: null,
       categoryIos: null,
       categoryAndroid: null,
@@ -243,9 +243,7 @@ class AppsOverview extends React.Component {
         }
       );
     } catch (error) {
-      this.setState({
-        errorMessage: error.message,
-      });
+      NotificationManager.error('Something went wrong','Error',3000);
     }
   }
 
@@ -299,20 +297,25 @@ class AppsOverview extends React.Component {
       url = url + "&name=" + this.state.searchString
     }
 
+    try{
+      console.log(url);
 
-    console.log(url);
+      const response = await api.get(url,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`
+          }
+        });
 
-    const response = await api.get(url,
-      {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`
-        }
-      });
+      console.log(response);
 
-    console.log(response);
+      this.setState({apps: response.data.items });
+      this.setState({totalPages: response.data.totalPages});
+    }catch(error){
+      console.log(error);
+      NotificationManager.error('Something went wrong','Error',3000);
+    }
 
-    this.setState({apps: response.data.items });
-    this.setState({totalPages: response.data.totalPages});
   }
 
   // updates the state of the filters in this component, is passed down to subcomponent
@@ -365,7 +368,8 @@ class AppsOverview extends React.Component {
       this.setState({ appsInWhishlist: response.data});
 
     }catch (error){
-      console.log(error.response)
+      console.log(error.response);
+      NotificationManager.error('Something went wrong','Error',3000);
     }
   }
 
@@ -399,7 +403,8 @@ class AppsOverview extends React.Component {
 
 
     }catch (error){
-      console.log(error.response)
+      console.log(error.response);
+      NotificationManager.error('Something went wrong','Error',3000);
     }
   }
 
@@ -522,6 +527,7 @@ class AppsOverview extends React.Component {
 
     return (
       <div>
+        <NotificationContainer/>
         <Header
           history={this.props.history}
           pushAppsOverview={this.pushAppsOverview.bind(this)}
