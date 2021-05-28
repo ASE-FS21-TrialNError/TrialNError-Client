@@ -7,6 +7,7 @@ import { withRouter } from "react-router-dom";
 import AppsCard from "./AppsCard";
 import {Button} from "../../views/design/Button";
 import LoadingOverlay from "react-loading-overlay";
+import {NotificationContainer, NotificationManager} from 'react-notifications';
 
 const HeaderRecommender = styled.h2`
   
@@ -56,14 +57,13 @@ class Dashboard extends React.Component{
       recommendedApps: [],
       whishlistApps: [],
       isStatusRemove: false,
-      appsToRemove: []
+      appsToRemove: [],
+      areRecommendedAppsUpdated: true
     };
   }
 
-
-  async componentDidMount() {
-    window.scrollTo(0, 0);
-    try {
+  async getApps(){
+    try{
       // fetching all the apps in the wishlist
       console.log(localStorage.getItem("token"));
       let url = "/wishlist/getApps"
@@ -77,8 +77,23 @@ class Dashboard extends React.Component{
 
       this.setState({ whishlistApps: response.data});
       console.log(response.data);
+    }catch(error){
+      NotificationManager.error('Something went wrong','Error',3000);
+    }
+  }
 
-      // getting all the ids of the apps in the whishlist
+  async componentDidMount() {
+    window.scrollTo(0, 0);
+    await this.getApps();
+    await this.getRecommendedApps();
+
+  }
+
+  async getRecommendedApps(){
+    let url, response;
+
+    // getting all the ids of the apps in the whishlist
+    try{
       url = "/wishlist/getApp/id"
       response = await api.get(url,
         {
@@ -89,8 +104,14 @@ class Dashboard extends React.Component{
         });
 
       console.log(response.data);
+    }catch(error){
+      console.log(error);
+      NotificationManager.error('Something went wrong','Error',3000);
+    }
 
-      // sending the all ids of apps in the whislist and getting back the recommended apps
+
+    // sending the all ids of apps in the whislist and getting back the recommended apps
+    try{
       url = "/recommender?appIds=[" + response.data.apps + "]";
       console.log(url);
       await apiRecommender.get(url)
@@ -98,12 +119,10 @@ class Dashboard extends React.Component{
           console.log(response);
           this.setState({recommendedApps: response.data});
         });
-
-    } catch (error) {
-      this.setState({
-        errorMessage: error.message,
-      });
+    }catch(error){
+      NotificationManager.error('Something went wrong','Error',3000);
     }
+
   }
 
   pushAppsOverview(){
@@ -145,46 +164,46 @@ class Dashboard extends React.Component{
   }
 
   isCardChosenToBeRemoved(app){
-    if(this.state.appsToRemove.includes(app._id)){
-      return true;
-    }else{
-      return false;
-    }
+    return this.state.appsToRemove.includes(app._id);
   }
 
   async removeAppsFromWishlist(){
     // api call to remove apps from the wishlist
-    let url = "/wishlist/deleteApps"
-    const requestBody = {
-      apps: this.state.appsToRemove
+    try{
+      let url = "/wishlist/deleteApps"
+      const requestBody = {
+        apps: this.state.appsToRemove
+      }
+      await api.put(url, requestBody,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`
+          }
+        });
+    }catch(error){
+      console.log(error);
+      NotificationManager.error('Something went wrong','Error',3000);
     }
-    await api.put(url, requestBody,
-      {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`
-        }
-      });
+
 
     // get the updated wishlist and the apps in it
-    url = "/wishlist/getApps"
-    await api.get(url,
+    await this.getApps();
+    this.setState(
       {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`
-        }
-      }).then(response => {
-      this.setState(
-        {
-          whishlistApps: response.data,
-          appsToRemove: [],
-          isStatusRemove: false
-        });
+        appsToRemove: [],
+        isStatusRemove: false
       });
+
+    // also update the recommended apps
+    this.setState({areRecommendedAppsUpdated: false})
+    await this.getRecommendedApps();
+    this.setState({areRecommendedAppsUpdated: true})
   }
 
   render(){
     return (
       <div>
+        <NotificationContainer/>
         <Header
           pushAppsOverview={this.pushAppsOverview.bind(this)}
           pushDashboard={this.pushDashboard.bind(this)}
@@ -217,32 +236,62 @@ class Dashboard extends React.Component{
                   <LoadingOverlay
                     active={true}
                     spinner
-                    text='Generating personalized recommendations ...'
+                    text='Generating personalized recommendations (can take up to 15 sec) ...'
                   >
                     <PlaceholoderForLoading/>
                   </LoadingOverlay>
                 )
             ):(
-              <AppCardsContainer>
-                {this.state.recommendedApps.map((app) =>
-                  {
-                    return (
-                      <AppCardCont
-                        key={app._id + "1"}
-                        onClick={() => {
-                          this.goToDetails(app);
-                        }}
-                      >
-                        <AppsCard
-                          key={app._id}
-                          app={app}
-                        />
-                      </AppCardCont>
+              this.state.areRecommendedAppsUpdated?
+                (
+                  <AppCardsContainer>
+                    {this.state.recommendedApps.map((app) =>
+                      {
+                        return (
+                          <AppCardCont
+                            key={app._id + "1"}
+                            onClick={() => {
+                              this.goToDetails(app);
+                            }}
+                          >
+                            <AppsCard
+                              key={app._id}
+                              app={app}
+                            />
+                          </AppCardCont>
 
-                    )
-                  }
-                )}
-              </AppCardsContainer>
+                        )
+                      }
+                    )}
+                  </AppCardsContainer>
+                ):(
+                  <LoadingOverlay
+                    active={true}
+                    spinner
+                    text='Updating personalized recommendations (can take up to 15 sec) ...'
+                  >
+                    <AppCardsContainer>
+                      {this.state.recommendedApps.map((app) =>
+                        {
+                          return (
+                            <AppCardCont
+                              key={app._id + "1"}
+                              onClick={() => {
+                                this.goToDetails(app);
+                              }}
+                            >
+                              <AppsCard
+                                key={app._id}
+                                app={app}
+                              />
+                            </AppCardCont>
+
+                          )
+                        }
+                      )}
+                    </AppCardsContainer>
+                  </LoadingOverlay>
+                )
             )
           }
 

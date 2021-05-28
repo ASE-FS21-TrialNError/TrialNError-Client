@@ -23,31 +23,40 @@ class Registration extends React.Component {
   async register() {
     // check correct format of email address
     if(isEmailFormatCorrect(this.state.email)){
-      const requestBody = JSON.stringify({
-        firstname: this.state.firstname,
-        lastname: this.state.lastname,
-        email: this.state.email,
-        password: this.state.password
-      });
-      const response = await api.post("/auth/email/register", requestBody);
 
-      console.log(response.status);
-      console.log(response.data);
-      console.log(response.data.payload);
-      if (response.data.message === "REGISTER.EMAIL_VERIFIED"){
-        localStorage.setItem("email", this.state.email)
-        this.props.history.push({
-          pathname: "/emailVerification",
-          state: {email: this.state.email}
+      try{
+        const requestBody = JSON.stringify({
+          firstname: this.state.firstname,
+          lastname: this.state.lastname,
+          email: this.state.email,
+          password: this.state.password
         });
+        const response = await api.post("/auth/email/register", requestBody);
 
-      }else{
-        if(response.data.error === "ERROR.REGISTRATION.EMAIL_NOT_SENT"){
-          NotificationManager.error('Error: Verification email could not be sent to your email address','',3000);
+        console.log(response.status);
+        console.log(response.data);
+        console.log(response.data.payload);
+        if (response.data.message === "REGISTER.EMAIL_VERIFIED"){
+          localStorage.setItem("email", this.state.email)
+          this.props.history.push({
+            pathname: "/emailVerification",
+            state: {email: this.state.email}
+          });
+
+
         }else{
-          NotificationManager.error('Error: Account with this email address already exists','',3000);
+          if(response.data.error === "ERROR.REGISTRATION.EMAIL_NOT_SENT"){
+            NotificationManager.success('Email account was created', 'Success',3000);
+            await new Promise(resolve => setTimeout(resolve, 3000));
+            this.props.history.push("/login");
+          }else{
+            NotificationManager.error('Error: Account with this email address already exists','',3000);
+          }
         }
+      }catch (error){
+        NotificationManager.error('Something went wrong','Error',3000);
       }
+
     }else{
       NotificationManager.error('Error: Email format is incorrect','',3000);
     }
