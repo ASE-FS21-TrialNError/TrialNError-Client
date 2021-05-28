@@ -33,7 +33,7 @@ const FilterButton = styled.button`
   border-width: thin;
   width: ${props => props.width}%;
   height: ${props => props.height}%;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: bold;
   overflow: hidden;
   border-radius: 20px;

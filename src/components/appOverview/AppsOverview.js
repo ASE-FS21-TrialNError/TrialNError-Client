@@ -273,7 +273,7 @@ class AppsOverview extends React.Component {
       url = url + "&rating_ios=" + this.state.ratingIos.min + "_" + this.state.ratingIos.max;
     }
     if(this.state.ratingAndroid.min !== null && this.state.ratingAndroid.max !== null){
-      url=url + "&rating_ios=" + this.state.ratingAndroid.min + "_" + this.state.ratingAndroid.max;
+      url=url + "&rating_andr=" + this.state.ratingAndroid.min + "_" + this.state.ratingAndroid.max;
     }
     if(this.state.contentRatingIos !== null){
       url= url + "&content_rating_ios=" + encodeURIComponent(this.state.contentRatingIos);
@@ -488,10 +488,10 @@ class AppsOverview extends React.Component {
       displayedText.push("- Price Android: " + this.state.priceAndroid.min + " to " + this.state.priceAndroid.max);
     }
     if(this.state.ratingCountIos.min !== null && this.state.ratingCountIos.max !== null){
-      displayedText.push("- Rating Count iOS" + this.state.ratingCountIos.min + " to " + this.state.ratingCountIos.max);
+      displayedText.push("- Rating Count iOS " + this.state.ratingCountIos.min + " to " + this.state.ratingCountIos.max);
     }
     if(this.state.ratingCountAndroid.min !== null && this.state.ratingCountAndroid.max !== null){
-      displayedText.push("- Rating Count Android" + this.state.ratingCountAndroid.min + " to " + this.state.ratingCountAndroid.max);
+      displayedText.push("- Rating Count Android " + this.state.ratingCountAndroid.min + " to " + this.state.ratingCountAndroid.max);
     }
     if(this.state.searchString !== ""){
       displayedText.push("- Search bar: " + this.state.searchString);
@@ -507,7 +507,9 @@ class AppsOverview extends React.Component {
         }
         {displayedText.map(filter =>{
           return(
-            <div>
+            <div
+              key={filter}
+            >
               {filter}
             </div>
           );
@@ -661,7 +663,7 @@ class AppsOverview extends React.Component {
                   updateListOfApps={this.updateFilter.bind(this)}
                   name={"Rating Count iOS"}
                   heightPopUp={220}
-                  widthPopUp={240}
+                  widthPopUp={300}
                   heightButton={80}
                   widthButton={140}
                 />
@@ -670,7 +672,7 @@ class AppsOverview extends React.Component {
                   updateListOfApps={this.updateFilter.bind(this)}
                   name={"Rating Count Android"}
                   heightPopUp={220}
-                  widthPopUp={280}
+                  widthPopUp={300}
                   heightButton={80}
                   widthButton={200}
                 />

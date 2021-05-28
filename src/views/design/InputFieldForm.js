@@ -55,7 +55,7 @@ const InputFieldContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 50%;
+  width: 60%;
 `;
 
 const InputField = styled.input`
@@ -69,11 +69,11 @@ const InputField = styled.input`
 
   font-size: 16px;
   height: 40px;
-  padding-left: 15px;
   border: 1px solid #5c5c5c;
   border-radius: 10px;
   width: 100%;
   background-color: #ecf7fa;
+  text-align: center;
 `;
 
 const SubmitButtonContainer = styled.div`
@@ -117,17 +117,17 @@ class InputFieldForm extends React.Component {
   }
 
 
-  handleInputChangeRatingCount(key, value) {
+  /*handleInputChangeRatingCount(key, value) {
     value = value.replace(/[^0-5]/g, "");
     if(value.length > 0){
       value = value.charAt(0);
     }
 
     this.setState({ [key]: value });
-  }
+  }*/
 
-  // for the price filters only numbers and a dot should be allowed to be typed into an input field
-  handleInputChangePrice(key, value) {
+  // for the price and rating count filters only numbers should be allowed to be typed into an input field
+  handleInputChange(key, value) {
     // eslint-disable-next-line no-useless-escape
     value = value.replace(/[^0-9]/g, "");
     this.setState({ [key]: value });
@@ -138,12 +138,9 @@ class InputFieldForm extends React.Component {
     let lowerBoundary = this.state.lowerBoundary;
     let upperBoundary = this.state.upperBoundary;
     if(this.state.lowerBoundary !== "" && this.state.upperBoundary !== ""){
-      if(lowerBoundary.length === 2 && lowerBoundary.charAt(1) === "."){
-        lowerBoundary = lowerBoundary + "0";
-      }
-      if(upperBoundary.length === 2 && upperBoundary.charAt(1) === "."){
-        upperBoundary = upperBoundary + "0";
-      }
+
+      lowerBoundary = lowerBoundary.replace(/^0+/, "");
+      upperBoundary = upperBoundary.replace(/^0+/, "");
 
       let value = (
         {
@@ -214,8 +211,8 @@ class InputFieldForm extends React.Component {
                 value={this.state.lowerBoundary}
                 onChange={(e) => {
                   this.props.name === "Price iOS" || this.props.name === "Price Android"?
-                    this.handleInputChangePrice("lowerBoundary", e.target.value)
-                    :this.handleInputChangeRatingCount("lowerBoundary", e.target.value);
+                    this.handleInputChange("lowerBoundary", e.target.value)
+                    :this.handleInputChange("lowerBoundary", e.target.value);
                 }}
               >
 
@@ -230,12 +227,12 @@ class InputFieldForm extends React.Component {
             </TitleInputContainer>
             <InputFieldContainer>
               <InputField
-                placeholder={5}
+                placeholder={this.props.name === "Price iOS" || this.props.name === "Price Android"? 10 : 100000}
                 value={this.state.upperBoundary}
                 onChange={(e) => {
                   this.props.name === "Price iOS" || this.props.name === "Price Android"?
-                    this.handleInputChangePrice("upperBoundary", e.target.value)
-                    :this.handleInputChangeRatingCount("upperBoundary", e.target.value);
+                    this.handleInputChange("upperBoundary", e.target.value)
+                    :this.handleInputChange("upperBoundary", e.target.value);
                 }}
               >
 
