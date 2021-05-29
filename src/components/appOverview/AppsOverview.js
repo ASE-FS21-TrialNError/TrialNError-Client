@@ -212,7 +212,7 @@ class AppsOverview extends React.Component {
     try {
 
       // fetching the first apps when user gets to this page, as well as how many pages there are
-      console.log(localStorage.getItem("token"));
+      //console.log(localStorage.getItem("token"));
       let response = await api.get("/apps?page=1&limit=10",
       {
       headers: {
@@ -224,8 +224,8 @@ class AppsOverview extends React.Component {
       this.setState({ apps: response.data.items });
       this.setState({totalPages: response.data.totalPages});
       this.setState({currentPage: 1});
-      console.log("total pages", this.state.totalPages);
-      console.log(response.data);
+      //console.log("total pages", this.state.totalPages);
+      //console.log(response.data);
 
       // get all apps which are in the wish list from the backend, so we know if we should display
       // add app to wishlist or remove app from wishlist
@@ -238,7 +238,7 @@ class AppsOverview extends React.Component {
 
         })
         .then(response =>{
-          console.log(response.data);
+          //console.log(response.data);
           this.setState({ appsInWhishlist: response.data})
         }
       );
@@ -259,7 +259,7 @@ class AppsOverview extends React.Component {
   async getApps(){
 
     let url = "/apps?page=" + this.state.currentPage + "&limit=" + this.state.nrOfAppsPerPage;
-    console.log(this.state.categoryIos)
+    //console.log(this.state.categoryIos)
     if( this.state.wayOfSorting !== null){
       url = url + "&sort=" + this.state.wayOfSorting;
     }
@@ -273,7 +273,7 @@ class AppsOverview extends React.Component {
       url = url + "&rating_ios=" + this.state.ratingIos.min + "_" + this.state.ratingIos.max;
     }
     if(this.state.ratingAndroid.min !== null && this.state.ratingAndroid.max !== null){
-      url=url + "&rating_ios=" + this.state.ratingAndroid.min + "_" + this.state.ratingAndroid.max;
+      url=url + "&rating_andr=" + this.state.ratingAndroid.min + "_" + this.state.ratingAndroid.max;
     }
     if(this.state.contentRatingIos !== null){
       url= url + "&content_rating_ios=" + encodeURIComponent(this.state.contentRatingIos);
@@ -282,23 +282,23 @@ class AppsOverview extends React.Component {
       url= url + "&content_rating_andr=" + encodeURIComponent(this.state.contentRatingAndroid);
     }
     if(this.state.priceIos.min !== null && this.state.priceIos.max !== null){
-      url= url + "&price_ios=" + this.state.priceIos.min + "_" + this.state.priceIos.max;
+      url= url + "&price_ios=" + encodeURIComponent(this.state.priceIos.min) + "_" + encodeURIComponent(this.state.priceIos.max);
     }
     if(this.state.priceAndroid.min !== null && this.state.priceAndroid.max !== null){
-      url= url + "&price_andr=" + this.state.priceAndroid.min + "_" + this.state.priceAndroid.max;
+      url= url + "&price_andr=" + encodeURIComponent(this.state.priceAndroid.min) + "_" + encodeURIComponent(this.state.priceAndroid.max);
     }
     if(this.state.ratingCountIos.min !== null && this.state.ratingCountIos.max !== null){
-      url= url + "&rating_count_ios=" + this.state.ratingCountIos.min + "_" + this.state.ratingCountIos.max;
+      url= url + "&rating_count_ios=" + encodeURIComponent(this.state.ratingCountIos.min) + "_" + encodeURIComponent(this.state.ratingCountIos.max);
     }
     if(this.state.ratingCountAndroid.min !== null && this.state.ratingCountAndroid.max !== null){
-      url= url + "&rating_count_andr=" + this.state.ratingCountAndroid.min + "_" + this.state.ratingCountAndroid.max;
+      url= url + "&rating_count_andr=" + encodeURIComponent(this.state.ratingCountAndroid.min) + "_" + encodeURIComponent(this.state.ratingCountAndroid.max);
     }
     if(this.state.searchString !== ""){
       url = url + "&name=" + this.state.searchString
     }
 
     try{
-      console.log(url);
+      //console.log(url);
 
       const response = await api.get(url,
         {
@@ -307,12 +307,12 @@ class AppsOverview extends React.Component {
           }
         });
 
-      console.log(response);
+      //console.log(response);
 
       this.setState({apps: response.data.items });
       this.setState({totalPages: response.data.totalPages});
     }catch(error){
-      console.log(error);
+      //console.log(error);
       NotificationManager.error('Something went wrong','Error',3000);
     }
 
@@ -320,7 +320,7 @@ class AppsOverview extends React.Component {
 
   // updates the state of the filters in this component, is passed down to subcomponent
   updateFilter(key, value){
-    console.log(key, value);
+    //console.log(key, value);
     this.setState(
       {[key]: value,
       currentPage: 1},
@@ -344,17 +344,17 @@ class AppsOverview extends React.Component {
   }
 
   async addAppToWishlist(appId){
-    console.log(appId);
+    //console.log(appId);
     try{
       let url = "/wishlist/add/" + appId;
-      console.log(url);
+      //console.log(url);
       let response = await api.get(url,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`
           }
         });
-      console.log(response);
+      //console.log(response);
 
       // get the updated wishlist for displaying the correct button: "add to wishlist" or "remove from whishlist"
       url = "/wishlist/getApps"
@@ -368,17 +368,17 @@ class AppsOverview extends React.Component {
       this.setState({ appsInWhishlist: response.data});
 
     }catch (error){
-      console.log(error.response);
+      //console.log(error.response);
       NotificationManager.error('Something went wrong','Error',3000);
     }
   }
 
   async removeAppFromWishlist(appId){
     // add API call
-    console.log(appId);
+    //console.log(appId);
     try{
       let url = "/wishlist/delete/" + appId;
-      console.log(url);
+      //console.log(url);
       let response = await api.get(url,
         {
           headers: {
@@ -387,7 +387,7 @@ class AppsOverview extends React.Component {
         });
 
 
-      console.log(response);
+      //console.log(response);
       // get the updated wishlist for displaying the correct button: "add to wishlist" or "remove from whishlist"
       url = "/wishlist/getApps"
       response = await api.get(url,
@@ -398,12 +398,12 @@ class AppsOverview extends React.Component {
 
         });
 
-      console.log(response);
+      //console.log(response);
       this.setState({ appsInWhishlist: response.data});
 
 
     }catch (error){
-      console.log(error.response);
+      //console.log(error.response);
       NotificationManager.error('Something went wrong','Error',3000);
     }
   }
@@ -488,10 +488,10 @@ class AppsOverview extends React.Component {
       displayedText.push("- Price Android: " + this.state.priceAndroid.min + " to " + this.state.priceAndroid.max);
     }
     if(this.state.ratingCountIos.min !== null && this.state.ratingCountIos.max !== null){
-      displayedText.push("- Rating Count iOS" + this.state.ratingCountIos.min + " to " + this.state.ratingCountIos.max);
+      displayedText.push("- Rating Count iOS " + this.state.ratingCountIos.min + " to " + this.state.ratingCountIos.max);
     }
     if(this.state.ratingCountAndroid.min !== null && this.state.ratingCountAndroid.max !== null){
-      displayedText.push("- Rating Count Android" + this.state.ratingCountAndroid.min + " to " + this.state.ratingCountAndroid.max);
+      displayedText.push("- Rating Count Android " + this.state.ratingCountAndroid.min + " to " + this.state.ratingCountAndroid.max);
     }
     if(this.state.searchString !== ""){
       displayedText.push("- Search bar: " + this.state.searchString);
@@ -507,7 +507,9 @@ class AppsOverview extends React.Component {
         }
         {displayedText.map(filter =>{
           return(
-            <div>
+            <div
+              key={filter}
+            >
               {filter}
             </div>
           );
@@ -518,7 +520,7 @@ class AppsOverview extends React.Component {
   }
 
   setNrOfAppsPerApps(nrOfAppsPerPage){
-    console.log(nrOfAppsPerPage);
+    //console.log(nrOfAppsPerPage);
     this.setState({nrOfAppsPerPage: nrOfAppsPerPage}, this.getApps);
   }
 
@@ -661,7 +663,7 @@ class AppsOverview extends React.Component {
                   updateListOfApps={this.updateFilter.bind(this)}
                   name={"Rating Count iOS"}
                   heightPopUp={220}
-                  widthPopUp={240}
+                  widthPopUp={300}
                   heightButton={80}
                   widthButton={140}
                 />
@@ -670,7 +672,7 @@ class AppsOverview extends React.Component {
                   updateListOfApps={this.updateFilter.bind(this)}
                   name={"Rating Count Android"}
                   heightPopUp={220}
-                  widthPopUp={280}
+                  widthPopUp={300}
                   heightButton={80}
                   widthButton={200}
                 />
