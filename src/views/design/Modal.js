@@ -72,7 +72,7 @@ function loadCorrectForm(props){
   // if it is a price or rating count button display InputFieldForm
   if(props.name === "Price iOS" || props.name === "Price Android" || props.name === "Rating Count iOS" || props.name === "Rating Count Android"){
     return(
-      <InputFieldForm updateListOfApps={props.updateListOfApps} name={props.name}/>
+      <InputFieldForm filterState={props.filterState} updateListOfApps={props.updateListOfApps} name={props.name}/>
     )
     // if it is a any other button display SingleChoice
   } else {

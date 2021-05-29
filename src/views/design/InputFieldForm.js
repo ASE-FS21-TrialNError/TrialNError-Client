@@ -139,8 +139,22 @@ class InputFieldForm extends React.Component {
     let upperBoundary = this.state.upperBoundary;
     if(this.state.lowerBoundary !== "" && this.state.upperBoundary !== ""){
 
-      lowerBoundary = lowerBoundary.replace(/^0+/, "");
-      upperBoundary = upperBoundary.replace(/^0+/, "");
+      let hasOtherCharThanZero = /[1-9]/
+      // check if whole number only consist of zeros
+      if(!hasOtherCharThanZero.test(lowerBoundary)){
+        lowerBoundary = "0"
+      }else{
+        // replace leading zeros
+        lowerBoundary = lowerBoundary.replace(/^0+/, "");
+      }
+
+      if(!hasOtherCharThanZero.test(upperBoundary)){
+        upperBoundary = "0"
+      }else{
+        // replace leading zeros
+        upperBoundary = upperBoundary.replace(/^0+/, "");
+      }
+
 
       let value = (
         {
@@ -208,7 +222,7 @@ class InputFieldForm extends React.Component {
             <InputFieldContainer>
               <InputField
                 placeholder={1}
-                value={this.state.lowerBoundary}
+                value={this.props.filterState.min === null? this.state.lowerBoundary: this.props.filterState.min}
                 onChange={(e) => {
                   this.props.name === "Price iOS" || this.props.name === "Price Android"?
                     this.handleInputChange("lowerBoundary", e.target.value)
@@ -228,7 +242,7 @@ class InputFieldForm extends React.Component {
             <InputFieldContainer>
               <InputField
                 placeholder={this.props.name === "Price iOS" || this.props.name === "Price Android"? 10 : 100000}
-                value={this.state.upperBoundary}
+                value={this.props.filterState.max === null? this.state.upperBoundary: this.props.filterState.max}
                 onChange={(e) => {
                   this.props.name === "Price iOS" || this.props.name === "Price Android"?
                     this.handleInputChange("upperBoundary", e.target.value)
