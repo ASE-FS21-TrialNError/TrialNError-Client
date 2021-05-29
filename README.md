@@ -2,9 +2,9 @@
 
 ## General information
 
-(Add a few introductory words what this repo is)
-
-The high-level components are:
+This repository is part of the project AppCom and contains the code for the front end of the project. Further information
+about the project can be found in the "Additional information" section. The main high level components of this 
+repository are mentioned below:
 
 - **[Login/Registration/EmailVerfication](https://github.com/ASE-FS21-TrialNError/TrialNError-Client/tree/main/src/components)**: 
   Users can register and login to the application.
@@ -30,7 +30,7 @@ be directed to the App Details page where all the additional information is disp
 
 ## Launch & Deployment - for joining developers
 
-To run the application locally, a Node.js version >= 12.10 will be need. Node.js can be downloaded [here](https://nodejs.org).
+To run the application locally, a Node.js version >= 12.10 will be needed. Node.js can be downloaded [here](https://nodejs.org).
 
 #### `npm install`
 
@@ -39,7 +39,7 @@ This command has to be run before starting the application for the first time. I
 #### `npm run dev`
 
 This command runs the application in the development mode.
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Open [http://localhost:3000](http://localhost:4000) to view it in the browser.
 If make changes to the code, the page will reload.
 
 #### `npm run test`
@@ -51,18 +51,34 @@ More information can be found [here](https://facebook.github.io/create-react-app
 
 #### `npm run build`
 
-This commands builds the application and i
-Builds the app for production to the `build` folder. It correctly bundles React in production mode and optimizes the build for the best performance.
-The build is minified and the filenames include the hashes.
-Your app is ready to be deployed!
+This commands builds the application to the `build` folder. The application is correctly bundled and optimized for production.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+For further information have a look at the section [deployment](https://facebook.github.io/create-react-app/docs/deployment).
 
 ## CI/CD pipeline
 
 For information regarding the setup of the CI/CD pipeline of the Client repo, please refer to the specific Project Wiki [page](https://github.com/ASE-FS21-TrialNError/TrialNError-Client/wiki/CI-CD-pipeline).
 
 ## Illustrations of the Front end 
+
+This application consists mainly out of four parts. For each of these parts you can find a picture below.
+
+### Login
+A user can get access to the AppCom service by providing user credentials.
+![Settings in the Lobby](public/Login.png)
+
+### Apps Overview
+In the Apps Overview page a user can sort and filter the apps. Furthermore, he can add them to his wishlist.
+![Join Game](public/AppsOverview.png)
+
+### Dashboard
+A user can see all the apps he added to his wishlist below the recommended apps. As soon as a user adds an app to the
+wishlist, he receives recommendations for other apps based on the content and rating of the apps in his wishlist.
+![Join Game](public/Dashboard.png)
+
+### App Details
+A user can get additional information on each app on the App Details page.
+![Join Game](public/AppDetails.png)
 
 ## Roadmap
 Joining developers can contribute to the project by adding the following things:
@@ -97,14 +113,3 @@ We thank the ASE team FS21 for all the support and advice during this course.
 - [Vladimir](https://github.com/vldonkov)
 - [Lukas](https://github.com/LukZeh)
 
-## License
-
-The project is licensed under the Apache License 2.0. For more information check [this :page_with_curl:](https://github.com/sopra-fs21-group-11/sopra-client/blob/master/LICENSE) out.
-
-
-
-## External packages
-
-## how to run in development
-
-## how to deploy
