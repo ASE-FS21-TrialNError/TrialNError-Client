@@ -3,8 +3,9 @@
 ## General information
 
 This repository is part of the project AppCom and contains the code for the front end of the project. The application
-was created using React.js and the programming languages used are Javascript, CSS and Html. Further information about the 
-project can be found in the "Additional information" section. 
+was created using React.js with Javascript. Further information about the 
+project can be found in the ["Additional information"](#additionalInformation) section.
+
 The main high level components of this repository are mentioned below:
 
 - **[Login/Registration/EmailVerfication](https://github.com/ASE-FS21-TrialNError/TrialNError-Client/tree/main/src/components)**: 
@@ -23,34 +24,46 @@ The main high level components of this repository are mentioned below:
 
 **User control flow**: An unregistered user can register on the Registration page. After
 the registration the user will be directed to the Email Verification page, where the user should enter the code he received 
-by email. After successful verification, the user arrives at the Apps Overview page where he can filter the displayed apps and 
+by email. (For sending the verification we use Gmail as a SMTP server. Sometimes Gmail fails to send an email due to security reasons, 
+in that case we directly authenticate the user and the user will be redirected to login page.) 
+After successful verification, the user arrives at the Apps Overview page where he can filter the displayed apps and 
 add apps to his wish list. If the user goes to Dashboard page after he added apps to his wish list, he can see these apps in the
-wish list in the Dashboard. Based on the apps in the wishlist, the user will get a list of recommended above the wish list. 
+wish list in the Dashboard. Based on the apps in the wish list, the user will get a list of recommended above the wish list. 
 If a user wants more information for a particular app, he can click on the picture, or the heading of the apps so that he will 
 be directed to the App Details page where all the additional information is displayed.
+
+Check out our server repository [:desktop_computer: server repo](https://github.com/ASE-FS21-TrialNError/TrialNError-Server).
+
+Check out our app recommendation repository [:hourglass: python repo ](https://github.com/ASE-FS21-TrialNError/TrialNError-Python).
 
 ## Launch & Deployment - for joining developers
 
 To run the application locally, a Node.js version >= 12.10 will be needed. Node.js can be downloaded [here](https://nodejs.org).
 
-#### `npm install`
+```bash
+npm install
+```
 
 This command has to be run before starting the application for the first time. It will install further dependencies besides Node.js.
 
-#### `npm run dev`
+```bash
+npm run dev
+```
 
 This command runs the application in the development mode.
 Open [http://localhost:4000](http://localhost:4000) to view it in the browser.
-If you make changes to the code, the page will be updated.
+The development mode runs with hot compile if make any changes in the code it will update in real time. 
 
-#### `npm run test`
+```bash
+npm run test
+```
 
 This command starts the test runner. 
 More information can be found [here](https://facebook.github.io/create-react-app/docs/running-tests).
 
-> For macOS user running into an 'fsevents' error: https://github.com/jest-community/vscode-jest/issues/423
-
-#### `npm run build`
+```bash
+npm run build
+```
 
 This commands builds the application to the `build` folder. The application is correctly bundled and optimized for production.
 
@@ -89,7 +102,7 @@ Joining developers can contribute to the project by adding the following things:
   with how many apps are for iOS, Android and both systems.
 - ... any other creative extensions which increases user experience! :smile:
 
-## Additional information (not specific to this repository)
+## Additional information (not specific to this repository)<a name="additionalInformation"></a>
 
 For additional information please refer to the Project Wiki:
 
