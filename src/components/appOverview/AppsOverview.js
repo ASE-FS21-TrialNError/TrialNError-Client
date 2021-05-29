@@ -282,16 +282,16 @@ class AppsOverview extends React.Component {
       url= url + "&content_rating_andr=" + encodeURIComponent(this.state.contentRatingAndroid);
     }
     if(this.state.priceIos.min !== null && this.state.priceIos.max !== null){
-      url= url + "&price_ios=" + this.state.priceIos.min + "_" + this.state.priceIos.max;
+      url= url + "&price_ios=" + encodeURIComponent(this.state.priceIos.min) + "_" + encodeURIComponent(this.state.priceIos.max);
     }
     if(this.state.priceAndroid.min !== null && this.state.priceAndroid.max !== null){
-      url= url + "&price_andr=" + this.state.priceAndroid.min + "_" + this.state.priceAndroid.max;
+      url= url + "&price_andr=" + encodeURIComponent(this.state.priceAndroid.min) + "_" + encodeURIComponent(this.state.priceAndroid.max);
     }
     if(this.state.ratingCountIos.min !== null && this.state.ratingCountIos.max !== null){
-      url= url + "&rating_count_ios=" + this.state.ratingCountIos.min + "_" + this.state.ratingCountIos.max;
+      url= url + "&rating_count_ios=" + encodeURIComponent(this.state.ratingCountIos.min) + "_" + encodeURIComponent(this.state.ratingCountIos.max);
     }
     if(this.state.ratingCountAndroid.min !== null && this.state.ratingCountAndroid.max !== null){
-      url= url + "&rating_count_andr=" + this.state.ratingCountAndroid.min + "_" + this.state.ratingCountAndroid.max;
+      url= url + "&rating_count_andr=" + encodeURIComponent(this.state.ratingCountAndroid.min) + "_" + encodeURIComponent(this.state.ratingCountAndroid.max);
     }
     if(this.state.searchString !== ""){
       url = url + "&name=" + this.state.searchString

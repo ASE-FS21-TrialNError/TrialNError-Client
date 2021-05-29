@@ -20,12 +20,13 @@ const TableDet = styled.table`
 `;
 
 const TableHeader = styled.th`
-  font-size: 20px;
+  font-size: 16px;
   text-align: center;
 `;
 
 const RowHeader = styled.th`
   text-align: left;
+  font-size: 16px;
 `;
 
 const RowHeaderGIC = styled.td`

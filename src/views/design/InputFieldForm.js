@@ -113,23 +113,27 @@ class InputFieldForm extends React.Component {
       lowerBoundary: "",
       upperBoundary: ""
     };
+
     this.formSubmit = this.formSubmit.bind(this);
   }
 
-
-  /*handleInputChangeRatingCount(key, value) {
-    value = value.replace(/[^0-5]/g, "");
-    if(value.length > 0){
-      value = value.charAt(0);
+  componentDidMount() {
+    if(this.props.filterState.min !== null && this.props.filterState.max !== null){
+      this.setState({
+        lowerBoundary: this.props.filterState.min,
+        upperBoundary: this.props.filterState.max
+      })
     }
+  }
 
+  handleInputChangeRatingCount(key, value) {
+    value = value.replace(/[^0-9]/g, "");
     this.setState({ [key]: value });
-  }*/
+  }
 
   // for the price and rating count filters only numbers should be allowed to be typed into an input field
   handleInputChange(key, value) {
-    // eslint-disable-next-line no-useless-escape
-    value = value.replace(/[^0-9]/g, "");
+    value = value.replace(/[^\d\.]/g, "");
     this.setState({ [key]: value });
   }
 
@@ -155,29 +159,42 @@ class InputFieldForm extends React.Component {
         upperBoundary = upperBoundary.replace(/^0+/, "");
       }
 
+      if(this.props.name === "Price iOS" || this.props.name === "Price Android"){
+        lowerBoundary = parseFloat(lowerBoundary).toFixed(2);
+        upperBoundary = parseFloat(upperBoundary).toFixed(2);
+      }else{
+        lowerBoundary = parseFloat(lowerBoundary).toFixed(0);
+        upperBoundary = parseFloat(upperBoundary).toFixed(0);
+      }
 
-      let value = (
-        {
-          "min": lowerBoundary,
-          "max": upperBoundary
-        }
-      )
-      if(parseFloat(lowerBoundary) > parseFloat(upperBoundary)){
-        value = (
+
+      if(!isNaN(lowerBoundary) && !isNaN(upperBoundary)){
+        let value = (
           {
-            "min": upperBoundary,
-            "max": lowerBoundary
+            "min": lowerBoundary,
+            "max": upperBoundary
           }
         )
-      }
-      console.log(this.props.name);
-      this.setState(
-        {
-          lowerBoundary: lowerBoundary,
-          upperBoundary: upperBoundary
+        if(parseFloat(lowerBoundary) > parseFloat(upperBoundary)){
+          value = (
+            {
+              "min": upperBoundary,
+              "max": lowerBoundary
+            }
+          )
         }
-      );
-      this.props.updateListOfApps(radioButtonData[this.props.name].filter, value)
+        console.log(this.props.name);
+        this.setState(
+          {
+            lowerBoundary: lowerBoundary,
+            upperBoundary: upperBoundary
+          }
+        );
+        this.props.updateListOfApps(radioButtonData[this.props.name].filter, value);
+      }else{
+        this.resetState();
+      }
+
     }
   }
 
@@ -222,11 +239,11 @@ class InputFieldForm extends React.Component {
             <InputFieldContainer>
               <InputField
                 placeholder={1}
-                value={this.props.filterState.min === null? this.state.lowerBoundary: this.props.filterState.min}
+                value={this.state.lowerBoundary}
                 onChange={(e) => {
                   this.props.name === "Price iOS" || this.props.name === "Price Android"?
                     this.handleInputChange("lowerBoundary", e.target.value)
-                    :this.handleInputChange("lowerBoundary", e.target.value);
+                    :this.handleInputChangeRatingCount("lowerBoundary", e.target.value);
                 }}
               >
 
@@ -242,11 +259,11 @@ class InputFieldForm extends React.Component {
             <InputFieldContainer>
               <InputField
                 placeholder={this.props.name === "Price iOS" || this.props.name === "Price Android"? 10 : 100000}
-                value={this.props.filterState.max === null? this.state.upperBoundary: this.props.filterState.max}
+                value={this.state.upperBoundary}
                 onChange={(e) => {
                   this.props.name === "Price iOS" || this.props.name === "Price Android"?
                     this.handleInputChange("upperBoundary", e.target.value)
-                    :this.handleInputChange("upperBoundary", e.target.value);
+                    :this.handleInputChangeRatingCount("upperBoundary", e.target.value);
                 }}
               >
 
