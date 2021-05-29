@@ -75,11 +75,11 @@ export class PageNumbers extends React.Component{
 
     // push all the numbers from the lower to the upper boundary into array for displaying
     let i=lowerBoundary;
-    console.log(this.props.totalPages);
+    //console.log(this.props.totalPages);
     for(i; i <= upperBoundary; i++){
       pageNumbers.push(i);
     }
-    console.log(pageNumbers);
+    //console.log(pageNumbers);
 
 
 

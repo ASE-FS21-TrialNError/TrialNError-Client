@@ -28,10 +28,10 @@ class Login extends React.Component {
           email: this.state.email,
           password: this.state.password,
         });
-        console.log(requestBody);
+        ////console.log(requestBody);
         const response = await api.post("/auth/login", requestBody);
 
-        console.log(response.status);
+        ////console.log(response.status);
         if(response.status === 200 && response.data.errorCode !== 202){
           localStorage.setItem("token", response.data.payload.token);
           this.props.history.push("/appsOverview");
@@ -39,7 +39,7 @@ class Login extends React.Component {
           NotificationManager.error('Error: Account does not exist','',3000);
         }
       }catch(error){
-        console.log(error);
+        //console.log(error);
         // User not found
         NotificationManager.error('Error: Password is invalid','',3000);
 

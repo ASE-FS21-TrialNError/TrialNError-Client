@@ -65,7 +65,7 @@ class Dashboard extends React.Component{
   async getApps(){
     try{
       // fetching all the apps in the wishlist
-      console.log(localStorage.getItem("token"));
+      //console.log(localStorage.getItem("token"));
       let url = "/wishlist/getApps"
       let response = await api.get(url,
         {
@@ -76,7 +76,7 @@ class Dashboard extends React.Component{
         });
 
       this.setState({ whishlistApps: response.data});
-      console.log(response.data);
+      //console.log(response.data);
     }catch(error){
       NotificationManager.error('Something went wrong','Error',3000);
     }
@@ -103,9 +103,9 @@ class Dashboard extends React.Component{
 
         });
 
-      console.log(response.data);
+      //console.log(response.data);
     }catch(error){
-      console.log(error);
+      //console.log(error);
       NotificationManager.error('Something went wrong','Error',3000);
     }
 
@@ -113,10 +113,10 @@ class Dashboard extends React.Component{
     // sending the all ids of apps in the whislist and getting back the recommended apps
     try{
       url = "/recommender?appIds=[" + response.data.apps + "]";
-      console.log(url);
+      //console.log(url);
       await apiRecommender.get(url)
         .then(response => {
-          console.log(response);
+          //console.log(response);
           this.setState({recommendedApps: response.data});
         });
     }catch(error){
@@ -135,7 +135,7 @@ class Dashboard extends React.Component{
   }
 
   setStatus(){
-    console.log(this.state.appsToRemove)
+    //console.log(this.state.appsToRemove)
     if(this.state.isStatusRemove){
       this.setState({isStatusRemove: false});
     }else{
@@ -144,7 +144,7 @@ class Dashboard extends React.Component{
   }
 
   goToDetails(app){
-    console.log(app)
+    //console.log(app)
     this.props.history.push({
       pathname: "/appDetails",
       state: { app: app },
@@ -181,7 +181,7 @@ class Dashboard extends React.Component{
           }
         });
     }catch(error){
-      console.log(error);
+      //console.log(error);
       NotificationManager.error('Something went wrong','Error',3000);
     }
 
