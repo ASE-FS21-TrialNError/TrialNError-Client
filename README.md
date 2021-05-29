@@ -2,20 +2,21 @@
 
 ## General information
 
-This repository is part of the project AppCom and contains the code for the front end of the project. Further information
-about the project can be found in the "Additional information" section. The main high level components of this 
-repository are mentioned below:
+This repository is part of the project AppCom and contains the code for the front end of the project. The application
+was created using React.js and the programming languages used are Javascript, CSS and Html. Further information about the 
+project can be found in the "Additional information" section. 
+The main high level components of this repository are mentioned below:
 
 - **[Login/Registration/EmailVerfication](https://github.com/ASE-FS21-TrialNError/TrialNError-Client/tree/main/src/components)**: 
   Users can register and login to the application.
 - **[Apps Overview](https://github.com/ASE-FS21-TrialNError/TrialNError-Client/blob/main/src/components/appOverview/AppsOverview.js)**: 
   Users can filter the apps by name, category, rating, content rating, price, rating count. Furthermore, users can sort 
-  the apps and add them to their wishlist. By clicking on a particular app, they can see the details of the app in the 
+  the apps and add them to their wish list. By clicking on a particular app, they can see the details of the app in the 
   "App Details" page.
 
 - **[Dashboard](https://github.com/ASE-FS21-TrialNError/TrialNError-Client/blob/main/src/components/dashboard/Dashboard.js)**:
-  Users can see their wishlist with the apps added and receive recommended apps apps based on the content of the apps
-  in the wishlist. In addition, user can remove apps in the whishlist.
+  Users can see their wish list with the added apps and receive recommended apps based on the content of the apps
+  in the wish list. In addition, user can remove apps in the wish list.
 
 - **[App Details](https://github.com/ASE-FS21-TrialNError/TrialNError-Client/blob/main/src/components/appDetails/AppDetails.js)**: 
   User can see all the detailed information of a particular app.
@@ -23,9 +24,9 @@ repository are mentioned below:
 **User control flow**: An unregistered user can register on the Registration page. After
 the registration the user will be directed to the Email Verification page, where the user should enter the code he received 
 by email. After successful verification, the user arrives at the Apps Overview page where he can filter the displayed apps and 
-add apps to his whishlist. If the user goes to Dashboard page after he added apps to his whishlist, he can see these apps in the
-whishlist in the Dashboard. Based on the apps in the wishlist, the user will get a list of recommended above the whishlist. 
-If a user wants more information for a particular app, he can click on the picture or the heading of the apps so he will 
+add apps to his wish list. If the user goes to Dashboard page after he added apps to his wish list, he can see these apps in the
+wish list in the Dashboard. Based on the apps in the wishlist, the user will get a list of recommended above the wish list. 
+If a user wants more information for a particular app, he can click on the picture, or the heading of the apps so that he will 
 be directed to the App Details page where all the additional information is displayed.
 
 ## Launch & Deployment - for joining developers
@@ -68,12 +69,12 @@ A user can get access to the AppCom service by providing user credentials.
 ![Settings in the Lobby](public/Login.png)
 
 ### Apps Overview
-In the Apps Overview page a user can sort and filter the apps. Furthermore, he can add them to his wishlist.
+In the Apps Overview page a user can sort and filter the apps. Furthermore, he can add them to his wish list.
 ![Join Game](public/AppsOverview.png)
 
 ### Dashboard
-A user can see all the apps he added to his wishlist below the recommended apps. As soon as a user adds an app to the
-wishlist, he receives recommendations for other apps based on the content and rating of the apps in his wishlist.
+A user can see all the apps he added to his wish list below the recommended apps. As soon as a user adds an app to the
+wish list, he receives recommendations for other apps based on the content and rating of the apps in his wish list.
 ![Join Game](public/Dashboard.png)
 
 ### App Details
@@ -83,8 +84,8 @@ A user can get additional information on each app on the App Details page.
 ## Roadmap
 Joining developers can contribute to the project by adding the following things:
 
-- User can have several wishlists
-- Providing the user with an overview with charts of what kind of apps he has in his whishlist, example: pie chart 
+- User can have several wish lists
+- Providing the user with an overview with charts of what kind of apps he has in his whish list, example: pie chart 
   with how many apps are for iOS, Android and both systems.
 - ... any other creative extensions which increases user experience! :smile:
 
