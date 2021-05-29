@@ -120,6 +120,7 @@ For additional information please refer to the Project Wiki:
 ## Authors and acknowledgment
 
 We thank the ASE team FS21 for all the support and advice during this course.
+We also acknowlege the Sopra team FS21 as we used the client template.
 
 ### Authors
 
