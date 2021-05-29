@@ -33,9 +33,9 @@ class Registration extends React.Component {
         });
         const response = await api.post("/auth/email/register", requestBody);
 
-        console.log(response.status);
-        console.log(response.data);
-        console.log(response.data.payload);
+        //console.log(response.status);
+        //console.log(response.data);
+        //console.log(response.data.payload);
         if (response.data.message === "REGISTER.EMAIL_VERIFIED"){
           localStorage.setItem("email", this.state.email)
           this.props.history.push({

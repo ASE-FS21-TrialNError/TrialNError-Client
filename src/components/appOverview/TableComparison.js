@@ -279,7 +279,7 @@ export class TableDetails extends React.Component{
 
 
   render(){
-    console.log(this.props.app);
+    //console.log(this.props.app);
     return (
       <TableDet>
         <thead>

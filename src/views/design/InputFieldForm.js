@@ -183,7 +183,7 @@ class InputFieldForm extends React.Component {
             }
           )
         }
-        console.log(this.props.name);
+        //console.log(this.props.name);
         this.setState(
           {
             lowerBoundary: lowerBoundary,

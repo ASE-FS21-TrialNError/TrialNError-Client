@@ -67,7 +67,7 @@ class EmailVerification extends React.Component{
         "token": this.state.code
       }
       const response = await api.post(url, requestBody);
-      console.log(response);
+      //console.log(response);
       if(response.status === 201){
         NotificationManager.success('Account verified', 'Success',3000);
         localStorage.setItem("token", response.data.payload.token);
@@ -79,7 +79,7 @@ class EmailVerification extends React.Component{
       }
 
     }catch (error){
-      console.log(error);
+      //console.log(error);
       NotificationManager.error('Something went wrong', 'Error',3000);
     }
   }
