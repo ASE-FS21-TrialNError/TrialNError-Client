@@ -35,13 +35,13 @@ To run the application locally, a Node.js version >= 12.10 will be needed. Node.
 
 #### `npm install`
 
-This command has to be run before starting the application for the first time. It will install further dependencies to Node.js.
+This command has to be run before starting the application for the first time. It will install further dependencies besides Node.js.
 
 #### `npm run dev`
 
 This command runs the application in the development mode.
-Open [http://localhost:3000](http://localhost:4000) to view it in the browser.
-If make changes to the code, the page will reload.
+Open [http://localhost:4000](http://localhost:4000) to view it in the browser.
+If you make changes to the code, the page will be updated.
 
 #### `npm run test`
 
