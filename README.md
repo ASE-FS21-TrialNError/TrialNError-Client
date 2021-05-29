@@ -1,37 +1,10 @@
-# Advanced Software Engineering: TrialNError AppCom
+# TrialNError-Client
 
-## Introduction
+## General information
 
-### Motivation
-Currently, people simply download the mobile apps which are available to them depending on the operating system of the 
-smartphone they use. However, some mobile apps are not available in all app stores. Moreover, an app may have better 
-performance and user rating on a specific operating system (iOS vs. Android). Therefore, it makes sense to turn 
-around the traditional approach and thus offer consumers the possibility to choose the smartphone they 
-want depending on the mobile apps they would like to later install on it.
+(Add a few introductory words what this repo is)
 
-### Idea and Overview
-Our idea is to develop a web application, which will act as a mobile app aggregator. The web application will provide 
-users with an overview of different mobile apps out there (for our project, scope will be limited to apps in Google Play
-Store and Apple App Store). After signing in on the website, users will be able to select the apps which interest them 
-(based on various information, e.g., price, rating, etc.) and add them to their personal “Apps list”.
-This should make it easier for users to decide whether their future smartphone should run on iOS or Android and which 
-apps exactly should they install on it. In addition to the “Apps list”, complementary app recommendations will be shown. 
-Those recommendations will be based on the selected apps in the “Apps list”, using a content-filtering technique. 
-
-## Technologies
-
-- **[React-js](https://reactjs.org/)**: React-js is a framwork for building JavaScript user interfaces in a 
-  component-based way.
-- **[NestJS](https://nestjs.com/)**: NestJS is a framework for building efficient, scalable Node.js web applications.
-  component-based way. (backend)
-- **[Docker](https://nestjs.com/)**: Docker is a set of platform as a service products that use OS-level virtualization 
-  to deliver software in packages called containers.
-- **[SonarCloud](https://sonarcloud.io/)**: SonarCloud enhances the workflow with continuous code quality by 
-  automatically analyzing and decorating pull requests on GitHub, Bitbucket etc.
-
-axios
-
-## High-level components
+The high-level components are:
 
 - **[Login/Registration/EmailVerfication](https://github.com/ASE-FS21-TrialNError/TrialNError-Client/tree/main/src/components)**: 
   Users can register and login to the application.
@@ -55,14 +28,13 @@ whishlist in the Dashboard. Based on the apps in the wishlist, the user will get
 If a user wants more information for a particular app, he can click on the picture or the heading of the apps so he will 
 be directed to the App Details page where all the additional information is displayed.
 
-
 ## Launch & Deployment - for joining developers
 
 To run the application locally, a Node.js version >= 12.10 will be need. Node.js can be downloaded [here](https://nodejs.org).
-Further dependencies will be installed with:
+
 #### `npm install`
 
-This command has to be run before starting the application for the first time.
+This command has to be run before starting the application for the first time. It will install further dependencies to Node.js.
 
 #### `npm run dev`
 
@@ -86,8 +58,11 @@ Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-## Illustrations of AppCom
+## CI/CD pipeline
 
+For information regarding the setup of the CI/CD pipeline of the Client repo, please refer to the specific Project Wiki [page](https://github.com/ASE-FS21-TrialNError/TrialNError-Client/wiki/CI-CD-pipeline).
+
+## Illustrations of the Front end 
 
 ## Roadmap
 Joining developers can contribute to the project by adding the following things:
@@ -97,9 +72,24 @@ Joining developers can contribute to the project by adding the following things:
   with how many apps are for iOS, Android and both systems.
 - ... any other creative extensions which increases user experience! :smile:
 
+## Additional information (not specific to this repository)
+
+For additional information please refer to the Project Wiki:
+
+- [Overall project idea & motivation](https://github.com/ASE-FS21-TrialNError/TrialNError-Client/wiki/Introduction-(Project-idea-&-Motivation))
+- [Data sources](https://github.com/ASE-FS21-TrialNError/TrialNError-Client/wiki/Data-selection)
+- [Architecture & Technologies](https://github.com/ASE-FS21-TrialNError/TrialNError-Client/wiki/Architecture-&-Technologies)
+- [MongoDB Data model](https://github.com/ASE-FS21-TrialNError/TrialNError-Client/wiki/MongoDB-Data-model)
+- [Project documentation](https://github.com/ASE-FS21-TrialNError/TrialNError-Client/wiki/Documentation)
+- [Recommender system](https://github.com/ASE-FS21-TrialNError/TrialNError-Client/wiki/Recommender-system)
+- [Outstanding problems & workarounds](https://github.com/ASE-FS21-TrialNError/TrialNError-Client/wiki/Outstanding-problems-&-workarounds)
+- [Project plan](https://github.com/ASE-FS21-TrialNError/TrialNError-Client/wiki/Project-plan)
+- [Roles & Task management](https://github.com/ASE-FS21-TrialNError/TrialNError-Client/wiki/Roles-&-Tasks-management)
+- [Branch management](https://github.com/ASE-FS21-TrialNError/TrialNError-Client/wiki/Branch-management-&-Handling-of-Pull-requests)
+
 ## Authors and acknowledgment
 
-We thank the ASE team FS21 for the support and course.
+We thank the ASE team FS21 for all the support and advice during this course.
 
 ### Authors
 
@@ -107,27 +97,14 @@ We thank the ASE team FS21 for the support and course.
 - [Vladimir](https://github.com/vldonkov)
 - [Lukas](https://github.com/LukZeh)
 
-
-
 ## License
 
 The project is licensed under the Apache License 2.0. For more information check [this :page_with_curl:](https://github.com/sopra-fs21-group-11/sopra-client/blob/master/LICENSE) out.
 
 
 
+## External packages
 
+## how to run in development
 
-
-
-
-
-
-
-
-
-### External packages
-
-### how to run in development
-
-### how to deploy
-
+## how to deploy
