@@ -167,7 +167,7 @@ export const radioButtonData = (
       "filter": "ratingCountIos"
     },
     "Rating Count Android":{
-      "filter": "ratingCountIos"
+      "filter": "ratingCountAndroid"
     },
     "5 to 4": {
       "min": "4",
