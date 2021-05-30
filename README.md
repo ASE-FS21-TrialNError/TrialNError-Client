@@ -1,4 +1,4 @@
-[![deploy to main  Client](https://github.com/ASE-FS21-TrialNError/TrialNError-Client/actions/workflows/deploy.yml/badge.svg)](https://github.com/ASE-FS21-TrialNError/TrialNError-Client/actions/workflows/deploy.yml)
+[![deploy](https://github.com/ASE-FS21-TrialNError/TrialNError-Client/actions/workflows/deploy.yml/badge.svg)](https://github.com/ASE-FS21-TrialNError/TrialNError-Client/actions/workflows/deploy.yml)
 # TrialNError-Client
 
 ## General information
