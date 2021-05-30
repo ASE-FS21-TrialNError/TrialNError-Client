@@ -1,4 +1,6 @@
 [![deploy](https://github.com/ASE-FS21-TrialNError/TrialNError-Client/actions/workflows/deploy.yml/badge.svg)](https://github.com/ASE-FS21-TrialNError/TrialNError-Client/actions/workflows/deploy.yml)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=ASE-FS21-TrialNError_TrialNError-Client&metric=alert_status)](https://sonarcloud.io/dashboard?id=ASE-FS21-TrialNError_TrialNError-Client)
+
 # TrialNError-Client
 
 ## General information
@@ -36,6 +38,9 @@ be directed to the App Details page where all the additional information is disp
 Check out our server repository [:desktop_computer: server repo](https://github.com/ASE-FS21-TrialNError/TrialNError-Server).
 
 Check out our app recommendation repository [:hourglass: python repo ](https://github.com/ASE-FS21-TrialNError/TrialNError-Python).
+
+## Demo
+Click [here](https://appcom-trailnerror.herokuapp.com/) for Live demo
 
 ## Launch & Deployment - for joining developers
 
