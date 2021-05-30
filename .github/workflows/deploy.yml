@@ -1,4 +1,4 @@
-name: deploy to main  Client
+name: deploy 
 
 on: 
   push:
