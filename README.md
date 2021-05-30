@@ -108,7 +108,7 @@ Joining developers can contribute to the project by adding the following things:
   with how many apps are for iOS, Android and both systems.
 - ... any other creative extensions which increases user experience! :smile:
 
-## Additional information (not specific to this repository)<a name="additionalInformation"></a>
+## Additional information (General) <a name="additionalInformation"></a>
 
 For additional information please refer to the Project Wiki:
 
